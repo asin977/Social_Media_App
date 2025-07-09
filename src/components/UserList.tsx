@@ -1,6 +1,5 @@
-import { useUsers } from '../../Hooks/FetchUsers';
-import UserCard from '../UserCard';
-import './UserList.css';
+import { useUsers } from '../Hooks/FetchUsers';
+import UserCard from './UserCard';
 
 const UserList = () => {
   const { data, isLoading, isError, error } = useUsers();
