@@ -3,9 +3,9 @@ import React from 'react';
 import UserIcon from '../assets/images/userIcon.png';
 
 export const Header = () => (
-  <header
+  <div
     style={{
-      padding: '1rem',
+      padding: '1.5rem',
       background: '#62b6cb',
       display: 'flex',
       justifyContent: 'flex-end',
@@ -16,7 +16,7 @@ export const Header = () => (
     <img
       src={UserIcon}
       alt="User Icon"
-      style={{ height: '40px', marginRight: '12px' }}
+      style={{ height: '50px', marginRight: '12px' }}
     />
-  </header>
+  </div>
 );
