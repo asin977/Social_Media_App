@@ -1,4 +1,4 @@
-import { FetchUsers } from '../hooks/FetchUsers';
+import { useUsers } from '../hooks/FetchUsers';
 import UserCard from './UserDetailsDisplay';
 import './UserList.css';
 
