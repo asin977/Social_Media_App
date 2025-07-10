@@ -6,7 +6,7 @@ type Props = {
   user: User;
 };
 
-const UserDetailsDisplay: React.FC<Props> = ({ user }) => (
+const UserProfile: React.FC<Props> = ({ user }) => (
   <div
     style={{
       border: '1px solid darkblue',
@@ -30,4 +30,4 @@ const UserDetailsDisplay: React.FC<Props> = ({ user }) => (
   </div>
 );
 
-export default UserDetailsDisplay;
+export default UserProfile;

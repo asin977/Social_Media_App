@@ -1,6 +1,5 @@
 import { useUsers } from '../hooks/FetchUsers';
-import UserDetailsDisplay from './UserDetailsDisplay';
-
+import UserDetailsDisplay from './UserDetails';
 
 const UserList = () => {
   const { data, isLoading, isError, error } = useUsers();
@@ -9,18 +8,21 @@ const UserList = () => {
   if (isError) return <p>Error: {error.message}</p>;
 
   return (
-    <div style={{display:'grid',
-      gridTemplateColumns:'repeat(3,1fr)',
-      gridTemplateRows:'(3,1fr)',
-      gap:'30px',
-      fontSize:'18px',
-      color:'black',
-      background:'#caf0f8',
-      padding:'20px',
-      marginLeft:'40px',
-      marginRight:'40px',
-      marginTop:'40px'
-    }}>
+    <div
+      style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(3,1fr)',
+        gridTemplateRows: '(3,1fr)',
+        gap: '30px',
+        fontSize: '18px',
+        color: 'black',
+        background: '#caf0f8',
+        padding: '20px',
+        marginLeft: '40px',
+        marginRight: '40px',
+        marginTop: '40px',
+      }}
+    >
       {data?.map(user => (
         <UserDetailsDisplay key={user.id} user={user} />
       ))}
