@@ -13,6 +13,7 @@ export const Header = () => (
       cursor: 'pointer',
     }}
   >
+    <h2 style={{color:'#f8f9fa',fontSize:'25px',margin:'0px',fontFamily:'bold',display:'flex',marginRight:'15px'}}>SOCIAL</h2>
     <img
       src={UserIcon}
       alt="User Icon"

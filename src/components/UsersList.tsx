@@ -17,6 +17,7 @@ const UserList = () => {
         textAlign: 'justify',
         marginLeft: '200px',
         gap: '20px',
+        marginTop:'50px'
       }}
     >
       {data?.map(user => (
