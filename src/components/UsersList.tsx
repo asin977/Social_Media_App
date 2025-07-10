@@ -1,6 +1,6 @@
 import { useUsers } from '../hooks/FetchUsers';
-import UserCard from './UserDetailsDisplay';
-import './UserList.css';
+import UserDetailsDisplay from './UserDetailsDisplay';
+
 
 const UserList = () => {
   const { data, isLoading, isError, error } = useUsers();
@@ -11,7 +11,7 @@ const UserList = () => {
   return (
     <div className="user-grid">
       {data?.map(user => (
-        <UserCard key={user.id} user={user} />
+        <UserDetailsDisplay key={user.id} user={user} />
       ))}
     </div>
   );

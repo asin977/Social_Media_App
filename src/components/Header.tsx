@@ -5,7 +5,7 @@ import UserIcon from '../assets/images/userIcon.png';
 export const Header = () => (
   <div
     style={{
-      padding: '1.5rem',
+      padding: '1rem',
       background: '#62b6cb',
       display: 'flex',
       justifyContent: 'flex-end',
