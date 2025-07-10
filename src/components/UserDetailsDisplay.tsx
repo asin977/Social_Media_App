@@ -7,15 +7,24 @@ type Props = {
 };
 
 const UserDetailsDisplay: React.FC<Props> = ({ user }) => (
-  <div className={`user-card ${user.status}`}>
-    <h3>{user.name}</h3>
-    <p>
+  <div
+    style={{
+      border: '1px solid darkblue',
+      boxShadow: '3px 3px 3px #353535',
+    }}
+    className={`user-card ${user.status}`}
+  >
+    <h3 style={{ color: 'darkblue', fontFamily: 'bold' }}>{user.name}</h3>
+
+    <p style={{ color: 'blue', fontFamily: 'regualar' }}>
       <strong>Email:</strong> {user.email}
     </p>
-    <p>
+
+    <p style={{ color: '#353535' }}>
       <strong>Gender:</strong> {user.gender}
     </p>
-    <p>
+
+    <p style={{ color: '#d90429' }}>
       <strong>Status:</strong> {user.status}
     </p>
   </div>
