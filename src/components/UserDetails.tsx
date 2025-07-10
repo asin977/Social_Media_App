@@ -44,8 +44,16 @@ const UserDetails: React.FC<Props> = ({ user }) => (
       </span>
     </h3>
 
-    <p style={{ color: 'black', fontFamily: 'regualar' }}>
-      <strong></strong> {user.email}
+    <p
+      style={{
+        color: 'black',
+        fontFamily: 'regular',
+        borderBottom: '1px solid lightgray',
+        width: '90%',
+        paddingBottom: '20px',
+      }}
+    >
+      {user.email}
     </p>
   </div>
 );

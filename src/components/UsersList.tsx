@@ -1,5 +1,5 @@
 import { useUsers } from '../hooks/FetchUsers';
-import UserDetailsDisplay from './UserDetails';
+import UserDetails from './UserDetails';
 
 const UserList = () => {
   const { data, isLoading, isError, error } = useUsers();
@@ -10,15 +10,17 @@ const UserList = () => {
   return (
     <div
       style={{
-        display: 'grid',
+        display: 'flex',
+        flexDirection: 'column',
         justifyItems: 'start',
+        flexGrow: '1',
         textAlign: 'justify',
         marginLeft: '200px',
         gap: '20px',
       }}
     >
       {data?.map(user => (
-        <UserDetailsDisplay key={user.id} user={user} />
+        <UserDetails key={user.id} user={user} />
       ))}
     </div>
   );
