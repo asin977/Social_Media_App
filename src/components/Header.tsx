@@ -1,12 +1,12 @@
 import React from 'react';
 
-import UserIcon from '../assets/images/userIcon.png';
+import UserIcon from '../assets/images/usersIcon.png';
 
 export const Header = () => (
   <div
     style={{
       padding: '1rem',
-      background: '#62b6cb',
+      background: '#023e8a',
       display: 'flex',
       justifyContent: 'flex-end',
       alignItems: 'center',

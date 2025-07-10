@@ -11,16 +11,10 @@ const UserList = () => {
     <div
       style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(3,1fr)',
-        gridTemplateRows: '(3,1fr)',
-        gap: '30px',
-        fontSize: '18px',
-        color: 'black',
-        background: '#caf0f8',
-        padding: '20px',
-        marginLeft: '40px',
-        marginRight: '40px',
-        marginTop: '40px',
+        justifyItems: 'start',
+        textAlign: 'justify',
+        marginLeft: '200px',
+        gap: '20px',
       }}
     >
       {data?.map(user => (
