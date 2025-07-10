@@ -9,11 +9,11 @@ const UserList = () => {
   if (isError) return <p>Error: {error.message}</p>;
 
   return (
-    <div className="user-grid">
+    <>
       {data?.map(user => (
         <UserDetailsDisplay key={user.id} user={user} />
       ))}
-    </div>
+    </>
   );
 };
 
