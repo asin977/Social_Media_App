@@ -1,11 +1,10 @@
-import { useUsers } from '../apis/FetchUsers';
-import UserDetails from './UserDetails';
+import { useGetUserDetails } from '../apis/user';
 
 const UserList = () => {
-  const { data, isLoading, isError, error } = useUsers();
+  const { users, isLoading, isError, error } = useGetUserDetails();
 
   if (isLoading) return <p>Loading users...</p>;
-  if (isError) return <p>Error: {error.message}</p>;
+  if (isError) return <p>Error: {error?.message}</p>;
 
   return (
     <div
@@ -20,9 +19,16 @@ const UserList = () => {
         marginTop: '50px',
       }}
     >
-      {data?.map(user => (
-        <UserDetails key={user.id} user={user} />
-      ))}
+      <div>
+        <div>
+          {users?.map(user => (
+            <div>
+              <h2 key={user.id}>{user.name}</h2>
+              <p>{user.email}</p>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
