@@ -1,1 +1,1 @@
-export * from '../../apis/user/useGetUserDetails';
+export * from './useGetUserDetails';

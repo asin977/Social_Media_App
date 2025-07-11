@@ -1,6 +1,11 @@
-export const enum APIEndPoints {
-  USERS = 'https://gorest.co.in/public/v2/users',
-  POSTS = 'https://gorest.co.in/public/v2/posts',
-  COMMENTS = 'https://gorest.co.in/public/v2/comments',
-  TODOS = 'https://gorest.co.in/public/v2/todos',
-}
+export const endpoints = {
+  // users
+  getUserDetails: (id: string) => `public/${id}/user`,
+  getUserList: () => 'public/v2/users',
+
+  // post
+  getPosts: () => 'public/v2/posts',
+
+  // comments
+  getComments: () => 'public/v2/comments',
+};

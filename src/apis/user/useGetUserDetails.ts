@@ -1,19 +1,16 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { data } from 'react-router-dom';
-import { fetchUsers } from '../FetchUsers';
 import { DataStorageKeys } from '../data-query-keys';
+import httpClient from '../httpClient';
+import { endpoints } from '../endpoints';
+import { UserListAPIResponse } from '../../types/user';
 
 export const useGetUserDetails = () => {
-  const {
-    data: users,
-    isLoading,
-    isError,
-    error,
-  } = useQuery({
+  return useQuery<UserListAPIResponse[], Error>({
     queryKey: [DataStorageKeys.USER],
-    queryFn: fetchUsers,
+    queryFn: async () => {
+      const { data } = await httpClient.get(endpoints.getUserList());
+      return data;
+    },
   });
-
-  return { data, users, isLoading, isError, error };
 };

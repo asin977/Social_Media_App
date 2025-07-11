@@ -1,4 +1,4 @@
-export type User = {
+export type UserListAPIResponse = {
   id: number;
   user: string;
   name: string;

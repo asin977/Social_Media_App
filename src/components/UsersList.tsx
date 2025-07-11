@@ -1,10 +1,14 @@
 import { useGetUserDetails } from '../apis/user';
 
 const UserList = () => {
-  const { users, isLoading, isError, error } = useGetUserDetails();
+  const { data: users, isLoading, isError, error } = useGetUserDetails();
 
-  if (isLoading) return <p>Loading users...</p>;
-  if (isError) return <p>Error: {error?.message}</p>;
+  if (isLoading) {
+    return <p>Loading users...</p>;
+  }
+  if (isError) {
+    return <p>Error: {error?.message}</p>;
+  }
 
   return (
     <div
@@ -19,16 +23,12 @@ const UserList = () => {
         marginTop: '50px',
       }}
     >
-      <div>
+      {users?.map(user => (
         <div>
-          {users?.map(user => (
-            <div>
-              <h2 key={user.id}>{user.name}</h2>
-              <p>{user.email}</p>
-            </div>
-          ))}
+          <h2 key={user.id}>{user.name}</h2>
+          <p>{user.email}</p>
         </div>
-      </div>
+      ))}
     </div>
   );
 };

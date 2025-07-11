@@ -8,18 +8,18 @@ import './App.css';
 
 const queryClient = new QueryClient();
 
-function App() {
+const App = () => {
   return (
-    <QueryClientProvider client={queryClient}>
-      <div className="App">
+    <div className="App">
+      <QueryClientProvider client={queryClient}>
         <BrowserRouter>
           <Routes>
             <Route path={routes.home} element={<Home />} />
           </Routes>
         </BrowserRouter>
-      </div>
-    </QueryClientProvider>
+      </QueryClientProvider>
+    </div>
   );
-}
+};
 
 export default App;
