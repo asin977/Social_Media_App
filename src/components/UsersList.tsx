@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { DataQueryKeys } from '../apis/data-query-keys';
-import { useGetUserDetails } from '../apis/user';
+import { useGetUserDetails } from '../apis/user/useGetUserList';
 import { UserListAPIResponse } from '../types/user';
 
 const USER_STORAGE_KEY = 'persisted_users';
@@ -120,8 +120,27 @@ const UserList: React.FC = () => {
       {/* Existing Users */}
       {users.map(user => (
         <div key={user.id}>
-          <h3 style={{ color: 'darkblue', fontWeight: 'bold' }}>
-            👤{' '}
+          <h3
+            style={{
+              color: 'darkblue',
+              fontWeight: 'bold',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
+            }}
+          >
+            {/* Status Dot */}
+            <span
+              title={user.status === 'active' ? 'Active' : 'Inactive'}
+              style={{
+                display: 'inline-block',
+                width: '10px',
+                height: '10px',
+                borderRadius: '50%',
+                backgroundColor: user.status === 'active' ? 'green' : 'red',
+              }}
+            ></span>
+
             {editingUserId === user.id ? (
               <input
                 type="text"
@@ -129,7 +148,6 @@ const UserList: React.FC = () => {
                 onChange={e => setEditedName(e.target.value)}
                 placeholder={DataQueryKeys.NAME_PLACEHOLDER}
                 style={{
-                  marginLeft: '10px',
                   border: 'none',
                   padding: '10px 25px',
                   fontSize: '18px',
@@ -137,7 +155,7 @@ const UserList: React.FC = () => {
                 }}
               />
             ) : (
-              user.name
+              <>👤 {user.name}</>
             )}
           </h3>
 
