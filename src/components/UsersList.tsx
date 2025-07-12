@@ -1,38 +1,52 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { DataQueryKeys } from '../apis/data-query-keys';
 import { useGetUserDetails } from '../apis/user';
 import { UserListAPIResponse } from '../types/user';
 
-type NameEditProps = {
-  initialName: string;
-  onSave: (newName: string) => void;
-  onDelete: () => void;
-  user: UserListAPIResponse;
-};
+const USER_STORAGE_KEY = 'persisted_users';
 
-const UserList: React.FC<NameEditProps> = ({
-  initialName,
-  onSave,
-  onDelete,
-}) => {
-  const [name, setName] = useState<string>(initialName);
-  const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [isFocused, setIsFocused] = useState(false);
+const UserList: React.FC = () => {
+  const { data: fetchedUsers, isLoading, isError, error } = useGetUserDetails();
 
-  const handleSave = () => {
-    onSave(name);
-    setIsEditing(false);
+  const [users, setUsers] = useState<UserListAPIResponse[]>([]);
+  const [editingUserId, setEditingUserId] = useState<number | null>(null);
+  const [editedName, setEditedName] = useState<string>('');
+
+
+  useEffect(() => {
+    const stored = localStorage.getItem(USER_STORAGE_KEY);
+    if (stored) {
+      setUsers(JSON.parse(stored));
+    } else if (fetchedUsers) {
+      setUsers(fetchedUsers);
+      localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(fetchedUsers));
+    }
+  }, [fetchedUsers]);
+
+  const handleEdit = (id: number, currentName: string) => {
+    setEditingUserId(id);
+    setEditedName(currentName);
   };
 
-  const { data: users, isLoading, isError, error } = useGetUserDetails();
+  const handleSave = (id: number) => {
+    const updatedUsers = users.map(user =>
+      user.id === id ? { ...user, name: editedName } : user
+    );
+    setUsers(updatedUsers);
+    localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(updatedUsers));
+    setEditingUserId(null);
+    setEditedName('');
+  };
 
-  if (isLoading) {
-    return <p>Loading users...</p>;
-  }
-  if (isError) {
-    return <p>Error: {error?.message}</p>;
-  }
+  const handleDelete = (id: number) => {
+    const updatedUsers = users.filter(user => user.id !== id);
+    setUsers(updatedUsers);
+    localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(updatedUsers));
+  };
+
+  if (isLoading) return <p>Loading users...</p>;
+  if (isError) return <p>Error: {error?.message}</p>;
 
   return (
     <div
@@ -47,74 +61,71 @@ const UserList: React.FC<NameEditProps> = ({
         backgroundColor: '#f9f9f9',
       }}
     >
-      {users?.map(user => (
+      {users.map(user => (
         <div key={user.id}>
           <h3 style={{ color: 'darkblue', fontWeight: 'bold' }}>
             👤{' '}
-            {isEditing ? (
+            {editingUserId === user.id ? (
               <input
                 type="text"
-                value={name}
-                onChange={e => setName(e.target.value)}
+                value={editedName}
+                onChange={e => setEditedName(e.target.value)}
                 placeholder={DataQueryKeys.NAME_PLACEHOLDER}
                 style={{
                   marginLeft: '10px',
                   border: 'none',
                   padding: '10px 25px',
                   fontSize: '18px',
-                  transition:
-                    'border 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
-                  boxShadow: isFocused
-                    ? '0 0 5px rgba(75, 0, 130, 0.4)'
-                    : 'none',
+                  boxShadow: '0 0 5px rgba(75, 0, 130, 0.4)',
                 }}
               />
             ) : (
               user.name
             )}
           </h3>
+
           <div>
-            {isEditing ? (
+            {editingUserId === user.id ? (
               <button
+                onClick={() => handleSave(user.id)}
                 style={{
                   position: 'absolute',
                   right: '15%',
                   border: 'none',
                   padding: '8px 20px',
                   fontSize: '18px',
-                  fontFamily: 'bold',
+                  fontWeight: 'bold',
                   marginTop: '-21px',
                   borderRadius: '3px',
                   cursor: 'pointer',
                   backgroundColor: '#023e8a',
                   color: 'white',
                 }}
-                onClick={handleSave}
               >
                 {DataQueryKeys.SAVE}
               </button>
             ) : (
               <button
+                onClick={() => handleEdit(user.id, user.name)}
                 style={{
                   position: 'absolute',
                   right: '15%',
                   border: 'none',
                   padding: '8px 20px',
                   fontSize: '18px',
-                  fontFamily: 'bold',
+                  fontWeight: 'bold',
                   marginTop: '-21px',
                   borderRadius: '3px',
                   cursor: 'pointer',
                   backgroundColor: '#023e8a',
                   color: 'white',
                 }}
-                onClick={() => setIsEditing(true)}
               >
-                {DataQueryKeys.EDIT}📝
+                {DataQueryKeys.EDIT} 📝
               </button>
             )}
             <button
-              onClick={onDelete}
+              onClick={() => handleDelete(user.id)}
               style={{
                 backgroundColor: '#023e8a',
                 color: 'white',
@@ -124,7 +135,7 @@ const UserList: React.FC<NameEditProps> = ({
                 border: 'none',
                 padding: '8px 20px',
                 fontSize: '18px',
-                fontFamily: 'bold',
+                fontWeight: 'bold',
                 marginTop: '-21px',
                 borderRadius: '3px',
                 transition: 'background-color 0.3s ease, transform 0.2s ease',
