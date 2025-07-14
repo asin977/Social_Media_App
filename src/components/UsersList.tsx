@@ -1,32 +1,157 @@
-import { useGetUserDetails } from '../apis/user';
+import React, { useState, useEffect } from 'react';
 
-const UserList = () => {
-  const { data: users, isLoading, isError, error } = useGetUserDetails();
+import { DataQueryKeys } from '../apis/data-query-keys';
+import { useGetUserDetails } from '../apis/user/useGetUserList';
+import { UserListAPIResponse } from '../types/user';
 
-  if (isLoading) {
-    return <p>Loading users...</p>;
-  }
-  if (isError) {
-    return <p>Error: {error?.message}</p>;
-  }
+import UserIcon from '../assets/images/user.png';
+
+const UserList: React.FC = () => {
+  const { data: fetchedUsers, isLoading, isError, error } = useGetUserDetails();
+
+  const [users, setUsers] = useState<UserListAPIResponse[]>([]);
+  const [editingUserId, setEditingUserId] = useState<number | null>(null);
+  const [editedName, setEditedName] = useState<string>('');
+
+  useEffect(() => {
+    const stored = localStorage.getItem(DataQueryKeys.USER_STORAGE_KEY);
+    if (stored) {
+      setUsers(JSON.parse(stored));
+    } else if (fetchedUsers) {
+      setUsers(fetchedUsers);
+      localStorage.setItem(
+        DataQueryKeys.USER_STORAGE_KEY,
+        JSON.stringify(fetchedUsers),
+      );
+    }
+  }, [fetchedUsers]);
+
+  const handleEdit = (id: number, currentName: string) => {
+    setEditingUserId(id);
+    setEditedName(currentName);
+  };
+
+  const handleSave = (id: number) => {
+    const updatedUsers = users.map(user =>
+      user.id === id ? { ...user, name: editedName } : user,
+    );
+    setUsers(updatedUsers);
+    localStorage.setItem(
+      DataQueryKeys.USER_STORAGE_KEY,
+      JSON.stringify(updatedUsers),
+    );
+    setEditingUserId(null);
+    setEditedName('');
+  };
+
+  if (isLoading) return <p>Loading users...</p>;
+  if (isError) return <p>Error: {error?.message}</p>;
 
   return (
     <div
       style={{
         display: 'flex',
         flexDirection: 'column',
-        justifyItems: 'start',
-        flexGrow: '1',
+        flexGrow: 1,
         textAlign: 'justify',
         marginLeft: '200px',
         gap: '20px',
         marginTop: '50px',
+        backgroundColor: '#f9f9f9',
       }}
     >
-      {users?.map(user => (
-        <div style={{color:'darkblue'}}>
-          <h2 key={user.id}>{user.name}</h2>
-          <p style={{color:'black',fontFamily:'regular'}}>{user.email}</p>
+      {users.map(user => (
+        <div key={user.id}>
+          <h3
+            style={{
+              color: 'darkblue',
+              fontWeight: 'bold',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
+            }}
+          >
+            {editingUserId === user.id ? (
+              <input
+                type="text"
+                value={editedName}
+                onChange={e => setEditedName(e.target.value)}
+                placeholder={DataQueryKeys.NAME_PLACEHOLDER}
+                style={{
+                  border: 'none',
+                  padding: '10px 25px',
+                  fontSize: '18px',
+                  boxShadow: '0 0 5px rgba(75, 0, 130, 0.4)',
+                }}
+              />
+            ) : (
+              <>
+                <span>
+                  <img
+                    style={{ width: '40px', cursor: 'pointer' }}
+                    src={UserIcon}
+                    alt=""
+                  />
+                </span>
+                {user.name}
+              </>
+            )}
+          </h3>
+
+          <div>
+            {editingUserId === user.id ? (
+              <button
+                onClick={() => handleSave(user.id)}
+                style={{
+                  position: 'absolute',
+                  right: '15%',
+                  border: 'none',
+                  padding: '8px 20px',
+                  fontSize: '18px',
+                  fontWeight: 'bold',
+                  marginTop: '-21px',
+                  borderRadius: '3px',
+                  cursor: 'pointer',
+                  backgroundColor: '#023e8a',
+                  color: 'white',
+                }}
+              >
+                {DataQueryKeys.SAVE}
+              </button>
+            ) : (
+              <button
+                onClick={() => handleEdit(user.id, user.name)}
+                style={{
+                  position: 'absolute',
+                  right: '15%',
+                  border: 'none',
+                  padding: '8px 20px',
+                  fontSize: '18px',
+                  fontWeight: 'bold',
+                  marginTop: '-30px',
+                  borderRadius: '3px',
+                  cursor: 'pointer',
+                  backgroundColor: '#023e8a',
+                  color: 'white',
+                }}
+              >
+                {DataQueryKeys.EDIT} 📝
+              </button>
+            )}
+          </div>
+
+          <p
+            style={{
+              color: 'black',
+              borderBottom: '1px solid lightgray',
+              width: '90%',
+              paddingBottom: '20px',
+              marginTop: '10px',
+              fontFamily: 'regular',
+            }}
+          >
+            {user.email}
+          </p>
         </div>
       ))}
     </div>
