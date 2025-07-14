@@ -44,11 +44,16 @@ const UserList = () => {
                 width: '12px',
                 height: '12px',
                 borderRadius: '50%',
+                cursor: 'pointer',
                 backgroundColor: user.status === 'active' ? 'green' : 'red',
               }}
             ></span>
 
-            <img src={UserIcon} alt="user-icon" style={{ width: '50px' }} />
+            <img
+              src={UserIcon}
+              alt="user-icon"
+              style={{ width: '50px', cursor: 'pointer' }}
+            />
 
             {user.name}
           </h2>
