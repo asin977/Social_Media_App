@@ -1,3 +1,4 @@
-export enum DataStorageKeys {
+export enum DataQueryKeys {
     USER ='users'
+    
 }

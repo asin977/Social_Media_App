@@ -1,4 +1,6 @@
-import { useGetUserDetails } from '../apis/user';
+import { useGetUserDetails } from '../apis/user/useGetUserList';
+
+import UserIcon from '../assets/images/user.png';
 
 const UserList = () => {
   const { data: users, isLoading, isError, error } = useGetUserDetails();
@@ -24,9 +26,34 @@ const UserList = () => {
       }}
     >
       {users?.map(user => (
-        <div style={{color:'darkblue'}}>
-          <h2 key={user.id}>{user.name}</h2>
-          <p style={{color:'black',fontFamily:'regular'}}>{user.email}</p>
+        <div style={{ color: 'darkblue' }}>
+          <h2
+            style={{
+              color: 'darkblue',
+              fontWeight: 'bold',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
+            }}
+            key={user.id}
+          >
+            <span
+              title={user.status === 'active' ? 'Active' : 'Inactive'}
+              style={{
+                display: 'inline-block',
+                width: '12px',
+                height: '12px',
+                borderRadius: '50%',
+                backgroundColor: user.status === 'active' ? 'green' : 'red',
+              }}
+            ></span>
+
+            <img src={UserIcon} alt="user-icon" style={{ width: '50px' }} />
+
+            {user.name}
+          </h2>
+
+          <p style={{ color: 'black', fontFamily: 'regular' }}>{user.email}</p>
         </div>
       ))}
     </div>
