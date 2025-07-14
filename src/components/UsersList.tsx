@@ -1,5 +1,7 @@
 import { useGetUserDetails } from '../apis/user';
 
+import AddNewUser from './AddNewUser';
+
 const UserList = () => {
   const { data: users, isLoading, isError, error } = useGetUserDetails();
 
@@ -24,11 +26,13 @@ const UserList = () => {
       }}
     >
       {users?.map(user => (
-        <div style={{color:'darkblue'}}>
+        <div style={{ color: 'darkblue' }}>
           <h2 key={user.id}>{user.name}</h2>
-          <p style={{color:'black',fontFamily:'regular'}}>{user.email}</p>
+          <p style={{ color: 'black', fontFamily: 'regular' }}>{user.email}</p>
         </div>
       ))}
+      
+      <AddNewUser />
     </div>
   );
 };
