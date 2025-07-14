@@ -1,7 +1,6 @@
 import React from 'react';
 
 import UserIcon from '../assets/images/usersIcon.png';
-import { NONAME } from 'dns';
 
 export const Header = () => (
   <div
