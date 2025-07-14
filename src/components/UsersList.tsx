@@ -24,9 +24,9 @@ const UserList = () => {
       }}
     >
       {users?.map(user => (
-        <div>
+        <div style={{color:'darkblue'}}>
           <h2 key={user.id}>{user.name}</h2>
-          <p>{user.email}</p>
+          <p style={{color:'black',fontFamily:'regular'}}>{user.email}</p>
         </div>
       ))}
     </div>

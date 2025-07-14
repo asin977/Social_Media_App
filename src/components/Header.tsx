@@ -1,6 +1,7 @@
 import React from 'react';
 
 import UserIcon from '../assets/images/usersIcon.png';
+import { NONAME } from 'dns';
 
 export const Header = () => (
   <div
@@ -30,5 +31,19 @@ export const Header = () => (
       alt="User Icon"
       style={{ height: '50px', marginRight: '12px' }}
     />
+    <button
+      style={{
+        border: 'none',
+        padding: '8px 20px',
+        background: '#0077b6',
+        color: 'white',
+        fontFamily: 'bold',
+        borderRadius: '5px',
+        fontSize: '18px',
+        cursor: 'pointer',
+      }}
+    >
+      Posts ➡️
+    </button>
   </div>
 );
