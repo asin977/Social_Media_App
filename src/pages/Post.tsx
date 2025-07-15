@@ -62,9 +62,8 @@ export const PostPage: React.FC = () => {
     setEditingPostId(null);
     setEditedPost({});
   };
-  // const { data: users } = useGetUserDetails();
-
-  // <p>Author: {users?.find(u => u.id === post.user_id)?.name || 'Unknown'}</p>
+  
+ 
 
   const handleDelete = (id: number) => {
     const updatedPosts = posts.filter(post => post.id !== id);

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import UserIcon from '../assets/images/userIcon.png';
 
 export const Header = () => (
