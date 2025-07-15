@@ -1,15 +1,23 @@
-import { useGetUserDetails } from '../apis/user/useGetUserList';
+import React from 'react';
 
+import { useGetUserList } from '../apis/user/useGetUserList';
 import UserIcon from '../assets/images/user.png';
+import { UserListAPIResponse } from '../types/user';
+import StatusIndicatorChip from './StatusIndicatorChip';
 
-const UserList = () => {
-  const { data: users, isLoading, isError, error } = useGetUserDetails();
+const UserList: React.FC = () => {
+  const { data: users, isLoading, isError, error } = useGetUserList();
 
   if (isLoading) {
-    return <p>Loading users...</p>;
+    return (
+        <p>Loading users...</p>
+    )
   }
+
   if (isError) {
-    return <p>Error: {error?.message}</p>;
+    return (
+        <p>Error: {error?.message}</p>
+    )
   }
 
   return (
@@ -18,15 +26,24 @@ const UserList = () => {
         display: 'flex',
         flexDirection: 'column',
         justifyItems: 'start',
-        flexGrow: '1',
+        flexGrow: 1,
         textAlign: 'justify',
         marginLeft: '200px',
         gap: '20px',
         marginTop: '50px',
       }}
     >
-      {users?.map(user => (
-        <div style={{ color: 'darkblue' }}>
+      {users?.map((user: UserListAPIResponse) => (
+        <div
+          key={user.id}
+          style={{
+            color: 'darkblue',
+            maxWidth: '90%',
+            marginBottom: '12px',
+            borderBottom: '1px solid #ccc',
+            paddingBottom: '12px',
+          }}
+        >
           <h2
             style={{
               color: 'darkblue',
@@ -34,20 +51,10 @@ const UserList = () => {
               display: 'flex',
               alignItems: 'center',
               gap: '10px',
+              marginBottom: '8px',
             }}
-            key={user.id}
           >
-            <span
-              title={user.status === 'active' ? 'Active' : 'Inactive'}
-              style={{
-                display: 'inline-block',
-                width: '12px',
-                height: '12px',
-                borderRadius: '50%',
-                cursor: 'pointer',
-                backgroundColor: user.status === 'active' ? 'green' : 'red',
-              }}
-            ></span>
+            <StatusIndicatorChip status={user.status} />
 
             <img
               src={UserIcon}
@@ -58,7 +65,14 @@ const UserList = () => {
             {user.name}
           </h2>
 
-          <p style={{ color: 'black', fontFamily: 'regular' }}>{user.email}</p>
+          <p
+            style={{
+              color: 'black',
+              fontFamily: 'regular',
+            }}
+          >
+            {user.email}
+          </p>
         </div>
       ))}
     </div>
