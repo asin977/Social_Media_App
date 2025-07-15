@@ -1,51 +1,52 @@
-import React, { useState, useEffect } from 'react';
-
-import { DataQueryKeys } from '../apis/data-query-keys';
+import React, { useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import { useGetUserDetails } from '../apis/user/useGetUserList';
+import { useUpdateUserDetails } from '../apis/user/useUpdateUserDetails';
 import { UserListAPIResponse } from '../types/user';
-
 import UserIcon from '../assets/images/user.png';
+import { DataQueryKeys } from '../apis/data-query-keys';
 
 const UserList: React.FC = () => {
-  const { data: fetchedUsers, isLoading, isError, error } = useGetUserDetails();
+  const queryClient = useQueryClient();
+  console.log('🔍 QueryClient available?', queryClient);
 
-  const [users, setUsers] = useState<UserListAPIResponse[]>([]);
+  const { data: users, isLoading, isError, error, refetch } = useGetUserDetails();
+  const updateUser = useUpdateUserDetails();
+  console.log('📦 Fetched users:', users);
+  console.log('Mutation error:', updateUser.error);
+  console.log('Is loading?', updateUser.isLoading);
+
   const [editingUserId, setEditingUserId] = useState<number | null>(null);
   const [editedName, setEditedName] = useState<string>('');
 
-  useEffect(() => {
-    const stored = localStorage.getItem(DataQueryKeys.USER_STORAGE_KEY);
-    if (stored) {
-      setUsers(JSON.parse(stored));
-    } else if (fetchedUsers) {
-      setUsers(fetchedUsers);
-      localStorage.setItem(
-        DataQueryKeys.USER_STORAGE_KEY,
-        JSON.stringify(fetchedUsers),
-      );
-    }
-  }, [fetchedUsers]);
-
   const handleEdit = (id: number, currentName: string) => {
+    console.log(`🖊️ Editing user ${id}`);
     setEditingUserId(id);
     setEditedName(currentName);
   };
 
-  const handleSave = (id: number) => {
-    const updatedUsers = users.map(user =>
-      user.id === id ? { ...user, name: editedName } : user,
-    );
-    setUsers(updatedUsers);
-    localStorage.setItem(
-      DataQueryKeys.USER_STORAGE_KEY,
-      JSON.stringify(updatedUsers),
-    );
-    setEditingUserId(null);
-    setEditedName('');
+  const handleSave = async (id: number) => {
+    console.log(`📤 Saving user ${id} with name "${editedName}"`);
+    try {
+      await updateUser.mutateAsync({ id, name: editedName });
+      console.log('✅ Update successful');
+      await refetch(); 
+      setEditingUserId(null);
+      setEditedName('');
+    } catch (err) {
+      console.error('❌ Failed to update user:', err);
+    }
   };
 
-  if (isLoading) return <p>Loading users...</p>;
-  if (isError) return <p>Error: {error?.message}</p>;
+  if (isLoading) {
+    console.log('⏳ Loading users...');
+    return <p>Loading users...</p>;
+  }
+
+  if (isError) {
+    console.error('❗ Error fetching users:', error);
+    return <p>Error: {error?.message}</p>;
+  }
 
   return (
     <div
@@ -53,15 +54,22 @@ const UserList: React.FC = () => {
         display: 'flex',
         flexDirection: 'column',
         flexGrow: 1,
-        textAlign: 'justify',
         marginLeft: '200px',
-        gap: '20px',
         marginTop: '50px',
+        gap: '20px',
         backgroundColor: '#f9f9f9',
       }}
     >
-      {users.map(user => (
-        <div key={user.id}>
+      {users?.map((user: UserListAPIResponse) => (
+        <div
+          key={user.id}
+          style={{
+            maxWidth: '80%',
+            marginBottom: '20px',
+            paddingBottom: '12px',
+            borderBottom: '1px solid lightgray',
+          }}
+        >
           <h3
             style={{
               color: 'darkblue',
@@ -69,30 +77,30 @@ const UserList: React.FC = () => {
               display: 'flex',
               alignItems: 'center',
               gap: '10px',
+              marginBottom: '10px',
             }}
           >
             {editingUserId === user.id ? (
               <input
                 type="text"
                 value={editedName}
-                onChange={e => setEditedName(e.target.value)}
+                onChange={(e) => setEditedName(e.target.value)}
                 placeholder={DataQueryKeys.NAME_PLACEHOLDER}
                 style={{
                   border: 'none',
                   padding: '10px 25px',
                   fontSize: '18px',
                   boxShadow: '0 0 5px rgba(75, 0, 130, 0.4)',
+                  flex: 1,
                 }}
               />
             ) : (
               <>
-                <span>
-                  <img
-                    style={{ width: '40px', cursor: 'pointer' }}
-                    src={UserIcon}
-                    alt=""
-                  />
-                </span>
+                <img
+                  style={{ width: '40px', cursor: 'pointer' }}
+                  src={UserIcon}
+                  alt="user-icon"
+                />
                 {user.name}
               </>
             )}
@@ -107,9 +115,8 @@ const UserList: React.FC = () => {
                   right: '15%',
                   border: 'none',
                   padding: '8px 20px',
-                  fontSize: '18px',
+                  fontSize: '16px',
                   fontWeight: 'bold',
-                  marginTop: '-21px',
                   borderRadius: '3px',
                   cursor: 'pointer',
                   backgroundColor: '#023e8a',
@@ -126,9 +133,8 @@ const UserList: React.FC = () => {
                   right: '15%',
                   border: 'none',
                   padding: '8px 20px',
-                  fontSize: '18px',
+                  fontSize: '16px',
                   fontWeight: 'bold',
-                  marginTop: '-30px',
                   borderRadius: '3px',
                   cursor: 'pointer',
                   backgroundColor: '#023e8a',
@@ -143,11 +149,8 @@ const UserList: React.FC = () => {
           <p
             style={{
               color: 'black',
-              borderBottom: '1px solid lightgray',
-              width: '90%',
-              paddingBottom: '20px',
-              marginTop: '10px',
               fontFamily: 'regular',
+              marginTop: '10px',
             }}
           >
             {user.email}
