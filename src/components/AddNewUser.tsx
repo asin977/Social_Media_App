@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-
-import { DataQueryKeys } from '../apis/data-query-keys';
 import { UserListAPIResponse } from '../types/user';
-
 import UserImage from '../assets/images/add-user.png';
 
-const AddNewUser = () => {
-  const [users, setUsers] = useState<UserListAPIResponse[]>([]);
+interface AddNewUserProps {
+  onClose: () => void;
+  onSuccess: () => void;
+}
 
+const AddNewUser: React.FC<AddNewUserProps> = ({ onClose, onSuccess }) => {
   const [newUser, setNewUser] = useState<Partial<UserListAPIResponse>>({
     name: '',
     email: '',
@@ -15,112 +15,118 @@ const AddNewUser = () => {
     status: '',
   });
 
-  const handleAddUser = () => {
+  const handleAddUser = async () => {
     if (!newUser.name || !newUser.email) return;
 
-    const id = users.length ? Math.max(...users.map(u => u.id)) + 1 : 1;
-    const userToAdd: UserListAPIResponse = {
-      id,
-      user: newUser.email?.split('@')[0] || '',
-      name: newUser.name!,
-      email: newUser.email!,
-      gender: newUser.gender || 'unspecified',
-      status: newUser.status || 'active',
-    };
+    try {
+      const response = await fetch('https://gorest.co.in/public/v2/users', {
+        method: 'POST',
+        headers: {
+          Authorization:
+            'Bearer bf7188bafc33522355d94c5dc844a2a3ecb964f8106af3fb75be425c587a376b',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newUser),
+      });
 
-    const updatedUsers = [...users, userToAdd];
-    setUsers(updatedUsers);
-    localStorage.setItem(
-      DataQueryKeys.USER_STORAGE_KEYS,
-      JSON.stringify(updatedUsers),
-    );
-    setNewUser({ name: '', email: '', gender: '', status: '' });
+      const data = await response.json();
+
+      if (response.status === 201) {
+        console.log('User added successfully:', data);
+        onSuccess();
+        onClose();
+      } else {
+        console.error('Failed to add user:', data);
+        alert(data[0]?.message || 'Could not add user');
+      }
+    } catch (error) {
+      console.error('Error adding user:', error);
+      alert('Network error or unexpected issue');
+    }
   };
 
   return (
-    <div style={{ paddingBottom: '23px' }}>
-      <h2
+    <div
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100vw',
+        height: '100vh',
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 1000,
+      }}
+    >
+      <div
         style={{
-          display: 'flex',
-          alignItems: 'center',
-          color: '#023e8a',
-          paddingBottom: '12px',
+          backgroundColor: 'white',
+          padding: '30px',
+          borderRadius: '8px',
+          width: '500px',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
         }}
       >
-        <img
-          style={{ width: '40px', height: '40px', marginRight: '12px' }}
-          src={UserImage}
-          alt="userImage"
-        />
-        Add New User
-      </h2>
-      <input
-        type="text"
-        placeholder="Name"
-        value={newUser.name}
-        onChange={e => setNewUser({ ...newUser, name: e.target.value })}
-        style={{
-          marginRight: '10px',
-          padding: '8px',
-          fontSize: '18px',
-          boxShadow: '0 0 5px rgba(75, 0, 130, 0.4)',
-        }}
-      />
+        <h2 style={{ color: '#023e8a', marginBottom: '20px' }}>
+          <img
+            src={UserImage}
+            alt="user"
+            style={{ width: '40px', marginRight: '12px' }}
+          />
+          Add New User
+        </h2>
 
-      <input
-        type="email"
-        placeholder="Email"
-        value={newUser.email}
-        onChange={e => setNewUser({ ...newUser, email: e.target.value })}
-        style={{
-          marginRight: '10px',
-          padding: '8px',
-          fontSize: '18px',
-          boxShadow: '0 0 5px rgba(75, 0, 130, 0.4)',
-        }}
-      />
+        {['name', 'email', 'gender', 'status'].map(field => (
+          <input
+            key={field}
+            type="text"
+            placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
+            value={newUser[field as keyof typeof newUser] || ''}
+            onChange={e => setNewUser({ ...newUser, [field]: e.target.value })}
+            style={{
+              width: '100%',
+              marginBottom: '12px',
+              padding: '10px',
+              fontSize: '16px',
+              boxShadow: '0 0 5px rgba(75, 0, 130, 0.2)',
+            }}
+          />
+        ))}
 
-      <input
-        type="text"
-        placeholder="Gender"
-        value={newUser.gender}
-        onChange={e => setNewUser({ ...newUser, gender: e.target.value })}
-        style={{
-          marginRight: '10px',
-          padding: '8px',
-          fontSize: '18px',
-          boxShadow: '0 0 5px rgba(75, 0, 130, 0.4)',
-        }}
-      />
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <button
+            onClick={handleAddUser}
+            style={{
+              padding: '10px 20px',
+              fontSize: '16px',
+              fontWeight: 'bold',
+              backgroundColor: '#023e8a',
+              color: 'white',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer',
+            }}
+          >
+            Add
+          </button>
 
-      <input
-        type="text"
-        placeholder="Status"
-        value={newUser.status}
-        onChange={e => setNewUser({ ...newUser, status: e.target.value })}
-        style={{
-          marginRight: '10px',
-          padding: '8px',
-          fontSize: '18px',
-          boxShadow: '0 0 5px rgba(75, 0, 130, 0.4)',
-        }}
-      />
-      <button
-        onClick={handleAddUser}
-        style={{
-          border: 'none',
-          padding: '8px 20px',
-          fontSize: '18px',
-          fontWeight: 'bold',
-          marginTop: '-21px',
-          borderRadius: '3px',
-          cursor: 'pointer',
-          backgroundColor: '#023e8a',
-          color: 'white',
-        }}
-      >
-        Add User
-      </button>
+          <button
+            onClick={onClose}
+            style={{
+              padding: '10px 20px',
+              fontSize: '16px',
+              backgroundColor: '#ccc',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer',
+            }}
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
