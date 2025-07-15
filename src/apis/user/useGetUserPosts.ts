@@ -9,7 +9,7 @@ export const useGetUserPosts = () => {
   return useQuery<Post[], Error>({
     queryKey: [DataQueryKeys.USER],
     queryFn: async () => {
-      const { data } = await httpClient.get(endpoints.getPost());
+      const { data } = await httpClient.get(endpoints.getPosts());
       return data;
     },
   });
