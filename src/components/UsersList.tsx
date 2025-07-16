@@ -5,7 +5,7 @@ import { UserListAPIResponse } from '../types/user';
 const UserList = () => {
   const { data: fetchedUsers, isLoading, isError, error } = useGetUserDetails();
   const [users, setUsers] = useState<UserListAPIResponse[]>([]);
-  const { mutate: deleteUser } = useDeleteUser(); // Your DELETE mutation hook
+  const { mutate: deleteUser } = useDeleteUser(); 
 
   useEffect(() => {
     if (fetchedUsers?.length) {
@@ -25,8 +25,12 @@ const UserList = () => {
     });
   };
 
-  if (isLoading) return <p>Loading users...</p>;
-  if (isError) return <p>Error: {error?.message}</p>;
+  if (isLoading) return (
+  <p>Loading users...</p>
+  )
+  if (isError) return (
+  <p>Error: {error?.message}</p>
+  )
   if (!users.length) return <p>No users found.</p>;
 
   return (
@@ -52,7 +56,7 @@ const UserList = () => {
             }}
             aria-label="Delete user"
           >
-            🗑️
+            Delete
           </button>
 
           <p style={{ color: 'black', fontFamily: 'regular' }}>{user.email}</p>
