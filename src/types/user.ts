@@ -6,3 +6,10 @@ export type UserListAPIResponse = {
   gender: string;
   status: string;
 };
+
+export type UpdateUserPayLoad = {
+  id:number;
+  name?: string;
+  email?:string;
+}
+

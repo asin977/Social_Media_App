@@ -1,9 +1,18 @@
 import { Header } from '../components/Header';
-import UserList from '../components/UsersList';
+import EditUserForm from '../components/EditUserFrom';
 
 export const Home = () => (
   <>
     <Header />
-    <UserList />
+    <EditUserForm user={{
+      id: 0,
+      user: '',
+      name: '',
+      email: '',
+      gender: '',
+      status: ''
+    }} onSuccess={function (): void {
+      throw new Error('Function not implemented.');
+    } } />
   </>
 );

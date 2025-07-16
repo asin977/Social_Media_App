@@ -1,5 +1,5 @@
 export enum DataQueryKeys {
-    USER = 'users',
+    USER_LIST = 'users',
     EDITED_NAMES = 'editedNames',
     DELETED_USER_IDS = 'deletedUserIds',
     EDIT = 'Edit',
