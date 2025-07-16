@@ -1,33 +1,11 @@
 import React from 'react';
-import { useQuery } from '@tanstack/react-query';
 
-import { useDeleteUser } from '../apis/user';
-import { endpoints } from '../apis/endpoints';
-import httpClient from '../apis/httpClient';
-import { DeleteIcon } from '../assets/svg/svg';
-type User = {
-  email: string;
-  id: string;
-  name: string;
-};
+import { useDeleteUser, useGetUserList } from '../apis/user';
 
-const fetchUsers = async (): Promise<User[]> => {
-  const url = endpoints.getUserList();
-  const response = await httpClient.get(url);
-  console.log(response.data, '===========');
-
-  return response.data;
-};
+import { ReactComponent as DeleteIcon } from '../assets/svg/delete.svg';
 
 const UserList: React.FC = () => {
-  const {
-    data: users,
-    isLoading,
-    isError,
-  } = useQuery<User[], Error>({
-    queryKey: ['users'],
-    queryFn: fetchUsers,
-  });
+  const { data: users, isLoading, isError } = useGetUserList();
 
   const { mutate: deleteUserMutation } = useDeleteUser();
 
@@ -50,16 +28,28 @@ const UserList: React.FC = () => {
             fontSize: '20px',
             color: 'darkblue',
             padding: '20px',
-            marginLeft:'80px',
+            marginLeft: '80px',
             marginBottom: '1px solid gray',
-            fontFamily:'bold'
+            fontFamily: 'bold',
           }}
         >
           {user.name}
           <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <button style={{marginRight:'20px',padding:'5px 10px',color:'#fff',fontFamily:'bold',fontSize:'18px',backgroundColor:'#023e8a',border:'none',borderRadius:'4px'}} onClick={() => handleDelete(user.id)}>
-                   {/* <DeleteIcon /> */}Delete
-                   
+            <button
+              style={{
+                marginRight: '20px',
+                padding: '5px 10px',
+                color: '#fff',
+                fontFamily: 'bold',
+                fontSize: '18px',
+                backgroundColor: '#023e8a',
+                border: 'none',
+                borderRadius: '4px',
+              }}
+              onClick={() => handleDelete(user?.id?.toString())}
+            >
+              <DeleteIcon />
+              Delete
             </button>
           </span>
 

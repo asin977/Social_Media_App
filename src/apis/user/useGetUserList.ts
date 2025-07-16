@@ -5,7 +5,7 @@ import httpClient from '../httpClient';
 import { endpoints } from '../endpoints';
 import { UserListAPIResponse } from '../../types/user';
 
-export const useGetUserDetails = () => {
+export const useGetUserList = () => {
   return useQuery<UserListAPIResponse[], Error>({
     queryKey: [DataQueryKeys.USER],
     queryFn: async () => {
