@@ -1,67 +1,91 @@
-import React, { useState } from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useUpdateUserDetails } from '../apis/user';
-import { UserListAPIResponse, UpdateUserPayLoad } from '../types/user';
+import React from 'react';
+import { useQueryClient, useMutation } from '@tanstack/react-query';
+import { useUpdateUserDetails } from '../apis/user/useUpdateUserDetails';
+import { UserListAPIResponse } from '../types/user';
 
-type EditUserFormProps = {
-  user: UserListAPIResponse;
-  onSuccess: () => void;
+type Props = {
+  users: UserListAPIResponse[];
 };
 
-const EditUserForm: React.FC<EditUserFormProps> = ({ user, onSuccess }) => {
+const EditUserForm: React.FC<Props> = ({ users }) => {
   const queryClient = useQueryClient();
-  const [name, setName] = useState(user.name);
-  const [email, setEmail] = useState(user.email);
 
   const mutation = useMutation({
     mutationFn: useUpdateUserDetails,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['users'] });
-      onSuccess();
+      alert('User name changed successfully!');
     },
     onError: (error: any) => {
-      console.error('Error updating user:', error.message);
+      console.error('Update error:', error.message);
+      alert('Failed to update user.');
     },
   });
 
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    const payload: UpdateUserPayLoad = {
-      id: user.id,
-      name,
-      email,
-    };
-    mutation.mutate(payload);
+  const handleEditToggle = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const parent = e.currentTarget.closest('[data-user-id]') as HTMLElement | null;
+    if (!parent) return;
+
+    const input = parent.querySelector('input') as HTMLInputElement | null;
+    const display = parent.querySelector('.user-name-display') as HTMLElement | null;
+
+    if (!input || !display) return;
+
+    const isEditing = parent.getAttribute('data-editing') === 'true';
+
+    if (!isEditing) {
+      
+      input.style.display = 'inline-block';
+      display.style.display = 'none';
+      parent.setAttribute('data-editing', 'true');
+      e.currentTarget.textContent = 'Save';
+    } else {
+    
+      const userId = Number(parent.getAttribute('data-user-id'));
+      const userEmail = parent.getAttribute('data-email') || '';
+      const newName = input.value.trim();
+
+      if (newName && newName !== display.textContent) {
+        mutation.mutate({
+          id: userId,
+          name: newName,
+          email: userEmail,
+        });
+
+        display.textContent = newName;
+      }
+
+      
+      input.style.display = 'none';
+      display.style.display = 'inline-block';
+      parent.setAttribute('data-editing', 'false');
+      e.currentTarget.textContent = 'Edit';
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="name">Name:</label>
-        <input
-          type="text"
-          id="name"
-          value={name}
-          onChange={e => setName(e.target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor="email">Email:</label>
-        <input
-          type="email"
-          id="email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-        />
-      </div>
-      <button type="submit"></button>
-      {mutation.isError && (
-        <p style={{ color: 'red' }}>Error: {mutation.error?.message}</p>
-      )}
-      {mutation.isSuccess && (
-        <p style={{ color: 'green' }}>User updated successfully!</p>
-      )}
-    </form>
+    <div style={{ padding: '20px' }}>
+      <h2>User List </h2>
+      {users.map(user => (
+        <div
+          key={user.id}
+          data-user-id={user.id}
+          data-email={user.email}
+          data-editing="false"
+          style={{ marginBottom: '12px' }}
+        >
+          <span className="user-name-display">{user.name}</span>
+          <input
+            type="text"
+            defaultValue={user.name}
+            style={{ display: 'none', marginRight: '10px' }}
+            name="name"
+          />
+          <span style={{ margin: '0 10px' }}>{user.email}</span>
+          <button onClick={handleEditToggle}>Edit</button>
+        </div>
+      ))}
+    </div>
   );
 };
 
