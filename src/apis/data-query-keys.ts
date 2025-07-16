@@ -1,3 +1,3 @@
 export enum DataQueryKeys {
-  USER = 'users',
+  USER_LIST = 'users_list',
 }

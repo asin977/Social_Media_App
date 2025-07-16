@@ -19,7 +19,7 @@ const UserList: React.FC = () => {
   return (
     <div>
       <h2 style={{ color: 'darkblue', textAlign: 'center', fontSize: '35px' }}>
-        Users List
+        USER LIST
       </h2>
       {users?.map(user => (
         <div
@@ -34,7 +34,7 @@ const UserList: React.FC = () => {
           }}
         >
           {user.name}
-          <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <span style={{ display: 'flex', justifyContent: 'flex-end',marginTop:'-50px' }}>
             <button
               style={{
                 marginRight: '20px',
@@ -49,7 +49,6 @@ const UserList: React.FC = () => {
               onClick={() => handleDelete(user?.id?.toString())}
             >
               <DeleteIcon />
-              Delete
             </button>
           </span>
 

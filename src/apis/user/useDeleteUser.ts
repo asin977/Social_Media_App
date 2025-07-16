@@ -1,10 +1,12 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'react-toastify';
 
 import { DataQueryKeys } from '../data-query-keys';
+import { endpoints } from '../endpoints';
 import httpClient from '../httpClient';
 
 const deleteUserRequest = async (userId: string) => {
-  const response = await httpClient.delete<void>(`public/v2/users/${userId}`);
+  const response = await httpClient.delete<void>(endpoints.getUserList());
   return response.data;
 };
 
@@ -14,11 +16,12 @@ export const useDeleteUser = () => {
   return useMutation<void, Error, string>({
     mutationFn: deleteUserRequest,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [DataQueryKeys.USER] });
-      console.log('User deleted Successfully!..');
+      queryClient.invalidateQueries({ queryKey: [DataQueryKeys.USER_LIST] });
+      // console.log('User deleted Successfully!..');
+      
     },
-    onError: error => {
-      console.error('Error deleting User', error);
-    },
+    // catch (error) {
+    //   toast.error(`Error:${error.message}`)
+    }
   });
 };
