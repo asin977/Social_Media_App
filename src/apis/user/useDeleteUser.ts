@@ -1,31 +1,24 @@
-import { useMutation } from '@tanstack/react-query';
-import { queries } from '@testing-library/dom';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-const TOKEN =
-  'bf7188bafc33522355d94c5dc844a2a3ecb964f8106af3fb75be425c587a376b';
+import { DataQueryKeys } from '../data-query-keys';
+import httpClient from '../httpClient';
 
-export const useDeleteUser = () => {
-  return useMutation({
-    mutationFn: (id: number) =>
-      fetch(`https://gorest.co.in/public/v2/users/${id}`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${TOKEN}`,
-          'Content-Type': 'application/json',
-        },
-      }),
-      onSuccess: () => {
-        
-      }
-  });
+const deleteUserRequest = async (userId: string) => {
+  const response = await httpClient.delete<void>(`public/v2/users/${userId}`);
+  return response.data;
 };
 
-// return useMutation((id: number) =>
-//   fetch(`https://gorest.co.in/public/v2/users/${id}`, {
-//     method: 'DELETE',
-//     headers: {
-//       Authorization: `Bearer ${TOKEN}`,
-//       'Content-Type': 'application/json',
-//     },
-//   }),
-// );
+export const useDeleteUser = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<void, Error, string>({
+    mutationFn: deleteUserRequest,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [DataQueryKeys.USER] });
+      console.log('User deleted Successfully!..');
+    },
+    onError: error => {
+      console.error('Error deleting User', error);
+    },
+  });
+};
