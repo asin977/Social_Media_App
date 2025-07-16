@@ -12,8 +12,12 @@ const UserList = () => {
     queryClient.invalidateQueries('get-user-details');
   };
 
-  if (isLoading) return <p>Loading users...</p>;
-  if (isError) return <p>Error: {error?.message}</p>;
+  if (isLoading) return (
+      <p>Loading users...</p>
+  ) 
+  if (isError) return (
+      <p>Error: {error?.message}</p>
+  )
 
   return (
     <div
