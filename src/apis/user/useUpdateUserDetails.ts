@@ -1,4 +1,3 @@
-import { DataQueryKeys } from '../data-query-keys';
 import httpClient from '../httpClient';
 import { UserListAPIResponse, UpdateUserPayLoad } from '../../types/user';
 

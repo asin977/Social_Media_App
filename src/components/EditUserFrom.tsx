@@ -15,9 +15,8 @@ const EditUserForm: React.FC<EditUserFormProps> = ({ user, onSuccess }) => {
 
   const mutation = useMutation({
     mutationFn: useUpdateUserDetails,
-    onSuccess: updatedUser => {
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['users'] });
-      queryClient.invalidateQueries({ queryKey: ['user', updatedUser.id] });
       onSuccess();
     },
     onError: (error: any) => {
