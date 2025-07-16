@@ -1,4 +1,5 @@
 import { useGetUserDetails } from '../apis/user';
+import UserIcon from '../assets/images/user.png';
 
 const UserList = () => {
   const { data: users, isLoading, isError, error } = useGetUserDetails();
@@ -13,20 +14,35 @@ const UserList = () => {
   return (
     <div
       style={{
-        display: 'flex',
-        flexDirection: 'column',
+        display: 'grid',
+        gridTemplateColumns: 'repeat(3,1fr)',
         justifyItems: 'start',
-        flexGrow: '1',
         textAlign: 'justify',
-        marginLeft: '200px',
-        gap: '20px',
+        marginLeft: '100px',
+        marginRight: '30px',
+        gap: '30px',
         marginTop: '50px',
       }}
     >
       {users?.map(user => (
-        <div style={{color:'darkblue'}}>
-          <h2 key={user.id}>{user.name}</h2>
-          <p style={{color:'black',fontFamily:'regular'}}>{user.email}</p>
+        <div
+          style={{
+            color: 'darkblue',
+            backgroundColor: '#e3f2fd',
+            boxShadow: '1px 2px 3px blue',
+            display: 'flex',
+            justifyContent: 'center',
+            flexWrap: 'wrap',
+            flexDirection: 'column',
+            width: '100%',
+            padding: '20px',
+          }}
+        >
+          <span>
+            <img src={UserIcon} alt="userIcon" style={{ width: '50px' }} />
+            <h2 key={user.id}>{user.name}</h2>
+          </span>
+          <p style={{ color: 'black', fontFamily: 'regular' }}>{user.email}</p>
         </div>
       ))}
     </div>
