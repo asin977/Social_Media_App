@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import httpClient from '../../apis/httpClient';
+import { endpoints } from '../endpoints';
 
 type CreateUserPostPayload = {
   user_id: number;
@@ -9,7 +10,10 @@ type CreateUserPostPayload = {
 
 export const useCreatePost = () => {
   return useMutation({
-    mutationFn: (payload: CreateUserPostPayload) =>
-      httpClient.post('public/v2/posts', payload).then(res => res.data),
+    mutationFn: async (payload: CreateUserPostPayload) => {
+      const { user_id, ...rest } = payload;
+      const response = await httpClient.post(endpoints.createUserPost(user_id), rest);
+      return response.data;
+    },
   });
 };

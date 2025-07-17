@@ -10,10 +10,9 @@ export const useCreateUserPost = () => {
   return useMutation<Posts, Error, CreateUserPostPayload>({
     mutationFn: (payload: CreateUserPostPayload) =>
       httpClient
-        .post(endpoints.createUserPost(payload.user_id.toString()), payload)
+        .post(endpoints.createUserPost(payload.user_id), payload)
         .then(res => res.data),
 
-    // 🔁 Trigger posts refetch after a post is created
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [DataQueryKeys.POST_LIST],
