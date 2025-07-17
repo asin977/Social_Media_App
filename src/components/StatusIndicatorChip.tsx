@@ -1,6 +1,6 @@
 import React from 'react';
 
-const StatusIndicatorChip: React.FC<{ status: string }> = ({ status }) => {
+const StatusIndicatorChip: React.FC<{ status: 'active' | 'inactive' }> = ({status}) => {
   const color = status === 'active' ? 'green' : 'red';
 
   return (

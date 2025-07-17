@@ -9,15 +9,11 @@ const UserList: React.FC = () => {
   const { data: users, isLoading, isError, error } = useGetUserList();
 
   if (isLoading) {
-    return (
-        <p>Loading users...</p>
-    )
+    return <p>Loading users...</p>;
   }
 
   if (isError) {
-    return (
-        <p>Error: {error?.message}</p>
-    )
+    return <p>Error: {error?.message}</p>;
   }
 
   return (
@@ -33,6 +29,7 @@ const UserList: React.FC = () => {
         marginTop: '50px',
       }}
     >
+      
       {users?.map((user: UserListAPIResponse) => (
         <div
           key={user.id}
@@ -53,9 +50,7 @@ const UserList: React.FC = () => {
               gap: '10px',
               marginBottom: '8px',
             }}
-          >
-            <StatusIndicatorChip status={user.status} />
-
+          ><StatusIndicatorChip status={'active'} />
             <img
               src={UserIcon}
               alt="user-icon"
