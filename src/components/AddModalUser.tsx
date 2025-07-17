@@ -8,7 +8,7 @@ import { DataQueryKeys } from '../apis/data-query-keys';
 type AddUserModalProps = {
   onClose: () => void;
   onSuccess: () => void;
-}
+};
 
 const AddUserModal: React.FC<AddUserModalProps> = ({ onClose, onSuccess }) => {
   const [formData, setFormData] = useState<Partial<UserListAPIResponse>>({
@@ -24,7 +24,7 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ onClose, onSuccess }) => {
     mutationFn: addUser,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [DataQueryKeys.USER_LIST] });
-      onSuccess(); 
+      onSuccess();
     },
     onError: (error: any) => {
       alert(error.message || 'Failed to add user');
@@ -32,7 +32,7 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ onClose, onSuccess }) => {
   });
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
@@ -45,7 +45,7 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ onClose, onSuccess }) => {
       return;
     }
 
-    mutation.mutate(   ;
+    mutation.mutate({ name, email, status, gender });
   };
 
   return (
@@ -64,20 +64,38 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ onClose, onSuccess }) => {
           />
         ))}
 
-        <select name="gender" value={formData.gender || ''} onChange={handleChange} style={inputStyle}>
+        <select
+          name="gender"
+          value={formData.gender || ''}
+          onChange={handleChange}
+          style={inputStyle}
+        >
           <option value="">Gender</option>
           <option value="male">Male</option>
           <option value="female">Female</option>
         </select>
 
-        <select name="status" value={formData.status || ''} onChange={handleChange} style={inputStyle}>
+        <select
+          name="status"
+          value={formData.status || ''}
+          onChange={handleChange}
+          style={inputStyle}
+        >
           <option value="">Status</option>
           <option value="active">Active</option>
           <option value="inactive">Inactive</option>
         </select>
 
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
-          <button onClick={handleSubmit} disabled={mutation.isPending}>Add</button>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            marginTop: '20px',
+          }}
+        >
+          <button onClick={handleSubmit} disabled={mutation.isPending}>
+            Add
+          </button>
           <button onClick={onClose}>Cancel</button>
         </div>
       </div>
