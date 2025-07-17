@@ -39,6 +39,7 @@ export const Home = () => {
           }}
         >
           <img style={{ width: '40px' }} src={AddUserIcon} alt="AddUserIcon" />
+          <span style={{color:'darkblue',fontSize:'34px'}}>Add User</span>
         </button>
 
         <UserList key={refreshKey} />

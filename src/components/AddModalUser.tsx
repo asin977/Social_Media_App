@@ -93,10 +93,33 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ onClose, onSuccess }) => {
             marginTop: '20px',
           }}
         >
-          <button onClick={handleSubmit} disabled={mutation.isPending}>
+          <button
+            onClick={handleSubmit}
+            disabled={mutation.isPending}
+            style={{
+              color: '#fff',
+              fontSize: '18px',
+              backgroundColor: '#023e8a',
+              border: 'none',
+              padding: '5px 20px',
+              fontFamily: 'bold',
+            }}
+          >
             Add
           </button>
-          <button onClick={onClose}>Cancel</button>
+          <button
+            onClick={onClose}
+            style={{
+              color: '#fff',
+              fontSize: '18px',
+              backgroundColor: '#023e8a',
+              border: 'none',
+              padding: '5px 20px',
+              fontFamily: 'bold',
+            }}
+          >
+            Cancel
+          </button>
         </div>
       </div>
     </div>
