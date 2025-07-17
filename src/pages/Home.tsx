@@ -1,9 +1,9 @@
 import { Header } from '../components/Header';
-import UserList from '../components/UsersList';
+import GetUserList from '../components/GetUsersList';
 
 export const Home = () => (
   <>
     <Header />
-    <UserList />
+    <GetUserList />
   </>
 );

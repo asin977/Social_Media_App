@@ -7,7 +7,7 @@ import { UserListAPIResponse } from '../../types/user';
 
 export const useGetUserDetails = () => {
   return useQuery<UserListAPIResponse[], Error>({
-    queryKey: [DataStorageKeys.USER],
+    queryKey: [DataStorageKeys.USER_LIST],
     queryFn: async () => {
       const { data } = await httpClient.get(endpoints.getUserList());
       return data;

@@ -1,3 +1,3 @@
 export enum DataStorageKeys {
-    USER ='users'
+    USER_LIST ='user_list'
 }

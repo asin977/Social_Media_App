@@ -1,7 +1,7 @@
 import { useGetUserDetails } from '../apis/user';
 import UserIcon from '../assets/images/user.png';
 
-const UserList = () => {
+const GetUserList = () => {
   const { data: users, isLoading, isError, error } = useGetUserDetails();
 
   if (isLoading) {
@@ -17,8 +17,8 @@ const UserList = () => {
         display: 'grid',
         gridTemplateColumns: 'repeat(3,1fr)',
         justifyItems: 'start',
-        textAlign: 'justify',
-        marginLeft: '100px',
+        textAlign: 'center',
+        marginLeft: '30px',
         marginRight: '30px',
         gap: '30px',
         marginTop: '50px',
@@ -36,6 +36,7 @@ const UserList = () => {
             flexDirection: 'column',
             width: '100%',
             padding: '20px',
+            marginBottom: '30px',
           }}
         >
           <span>
@@ -49,4 +50,4 @@ const UserList = () => {
   );
 };
 
-export default UserList;
+export default GetUserList;
