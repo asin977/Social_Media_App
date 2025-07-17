@@ -1,5 +1,4 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { toast } from 'react-toastify';
 
 import { DataQueryKeys } from '../data-query-keys';
 import { endpoints } from '../endpoints';
@@ -17,11 +16,6 @@ export const useDeleteUser = () => {
     mutationFn: deleteUserRequest,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [DataQueryKeys.USER_LIST] });
-      // console.log('User deleted Successfully!..');
-      
     },
-    // catch (error) {
-    //   toast.error(`Error:${error.message}`)
-    }
   });
 };
