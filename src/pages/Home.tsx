@@ -1,9 +1,49 @@
+import React, { useState } from 'react';
 import { Header } from '../components/Header';
 import UserList from '../components/UsersList';
+import AddUserModal from '../components/AddModalUser';
 
-export const Home = () => (
-  <>
-    <Header />
-    <UserList />
-  </>
-);
+export const Home = () => {
+  const [showModal, setShowModal] = useState(false);
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  const handleOpenModal = () => setShowModal(true);
+  const handleCloseModal = () => setShowModal(false);
+
+  const handleUserAdded = () => {
+    setShowModal(false);
+    setRefreshKey(prev => prev + 1); // Trigger UserList re-fetch
+  };
+
+  return (
+    <>
+      <Header />
+      <div style={{ padding: '20px' }}>
+        <button
+          onClick={handleOpenModal}
+          style={{
+            padding: '10px 20px',
+            fontSize: '16px',
+            fontWeight: 'bold',
+            backgroundColor: '#007bff',
+            color: 'white',
+            border: 'none',
+            borderRadius: '5px',
+            cursor: 'pointer',
+            marginBottom: '20px',
+          }}
+        >
+          + Add User
+        </button>
+
+        {/* User list with refresh trigger via key */}
+        <UserList key={refreshKey} />
+
+        {/* Modal */}
+        {showModal && (
+          <AddUserModal onClose={handleCloseModal} onSuccess={handleUserAdded} />
+        )}
+      </div>
+    </>
+  );
+};
