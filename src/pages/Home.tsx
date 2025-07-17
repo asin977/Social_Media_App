@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+
 import { Header } from '../components/Header';
 import UserList from '../components/UsersList';
 import AddUserModal from '../components/AddModalUser';
+
+import AddUserIcon from '../assets/images/add-user.png';
 
 export const Home = () => {
   const [showModal, setShowModal] = useState(false);
@@ -12,12 +15,13 @@ export const Home = () => {
 
   const handleUserAdded = () => {
     setShowModal(false);
-    setRefreshKey(prev => prev + 1); // Trigger UserList re-fetch
+    setRefreshKey(prev => prev + 1);
   };
 
   return (
     <>
       <Header />
+
       <div style={{ padding: '20px' }}>
         <button
           onClick={handleOpenModal}
@@ -33,15 +37,16 @@ export const Home = () => {
             marginBottom: '20px',
           }}
         >
-          + Add User
+          <img style={{ width: '40px' }} src={AddUserIcon} alt="AddUserIcon" />
         </button>
 
-        {/* User list with refresh trigger via key */}
         <UserList key={refreshKey} />
 
-        {/* Modal */}
         {showModal && (
-          <AddUserModal onClose={handleCloseModal} onSuccess={handleUserAdded} />
+          <AddUserModal
+            onClose={handleCloseModal}
+            onSuccess={handleUserAdded}
+          />
         )}
       </div>
     </>

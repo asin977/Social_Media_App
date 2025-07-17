@@ -34,6 +34,7 @@ const UserList = () => {
             boxShadow: '1px 2px 3px blue',
             display: 'flex',
             justifyContent: 'center',
+            alignItems:'center',
             flexWrap: 'wrap',
             flexDirection: 'column',
             width: '100%',
