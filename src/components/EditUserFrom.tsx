@@ -1,52 +1,45 @@
 import React from 'react';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
-import { useUpdateUserDetails } from '../apis/user/useUpdateUserDetails';
+
+import { useUpdateUserList } from '../apis/user/useUpdateUserList';
 import { UserListAPIResponse } from '../types/user';
+import { DataQueryKeys } from '../apis/data-query-keys';
+import { useUpdateUser } from '../apis/user/useUpdateUser';
 
 type Props = {
   users: UserListAPIResponse[];
 };
 
 const EditUserForm: React.FC<Props> = ({ users }) => {
-  const queryClient = useQueryClient();
-
-  const mutation = useMutation({
-    mutationFn: useUpdateUserDetails,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['users'] });
-      alert('User name changed successfully!');
-    },
-    onError: (error: any) => {
-      console.error('Update error:', error.message);
-      alert('Failed to update user.');
-    },
-  });
+  const { mutate, isError, error } = useUpdateUser();
 
   const handleEditToggle = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const parent = e.currentTarget.closest('[data-user-id]') as HTMLElement | null;
+    const parent = e.currentTarget.closest(
+      '[data-user-id]',
+    ) as HTMLElement | null;
     if (!parent) return;
 
     const input = parent.querySelector('input') as HTMLInputElement | null;
-    const display = parent.querySelector('.user-name-display') as HTMLElement | null;
+    const display = parent.querySelector(
+      '.user-name-display',
+    ) as HTMLElement | null;
 
     if (!input || !display) return;
 
     const isEditing = parent.getAttribute('data-editing') === 'true';
 
     if (!isEditing) {
-      
       input.style.display = 'inline-block';
       display.style.display = 'none';
       parent.setAttribute('data-editing', 'true');
       e.currentTarget.textContent = 'Save';
     } else {
-    
       const userId = Number(parent.getAttribute('data-user-id'));
       const userEmail = parent.getAttribute('data-email') || '';
       const newName = input.value.trim();
 
       if (newName && newName !== display.textContent) {
-        mutation.mutate({
+        useUpdateUser.mutate({
           id: userId,
           name: newName,
           email: userEmail,
@@ -55,7 +48,6 @@ const EditUserForm: React.FC<Props> = ({ users }) => {
         display.textContent = newName;
       }
 
-      
       input.style.display = 'none';
       display.style.display = 'inline-block';
       parent.setAttribute('data-editing', 'false');

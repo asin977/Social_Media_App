@@ -8,8 +8,7 @@ export type UserListAPIResponse = {
 };
 
 export type UpdateUserPayLoad = {
-  id:number;
+  id: number;
   name?: string;
-  email?:string;
-}
-
+  email?: string;
+};

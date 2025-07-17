@@ -1,8 +1,8 @@
-import httpClient from '../httpClient';
-import { UserListAPIResponse, UpdateUserPayLoad } from '../../types/user';
+import { UpdateUserPayLoad, UserListAPIResponse } from '../../types/user';
 import { endpoints } from '../endpoints';
+import httpClient from '../httpClient';
 
-export const useUpdateUserDetails = async (
+export const useUpdateUserList = async (
   payload: UpdateUserPayLoad,
 ): Promise<UserListAPIResponse> => {
   const { id, ...dataToUpdate } = payload;
