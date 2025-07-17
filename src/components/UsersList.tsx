@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { useGetUserList } from '../apis/user/useGetUserList';
 import UserIcon from '../assets/images/user.png';
 import { UserListAPIResponse } from '../types/user';
@@ -8,20 +7,14 @@ import StatusIndicatorChip from './StatusIndicatorChip';
 const UserList: React.FC = () => {
   const { data: users, isLoading, isError, error } = useGetUserList();
 
-  if (isLoading) {
-    return <p>Loading users...</p>;
-  }
-
-  if (isError) {
-    return <p>Error: {error?.message}</p>;
-  }
+  if (isLoading) return <p>Loading users...</p>;
+  if (isError) return <p>Error: {error?.message}</p>;
 
   return (
     <div
       style={{
         display: 'flex',
         flexDirection: 'column',
-        justifyItems: 'start',
         flexGrow: 1,
         textAlign: 'justify',
         marginLeft: '200px',
@@ -29,7 +22,6 @@ const UserList: React.FC = () => {
         marginTop: '50px',
       }}
     >
-      
       {users?.map((user: UserListAPIResponse) => (
         <div
           key={user.id}
@@ -43,31 +35,23 @@ const UserList: React.FC = () => {
         >
           <h2
             style={{
-              color: 'darkblue',
               fontWeight: 'bold',
               display: 'flex',
               alignItems: 'center',
               gap: '10px',
               marginBottom: '8px',
             }}
-          ><StatusIndicatorChip status={'active'} />
+          >
+            <StatusIndicatorChip status={user.isActive ? 'active' : 'inactive'} />
             <img
               src={UserIcon}
               alt="user-icon"
               style={{ width: '50px', cursor: 'pointer' }}
             />
-
             {user.name}
           </h2>
 
-          <p
-            style={{
-              color: 'black',
-              fontFamily: 'regular',
-            }}
-          >
-            {user.email}
-          </p>
+          <p style={{ color: 'black', fontFamily: 'regular' }}>{user.email}</p>
         </div>
       ))}
     </div>

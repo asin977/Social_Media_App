@@ -5,4 +5,5 @@ export type UserListAPIResponse = {
   email: string;
   gender: string;
   status: string;
+  isActive:boolean
 };
