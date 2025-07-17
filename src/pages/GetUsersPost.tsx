@@ -1,6 +1,7 @@
 import { useGetUserPosts } from '../apis/user';
 import { Header } from '../components/Header';
 import UserIcon from '../assets/images/userIcon.png';
+import { CreateUserPost } from '../components/CreateUserPost';
 
 export const GetUsersPost = () => {
   const { data: posts, isLoading, isError, error } = useGetUserPosts();
@@ -10,27 +11,30 @@ export const GetUsersPost = () => {
   }
 
   if (isError) {
-    return <p>Error:{error?.message}</p>;
+    return <p>Error: {error?.message}</p>;
   }
+
   return (
     <>
       <Header />
-      <h2 style={{ color: 'darkblue', fontSize: '30px' }}>USER POST</h2>
+      <h2 style={{ color: 'darkblue', fontSize: '30px', textAlign: 'center' }}>
+        USER POST
+      </h2>
+      <CreateUserPost/>
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(3,1fr)',
+          gridTemplateColumns: 'repeat(3, 1fr)',
           justifyItems: 'start',
           textAlign: 'justify',
-          marginLeft: '100px',
-          marginRight: '30px',
+          margin: '50px 30px 0 100px',
           gap: '30px',
-          marginTop: '50px',
-          marginBottom: '50px',
         }}
       >
+        
         {posts?.map(post => (
           <div
+            key={post.id} 
             style={{
               color: 'black',
               backgroundColor: '#e3f2fd',
@@ -42,16 +46,15 @@ export const GetUsersPost = () => {
               flexDirection: 'column',
               width: '100%',
               padding: '20px',
-              fontFamily: 'bold',
-              fontSize: '20px',
+              fontFamily: 'Arial, sans-serif',
+              fontSize: '18px',
+              borderRadius: '10px',
             }}
           >
-            <span>
-              <img style={{ width: '60px' }} src={UserIcon} />
-            </span>
-            <h2 style={{ color: 'darkblue', display: 'grid' }}>{post.title}</h2>
+            <img style={{ width: '40%', marginBottom: '10px' }} src={UserIcon} alt="User Icon" />
+            <h2 style={{ color: 'darkblue', textAlign: 'center' }}>{post.title}</h2>
             <p>{post.body}</p>
-            <p style={{ color: 'darkred' }}>{post.user_id}</p>
+            <p style={{ color: 'darkred' }}>User ID: {post.user_id}</p>
           </div>
         ))}
       </div>
