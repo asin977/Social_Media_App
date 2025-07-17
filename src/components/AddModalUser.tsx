@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+
 import { addUser } from '../apis/user/useAddUser';
 import { UserListAPIResponse } from '../types/user';
+import { DataQueryKeys } from '../apis/data-query-keys';
 
 type AddUserModalProps = {
   onClose: () => void;
@@ -21,7 +23,7 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ onClose, onSuccess }) => {
   const mutation = useMutation({
     mutationFn: addUser,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['users'] });
+      queryClient.invalidateQueries({ queryKey: [DataQueryKeys.USER_LIST] });
       onSuccess(); 
     },
     onError: (error: any) => {
@@ -43,7 +45,7 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ onClose, onSuccess }) => {
       return;
     }
 
-    mutation.mutate(formData);
+    mutation.mutate(   ;
   };
 
   return (

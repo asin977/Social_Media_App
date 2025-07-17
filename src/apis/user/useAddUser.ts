@@ -3,7 +3,7 @@ import { UserListAPIResponse } from '../../types/user';
 import { endpoints } from '../endpoints';
 
 export const addUser = async (payload: Partial<UserListAPIResponse>) => {
-  const response = await httpClient.post(endpoints.createUser(), payload);
+  const response = await httpClient.post(endpoints.getUserList(),payload);
 
   if (!response || response.status !== 201) {
     const data = response.data;
