@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import { Home, UsersPost } from './pages';
+import { Home, GetUsersPost} from './pages';
 import { routes } from './routes';
 
 import './App.css';
@@ -14,7 +14,7 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
           <Routes>
-            <Route path={routes.userspost} element={<UsersPost />} />
+            <Route path={routes.userspost} element={<GetUsersPost />} />
             <Route path={routes.home} element={<Home />} />
           </Routes>
         </BrowserRouter>
