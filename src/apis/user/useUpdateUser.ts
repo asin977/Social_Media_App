@@ -11,7 +11,7 @@ type Props = {
 export const useUpdateUser = () => {
   const queryClient = useQueryClient();
 
-  const { mutate, isError, data, error } = useMutation({
+  const mutation = useMutation({
     mutationFn: useUpdateUserList,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [DataQueryKeys.USER_LIST] });
@@ -19,8 +19,9 @@ export const useUpdateUser = () => {
     },
     onError: (error: any) => {
       console.error('Update error:', error.message);
-      alert('Failed to upadate user..');
+      alert('Failed to update user.');
     },
   });
-  return { mutate, isError, data, error };
+
+  return mutation;
 };
