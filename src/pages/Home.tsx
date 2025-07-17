@@ -35,6 +35,7 @@ export const Home = () => {
             borderRadius: '5px',
             cursor: 'pointer',
             marginBottom: '20px',
+            background:'transparent'
           }}
         >
           <img style={{ width: '40px' }} src={AddUserIcon} alt="AddUserIcon" />
