@@ -11,6 +11,7 @@ export const Header = () => (
       justifyContent: 'flex-end',
       alignItems: 'center',
       cursor: 'pointer',
+      position: 'fixed',
     }}
   >
     <h2
