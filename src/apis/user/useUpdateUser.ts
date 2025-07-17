@@ -1,12 +1,7 @@
 import { useQueryClient, useMutation } from '@tanstack/react-query';
+
 import { DataQueryKeys } from '../data-query-keys';
-
-import { UserListAPIResponse } from '../../types/user';
 import { useUpdateUserList } from './useUpdateUserList';
-
-type Props = {
-  users: UserListAPIResponse[];
-};
 
 export const useUpdateUser = () => {
   const queryClient = useQueryClient();
@@ -18,7 +13,6 @@ export const useUpdateUser = () => {
       alert('User name changed successfully!');
     },
     onError: (error: any) => {
-      console.error('Update error:', error.message);
       alert('Failed to update user.');
     },
   });

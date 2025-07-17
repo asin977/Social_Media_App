@@ -1,9 +1,6 @@
 import React from 'react';
-import { useQueryClient, useMutation } from '@tanstack/react-query';
 
-import { useUpdateUserList } from '../apis/user/useUpdateUserList';
 import { UserListAPIResponse } from '../types/user';
-import { DataQueryKeys } from '../apis/data-query-keys';
 import { useUpdateUser } from '../apis/user/useUpdateUser';
 
 type Props = {
@@ -11,7 +8,7 @@ type Props = {
 };
 
 const EditUserForm: React.FC<Props> = ({ users }) => {
-  const { mutate, isError, error } = useUpdateUser();
+  const { mutate } = useUpdateUser();
 
   const handleEditToggle = (e: React.MouseEvent<HTMLButtonElement>) => {
     const parent = e.currentTarget.closest(
@@ -39,7 +36,7 @@ const EditUserForm: React.FC<Props> = ({ users }) => {
       const newName = input.value.trim();
 
       if (newName && newName !== display.textContent) {
-        useUpdateUser.mutate({
+        mutate({
           id: userId,
           name: newName,
           email: userEmail,
