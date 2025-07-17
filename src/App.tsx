@@ -4,6 +4,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Home } from './pages';
 import { routes } from './routes';
 
+import './App.css';
+
 const queryClient = new QueryClient();
 
 const App = () => {

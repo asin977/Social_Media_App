@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { useDeleteUser, useGetUserList } from '../apis/user';
-
 import { ReactComponent as DeleteIcon } from '../assets/svg/delete.svg';
 
 const UserList: React.FC = () => {
@@ -34,7 +33,13 @@ const UserList: React.FC = () => {
           }}
         >
           {user.name}
-          <span style={{ display: 'flex', justifyContent: 'flex-end',marginTop:'-50px' }}>
+          <span
+            style={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              marginTop: '-50px',
+            }}
+          >
             <button
               style={{
                 marginRight: '20px',
