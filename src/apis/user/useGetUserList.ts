@@ -9,9 +9,8 @@ export const useGetUserList = () => {
   return useQuery<UserListAPIResponse[], Error>({
     queryKey: [DataQueryKeys.USER_LIST],
     queryFn: async () => {
-      // const { data } = await httpClient.get(endpoints.getUserList());
-      
-      const {data} = await httpClient.get('public/v2/users')
+      const { data } = await httpClient.get(endpoints.getUserList());
+
       return data;
     },
   });

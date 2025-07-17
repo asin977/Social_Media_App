@@ -6,9 +6,8 @@ import { endpoints } from '../endpoints';
 
 const deleteUserRequest = async (userId: string) => {
 
-  const response = await httpClient.delete<void>(`public/v2/users/${userId}`);
-  
-  //  const response = await httpClient.delete<void>(endpoints.getUserList(userId))
+
+  const response = await httpClient.delete<void>(endpoints.deleteUser(userId));
 
   return response.data;
 };
