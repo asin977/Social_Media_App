@@ -1,12 +1,13 @@
-import { useGetUserDetails } from '../apis/user';
+import { useGetUserList } from '../apis/user';
 import UserIcon from '../assets/images/user.png';
 
 const GetUserList = () => {
-  const { data: users, isLoading, isError, error } = useGetUserDetails();
+  const { data: users, isLoading, isError, error } = useGetUserList();
 
   if (isLoading) {
     return <p>Loading users...</p>;
   }
+
   if (isError) {
     return <p>Error: {error?.message}</p>;
   }
