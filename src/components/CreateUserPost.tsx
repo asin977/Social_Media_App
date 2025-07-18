@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import { useCreateUserPost } from '../apis/user';
 import { useFetchUsers } from '../apis/user/useFetchUsers';
 
@@ -15,7 +16,7 @@ export const CreateUserPost = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -47,7 +48,20 @@ export const CreateUserPost = () => {
 
   return (
     <>
-      <button onClick={() => setIsOpen(true)}>New Post</button>
+      <button
+        onClick={() => setIsOpen(true)}
+        style={{
+          color: 'white',
+          fontFamily: 'bold',
+          border: 'none',
+          background: 'darkblue',
+          padding:"8px 20px",
+          cursor:'pointer',
+          borderRadius:'4px'
+        }}
+      >
+        ➕  New Post
+      </button>
 
       {isOpen && (
         <div style={modalOverlay}>
@@ -55,41 +69,80 @@ export const CreateUserPost = () => {
             <button onClick={() => setIsOpen(false)} style={closeButton}>
               ×
             </button>
-            <h2>Create New Post</h2>
-            <form onSubmit={handleSubmit}>
-              <select
-                name="userId"
-                onChange={handleChange}
-                value={form.userId}
-                required
-              >
-                <option value="">Select User</option>
-                {users?.map(user => (
-                  <option key={user.id} value={user.id}>
-                    {user.name}
-                  </option>
-                ))}
-              </select>
+            <h2 style={{ color: 'darkblue' }}>Create New Post</h2>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <form onSubmit={handleSubmit}>
+                <select
+                  style={{
+                    padding: '10px',
+                    border: 'none',
+                    background: 'darkblue',
+                    color: 'white',
+                    fontFamily: 'bold',
+                    marginBottom: '20px',
+                  }}
+                  name="userId"
+                  onChange={handleChange}
+                  value={form.userId}
+                  required
+                >
+                  <option value="">Select User</option>
+                  {users?.map(user => (
+                    <option key={user.id} value={user.id}>
+                      {user.name}
+                    </option>
+                  ))}
+                </select>
 
-              <input
-                name="title"
-                placeholder="Title"
-                onChange={handleChange}
-                value={form.title}
-                required
-              />
-              <input
-                name="body"
-                placeholder="Body"
-                onChange={handleChange}
-                value={form.body}
-                required
-              />
+                <input
+                  name="title"
+                  placeholder="Title"
+                  onChange={handleChange}
+                  value={form.title}
+                  required
+                  style={{
+                    padding: '5px 10px',
+                    border: 'none',
+                    fontSize: '18px',
+                    boxShadow: '10px 10px 20px black',
+                    marginBottom: '20px',
+                  }}
+                />
+                <input
+                  name="body"
+                  placeholder="Body"
+                  onChange={handleChange}
+                  value={form.body}
+                  required
+                  style={{
+                    padding: '5px 10px',
+                    border: 'none',
+                    fontSize: '18px',
+                    boxShadow: '10px 10px 20px black',
+                    marginBottom: '20px',
+                  }}
+                />
 
-              <button type="submit" disabled={createPost.isPending}>
-                {createPost.isPending ? 'Creating...' : 'Create Post'}
-              </button>
-            </form>
+                <button
+                  type="submit"
+                  disabled={createPost.isPending}
+                  style={{
+                    padding: '5px 10px',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginLeft: '130px',
+                    border: 'none',
+                    background: 'darkblue',
+                    fontFamily: 'bold',
+                    color: '#fff',
+                    fontSize: '18px',
+                  }}
+                >
+                  {createPost.isPending ? 'Creating...' : 'Create Post'}
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       )}

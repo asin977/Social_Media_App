@@ -1,6 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
-import httpClient  from '../httpClient';
+
+import { DataQueryKeys } from '../data-query-keys';
 import { endpoints } from '../endpoints';
+import httpClient from '../httpClient';
 
 export type User = {
   id: number;
@@ -9,7 +11,7 @@ export type User = {
 
 export const useFetchUsers = () => {
   return useQuery<User[]>({
-    queryKey: ['users'],
+    queryKey: [DataQueryKeys.USER_LIST],
     queryFn: () => httpClient.get(endpoints.getUserList()).then(res => res.data),
     staleTime: 0,
   });

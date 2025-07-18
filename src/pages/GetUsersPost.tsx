@@ -1,7 +1,7 @@
 import { useGetUserPosts } from '../apis/user';
-import { Header } from '../components/Header';
-import UserIcon from '../assets/images/userIcon.png';
+import UserIcon from '../assets/images/user.png';
 import { CreateUserPost } from '../components/CreateUserPost';
+import { Header } from '../components/Header';
 
 export const GetUsersPost = () => {
   const { data: posts, isLoading, isError, error } = useGetUserPosts();
@@ -17,10 +17,10 @@ export const GetUsersPost = () => {
   return (
     <>
       <Header />
-      <h2 style={{ color: 'darkblue', fontSize: '30px', textAlign: 'center' }}>
+      <h2 style={{ color: 'darkblue', fontSize: '30px', textAlign: 'center',}}>
         USER POST
       </h2>
-      <CreateUserPost/>
+      <CreateUserPost />
       <div
         style={{
           display: 'grid',
@@ -31,10 +31,9 @@ export const GetUsersPost = () => {
           gap: '30px',
         }}
       >
-        
         {posts?.map(post => (
           <div
-            key={post.id} 
+            key={post.id}
             style={{
               color: 'black',
               backgroundColor: '#e3f2fd',
@@ -51,8 +50,14 @@ export const GetUsersPost = () => {
               borderRadius: '10px',
             }}
           >
-            <img style={{ width: '40%', marginBottom: '10px' }} src={UserIcon} alt="User Icon" />
-            <h2 style={{ color: 'darkblue', textAlign: 'center' }}>{post.title}</h2>
+            <img
+              style={{ width: '40%', marginBottom: '10px' }}
+              src={UserIcon}
+              alt="User Icon"
+            />
+            <h2 style={{ color: 'darkblue', textAlign: 'center' }}>
+              {post.title}
+            </h2>
             <p>{post.body}</p>
             <p style={{ color: 'darkred' }}>User ID: {post.user_id}</p>
           </div>

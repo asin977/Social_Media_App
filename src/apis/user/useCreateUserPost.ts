@@ -1,8 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import httpClient from '../httpClient';
+
 import { CreateUserPostPayload, Posts } from '../../types/posts';
-import { endpoints } from '../endpoints';
 import { DataQueryKeys } from '../data-query-keys';
+import { endpoints } from '../endpoints';
+import httpClient from '../httpClient';
 
 export const useCreateUserPost = () => {
   const queryClient = useQueryClient();
