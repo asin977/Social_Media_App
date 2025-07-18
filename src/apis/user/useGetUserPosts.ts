@@ -6,7 +6,7 @@ import { endpoints } from '../endpoints';
 import { Post } from '../../types/posts';
 
 export const useGetUserPosts = () => {
-  return useQuery<Post[], Error>({
+  return useQuery<Post[]>({
     queryKey: [DataQueryKeys.USERS_LIST],
     queryFn: async () => {
       const { data } = await httpClient.get(endpoints.getPosts());
