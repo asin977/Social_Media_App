@@ -1,9 +1,11 @@
 import { useGetUserPosts } from '../apis/user';
 import { Header } from '../components/Header';
 import UserIcon from '../assets/images/user.png';
+import { useDeletePosts } from '../apis/user/useDeletePosts';
 
 export const GetUsersPost = () => {
   const { data: posts, isLoading, isError, error } = useGetUserPosts();
+  const {mutate:deletePostMutation} = useDeletePosts();
 
   if (isLoading) {
     return <p>Loading Users...</p>;
@@ -11,6 +13,10 @@ export const GetUsersPost = () => {
 
   if (isError) {
     return <p>Error:{error?.message}</p>;
+  }
+
+  const handleDeletePosts = (userId:number) => {
+     deletePostMutation(userId)
   }
   return (
     <>
@@ -52,6 +58,9 @@ export const GetUsersPost = () => {
             <h2 style={{ color: 'darkblue', display: 'grid' }}>{post.title}</h2>
             <p>{post.body}</p>
             <p style={{ color: 'darkred' }}>{post.user_id}</p>
+
+            <button onClick={()=> handleDeletePosts(post?.id)}
+            >Delete</button>
           </div>
         ))}
       </div>

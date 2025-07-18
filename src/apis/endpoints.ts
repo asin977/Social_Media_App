@@ -5,6 +5,7 @@ export const endpoints = {
 
   // post
   getPosts: () => 'public/v2/posts',
+  deletePost: (userId: number) => `public/v2/posts/${userId}`,
 
   // comments
   getComments: () => 'public/v2/comments',
