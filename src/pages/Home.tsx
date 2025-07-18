@@ -35,11 +35,24 @@ export const Home = () => {
             borderRadius: '5px',
             cursor: 'pointer',
             marginBottom: '20px',
-            background:'transparent'
+            background: 'transparent',
           }}
         >
-          <img style={{ width: '40px' }} src={AddUserIcon} alt="AddUserIcon" />
-          <span style={{color:'darkblue',fontSize:'34px'}}>Add User</span>
+          <img
+            style={{
+              width: '40px',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            src={AddUserIcon}
+            alt="AddUserIcon"
+          />
+          <span
+            style={{ color: 'darkblue', fontSize: '34px', textAlign: 'center' }}
+          >
+            Add User
+          </span>
         </button>
 
         <UserList key={refreshKey} />
