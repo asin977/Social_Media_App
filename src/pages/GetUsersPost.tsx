@@ -1,6 +1,6 @@
 import { useGetUserPosts } from '../apis/user';
 import { Header } from '../components/Header';
-import UserIcon from '../assets/images/userIcon.png';
+import UserIcon from '../assets/images/user.png';
 
 export const GetUsersPost = () => {
   const { data: posts, isLoading, isError, error } = useGetUserPosts();
