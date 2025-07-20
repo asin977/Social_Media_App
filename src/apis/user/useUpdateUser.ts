@@ -1,21 +1,21 @@
 import { useQueryClient, useMutation } from '@tanstack/react-query';
-
 import { DataQueryKeys } from '../data-query-keys';
 import { useUpdateUserList } from './useUpdateUserList';
 
-export const useUpdateUser = () => {
+export const useUpdateUser = (options?: {
+  onSuccess?: () => void;
+  onError?: (error: any) => void;
+}) => {
   const queryClient = useQueryClient();
 
-  const mutation = useMutation({
+  return useMutation({
     mutationFn: useUpdateUserList,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [DataQueryKeys.USER_LIST] });
-      alert('User name changed successfully!');
+      options?.onSuccess?.();
     },
-    onError: (error: any) => {
-      alert('Failed to update user.');
+    onError: (error) => {
+      options?.onError?.(error);
     },
   });
-
-  return mutation;
 };
