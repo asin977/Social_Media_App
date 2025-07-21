@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import { useCreateUserPost } from '../apis/user';
 import { useFetchUsers } from '../apis/user/useFetchUsers';
+import PostIcon from '../assets/images/post.png'
 
 export const CreateUserPost = () => {
   const { data: users, isLoading: isUserLoading } = useFetchUsers();
@@ -48,6 +49,30 @@ export const CreateUserPost = () => {
 
   return (
     <>
+      <div style={{ position: 'absolute', right: '1%', top: '9%' }}>
+        <select
+          style={{
+            padding: '10px',
+            border: 'none',
+            background: 'darkblue',
+            color: 'white',
+            fontFamily: 'bold',
+            marginBottom: '20px',
+          }}
+          name="userId"
+          onChange={handleChange}
+          value={form.userId}
+          required
+        >
+          <option value="">Select User</option>
+          {users?.map(user => (
+            <option key={user.id} value={user.id}>
+              {user.name}
+            </option>
+          ))}
+        </select>
+      </div>
+
       <button
         onClick={() => setIsOpen(true)}
         style={{
@@ -58,9 +83,12 @@ export const CreateUserPost = () => {
           padding: '8px 20px',
           cursor: 'pointer',
           borderRadius: '4px',
+          position:'absolute',
+          top:'9%',
+          left:'1%'
         }}
       >
-        ➕ New Post
+        <span><img src={PostIcon} alt="postIcon" style={{width:'30px'}}/></span> New Post
       </button>
 
       {isOpen && (
@@ -72,28 +100,6 @@ export const CreateUserPost = () => {
             <h2 style={{ color: 'darkblue' }}>Create New Post</h2>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               <form onSubmit={handleSubmit}>
-                <select
-                  style={{
-                    padding: '10px',
-                    border: 'none',
-                    background: 'darkblue',
-                    color: 'white',
-                    fontFamily: 'bold',
-                    marginBottom: '20px',
-                  }}
-                  name="userId"
-                  onChange={handleChange}
-                  value={form.userId}
-                  required
-                >
-                  <option value="">Select User</option>
-                  {users?.map(user => (
-                    <option key={user.id} value={user.id}>
-                      {user.name}
-                    </option>
-                  ))}
-                </select>
-
                 <input
                   name="title"
                   placeholder="Title"
