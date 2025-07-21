@@ -1,94 +1,67 @@
 import React, { useState } from 'react';
-import { useGetComments } from '../apis/user/useGetCommentList';
-import User from '../assets/images/commentuser.png';
+import { useAddComments } from '../apis/user/useAddComments';
 
-const CommentList = () => {
-  const [showComments, setShowComments] = useState(false);
-  const { data: comments, isLoading, isError, error } = useGetComments();
+const CommentList: React.FC = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [body, setBody] = useState('');
+  const [postId] = useState(7440047); 
 
-  const handleToggleComments = () => {
-    setShowComments(prev => !prev);
+  const { mutate: addComment, isPending } = useAddComments();
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    addComment({ postId, name, email, body });
+    setName('');
+    setEmail('');
+    setBody('');
   };
 
   return (
-    <div style={{ textAlign: 'center', padding: '30px' }}>
-      <button
-        onClick={handleToggleComments}
-        style={{
-          padding: '10px 20px',
-          backgroundColor: '#007bff',
-          color: 'white',
-          border: 'none',
-          borderRadius: '5px',
-          cursor: 'pointer',
-          marginBottom: '20px',
-        }}
-      >
-        {showComments ? 'Hide Comments' : 'Show Comments'}
-      </button>
-
-      {showComments && (
-        <>
-          {isLoading && <p>Loading Comments...</p>}
-          {isError && <p>Error: {error?.message}</p>}
-          <div
-            style={{
-              margin: '0 auto',
-              maxWidth: '800px',
-              textAlign: 'left',
-              borderRadius: '10px',
-              overflow: 'hidden',
-              boxShadow: '0 0 10px rgba(0,0,0,0.1)',
-            }}
-          >
-            {comments?.map(comment => (
-              <div
-                key={comment.id}
-                style={{
-                  color: 'darkblue',
-                  padding: '20px',
-                  borderBottom: '1px solid lightgray',
-                  backgroundColor: '#f9f9f9',
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                  <img
-                    src={User}
-                    alt="user"
-                    style={{ width: '30px', marginRight: '10px' }}
-                  />
-                  <div>
-                    <h3
-                      style={{
-                        fontSize: '16px',
-                        margin: '0',
-                        fontWeight: 'bold',
-                      }}
-                    >
-                      {comment.name}
-                    </h3>
-                    <h4
-                      style={{
-                        margin: '0',
-                        color: 'gray',
-                        fontSize: '14px',
-                        fontWeight: 'normal',
-                      }}
-                    >
-                      {comment.email}
-                    </h4>
-                  </div>
-                </div>
-                <p style={{ marginTop: '10px', color: 'black' }}>
-                  {comment.body}
-                </p>
-              </div>
-            ))}
-          </div>
-        </>
-      )}
+    <div style={{ maxWidth: 500, margin: '0 auto' }}>
+      <h2>Add Comment</h2>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Name:</label><br />
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label>Email:</label><br />
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label>Comment:</label><br />
+          <textarea
+            value={body}
+            onChange={(e) => setBody(e.target.value)}
+            required
+          />
+        </div>
+        <button type="submit" disabled={isPending}>
+          {isPending ? 'Adding...' : 'Add Comment'}
+        </button>
+      </form>
     </div>
   );
 };
 
 export default CommentList;
+
+
+
+
+
+
+
+
+
