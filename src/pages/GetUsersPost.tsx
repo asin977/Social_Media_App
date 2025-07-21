@@ -29,6 +29,7 @@ export const GetUsersPost = () => {
           textAlign: 'justify',
           margin: '50px 30px 0 100px',
           gap: '30px',
+          marginBottom:'35px'
         }}
       >
         {posts?.map(post => (
