@@ -1,13 +1,20 @@
 import React, { useState } from 'react';
+
 import { useGetComments } from '../apis/user/useGetCommentList';
 import User from '../assets/images/commentuser.png';
+import { useDeleteComment } from '../apis/user/useDeleteComment';
 
 const CommentList = () => {
   const [showComments, setShowComments] = useState(false);
   const { data: comments, isLoading, isError, error } = useGetComments();
+  const { mutate: deleteUserMutation } = useDeleteComment();
 
   const handleToggleComments = () => {
     setShowComments(prev => !prev);
+  };
+
+  const handleDelete = ( post_id: number) => {
+    deleteUserMutation( post_id);
   };
 
   return (
@@ -82,6 +89,7 @@ const CommentList = () => {
                 <p style={{ marginTop: '10px', color: 'black' }}>
                   {comment.body}
                 </p>
+                <button onClick={()=> handleDelete(comment?. post_id)}>delete</button>
               </div>
             ))}
           </div>

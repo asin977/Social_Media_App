@@ -8,4 +8,5 @@ export const endpoints = {
 
   // comments
   getComments: () => 'public/v2/comments',
+  deleteComments: ( post_id:number) => `public/v2/${post_id}comments`
 };
