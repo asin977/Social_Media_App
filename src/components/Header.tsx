@@ -30,18 +30,18 @@ export const Header = () => (
       alt="User Icon"
       style={{ height: '40px', marginRight: '12px' }}
     />
-    <Link to="/home">HOME</Link>
-    <button
+    <Link
+      to="/home"
       style={{
-        border: 'none',
-        padding: '8px 20px',
-        background: '#0077b6',
         color: 'white',
         fontFamily: 'bold',
         borderRadius: '5px',
         fontSize: '18px',
         cursor: 'pointer',
+        textDecoration: 'none',
       }}
-    ></button>
+    >
+      HOME
+    </Link>
   </div>
 );

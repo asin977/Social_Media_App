@@ -52,6 +52,7 @@ export const GetUsersPost = () => {
             <h2 style={{ color: 'darkblue', display: 'grid' }}>{post.title}</h2>
             <p>{post.body}</p>
             <p style={{ color: 'darkred' }}>{post.user_id}</p>
+            
           </div>
         ))}
       </div>
