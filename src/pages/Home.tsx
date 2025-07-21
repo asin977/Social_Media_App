@@ -7,7 +7,7 @@ import CommentList from '../components/CommentList';
 export const Home = () => (
   <>
     <Header />
-    <CommentList postId={0} />
+    <CommentList postId={224143} />
     <ToastContainer />
   </>
 );
