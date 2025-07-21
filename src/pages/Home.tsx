@@ -1,5 +1,5 @@
 import { Header } from '../components/Header';
-import EditUserForm from '../components/EditUserFrom';
+import EditUserForm from '../components/EditUserList';
 import { useGetUserDetails } from '../apis/user';
 
 export const Home = () => {

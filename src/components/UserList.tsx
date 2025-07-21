@@ -1,6 +1,6 @@
 import { useGetUserDetails } from '../apis/user';
 import UserIcon from '../assets/images/user.png';
-import EditUserForm from '../components/EditUserFrom';
+import EditUserForm from './EditUserList';
 
 const UserList = () => {
   const { data: users, isLoading, isError, error } = useGetUserDetails();
