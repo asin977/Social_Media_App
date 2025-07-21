@@ -73,6 +73,7 @@ const CommentList = () => {
                         color: 'gray',
                         fontSize: '14px',
                         fontWeight: 'normal',
+                        marginTop:'12px'
                       }}
                     >
                       {comment.email}
