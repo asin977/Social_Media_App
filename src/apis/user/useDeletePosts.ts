@@ -1,4 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { ToastContainer, toast } from 'react-toastify';
+
 
 import { DataQueryKeys } from '../data-query-keys';
 import httpClient from '../httpClient';
@@ -16,10 +18,10 @@ export const useDeletePosts = () => {
     mutationFn: deletePostRequest,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [DataQueryKeys.POST_LIST] }); 
-      alert('Post deleted Successfully..');
+      toast.success('Post deleted Successfully..');
     },
     onError: error => {
-      alert('Error deleting Post');
+      toast.success('Error deleting Post');
     },
   });
 };

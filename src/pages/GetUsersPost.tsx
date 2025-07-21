@@ -1,8 +1,8 @@
 import { useGetUserPosts } from '../apis/user';
-import { Header } from '../components/Header';
-import UserIcon from '../assets/images/user.png';
 import { useDeletePosts } from '../apis/user/useDeletePosts';
 import deleteIcon from '../assets/images/delete.png';
+import UserIcon from '../assets/images/user.png';
+import { Header } from '../components/Header';
 
 export const GetUsersPost = () => {
   const { data: posts, isLoading, isError, error } = useGetUserPosts();
@@ -69,6 +69,7 @@ export const GetUsersPost = () => {
                 alt="deleteIcon"
                 style={{
                   width: '40px',
+                  cursor:'pointer'
                 }}
               />
             </button>
