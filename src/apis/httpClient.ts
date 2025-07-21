@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const BASE_URL = 'https://gorest.co.in';
-const TOKEN = 'bf7188bafc33522355d94c5dc844a2a3ecb964f8106af3fb75be425c587a376b';
+const TOKEN = '15ecd95a16ae3efdba08a9373b373cdfc9eb99dc9ca6f1da2d1be00b8ecc74ff';
 
 const httpClient = axios.create({
   baseURL: BASE_URL,

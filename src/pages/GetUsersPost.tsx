@@ -1,81 +1,175 @@
+import React, { useState } from 'react';
 import { useGetUserPosts } from '../apis/user';
 import { useDeletePosts } from '../apis/user/useDeletePosts';
 import deleteIcon from '../assets/images/delete.png';
 import UserIcon from '../assets/images/user.png';
 import { Header } from '../components/Header';
+import { toast } from 'react-toastify';
+
+type Post = {
+  id: number;
+  title: string;
+  body: string;
+  user_id: number;
+};
 
 export const GetUsersPost = () => {
-  const { data: posts, isLoading, isError, error } = useGetUserPosts();
-  const { mutate: deletePostMutation } = useDeletePosts();
+  const { data: posts, isPending, isError, error } = useGetUserPosts();
+  const {
+    mutate: deletePostMutation,
+    isPending: isDeleting,
+    isError: deleteError,
+    error: deleteErrorInfo,
+  } = useDeletePosts();
 
-  if (isLoading) {
-    return <p>Loading Users...</p>;
-  }
+  const [postToDelete, setPostToDelete] = useState<Post | null>(null);
 
-  if (isError) {
-    return <p>Error:{error?.message}</p>;
-  }
-
-  const handleDeletePosts = (userId: number) => {
-    deletePostMutation(userId);
+  const confirmDelete = (post: Post) => {
+    setPostToDelete(post);
   };
+
+  const handleConfirmDelete = () => {
+    if (!postToDelete) return;
+    deletePostMutation(postToDelete.id, {
+      onSuccess: () => {
+        toast.success('Post deleted successfully');
+        setPostToDelete(null);
+      },
+      onError: () => {
+        toast.error('Failed to delete post');
+        setPostToDelete(null);
+      },
+    });
+  };
+
+  if (isPending) return <p>Loading posts...</p>;
+  if (isError) return <p>Error: {error?.message}</p>;
+
   return (
     <>
       <Header />
-      <h2 style={{ color: 'darkblue', fontSize: '30px' }}>USER POST</h2>
+      <h2 style={{ color: 'darkblue', fontSize: '30px', textAlign: 'center' }}>
+        User Posts
+      </h2>
+
+      {deleteError && (
+        <p style={{ color: 'red', textAlign: 'center' }}>
+          Deletion failed: {deleteErrorInfo?.message}
+        </p>
+      )}
+
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(3,1fr)',
-          justifyItems: 'start',
-          textAlign: 'justify',
-          marginLeft: '100px',
-          marginRight: '30px',
-          gap: '30px',
-          marginTop: '50px',
-          marginBottom: '50px',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
+          gap: '20px',
+          padding: '20px',
         }}
       >
-        {posts?.map(post => (
+        {posts?.map((post: Post) => (
           <div
+            key={post.id}
             style={{
-              color: 'black',
               backgroundColor: '#e3f2fd',
-              boxShadow: '1px 2px 3px blue',
+              boxShadow: '0 2px 6px rgba(0,0,255,0.2)',
               display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              flexWrap: 'wrap',
               flexDirection: 'column',
-              width: '100%',
+              alignItems: 'center',
               padding: '20px',
-              fontFamily: 'bold',
-              fontSize: '20px',
+              borderRadius: '8px',
             }}
           >
-            <span>
-              <img style={{ width: '60px' }} src={UserIcon} />
-            </span>
-            <h2 style={{ color: 'darkblue', display: 'grid' }}>{post.title}</h2>
+            <img src={UserIcon} alt="User Icon" style={{ width: '60px' }} />
+            <h3 style={{ color: 'darkblue', margin: '10px 0' }}>
+              {post.title}
+            </h3>
             <p>{post.body}</p>
-            <p style={{ color: 'darkred' }}>{post.user_id}</p>
+            <p style={{ color: 'darkred', fontSize: '12px' }}>
+              Author ID: {post.user_id}
+            </p>
 
             <button
-              onClick={() => handleDeletePosts(post?.id)}
-              style={{ background: 'transparent', border: 'none' }}
+              onClick={() => confirmDelete(post)}
+              disabled={isDeleting}
+              style={{
+                marginTop: '12px',
+                padding: '8px 12px',
+                backgroundColor: isDeleting ? '#ccc' : '#ff4d4d',
+                color: 'white',
+                border: 'none',
+                cursor: isDeleting ? 'not-allowed' : 'pointer',
+                borderRadius: '4px',
+              }}
             >
-              <img
-                src={deleteIcon}
-                alt="deleteIcon"
-                style={{
-                  width: '40px',
-                  cursor:'pointer'
-                }}
-              />
+              {isDeleting ? 'Deleting...' : 'Delete'}
             </button>
           </div>
         ))}
       </div>
+
+      {postToDelete && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0,0,0,0.5)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1000,
+          }}
+        >
+          <div
+            style={{
+              backgroundColor: '#fff',
+              padding: '30px',
+              borderRadius: '10px',
+              width: '300px',
+              textAlign: 'center',
+            }}
+          >
+            <h3>Confirm Delete</h3>
+            <p>
+              Are you sure you want to delete{' '}
+              <strong>{postToDelete.title}</strong>?
+            </p>
+            <div
+              style={{
+                marginTop: '20px',
+                display: 'flex',
+                justifyContent: 'space-around',
+              }}
+            >
+              <button
+                onClick={handleConfirmDelete}
+                style={{
+                  backgroundColor: '#ff4d4d',
+                  color: 'white',
+                  padding: '8px 16px',
+                  border: 'none',
+                  borderRadius: '5px',
+                }}
+              >
+                Yes
+              </button>
+              <button
+                onClick={() => setPostToDelete(null)}
+                style={{
+                  backgroundColor: '#ccc',
+                  padding: '8px 16px',
+                  border: 'none',
+                  borderRadius: '5px',
+                }}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };

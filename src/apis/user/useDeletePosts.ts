@@ -1,27 +1,26 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { ToastContainer, toast } from 'react-toastify';
-
-
-import { DataQueryKeys } from '../data-query-keys';
+import { toast } from 'react-toastify';
 import httpClient from '../httpClient';
 import { endpoints } from '../endpoints';
+import { DataQueryKeys } from '../data-query-keys';
 
-const deletePostRequest = async (userId: number) => {
-  const response = await httpClient.delete<void>(endpoints.deletePost(userId));
+const deletePostRequest = async (postId: number) => {
+  const response = await httpClient.delete(endpoints.deletePost(postId));
   return response.data;
 };
 
 export const useDeletePosts = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<void, Error, number>({
+  return useMutation({
     mutationFn: deletePostRequest,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [DataQueryKeys.POST_LIST] }); 
-      toast.success('Post deleted Successfully..');
+      toast.success('Post deleted successfully.');
+      // ✅ This line tells React Query to refetch the posts
+      queryClient.invalidateQueries({ queryKey: [DataQueryKeys.POST_LIST] });
     },
-    onError: error => {
-      toast.success('Error deleting Post');
+    onError: () => {
+      toast.error('Failed to delete post.');
     },
   });
 };
