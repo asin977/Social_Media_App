@@ -1,26 +1,25 @@
 import React, { useState } from 'react';
-
 import { useGetComments } from '../apis/user/useGetCommentList';
-import User from '../assets/images/commentuser.png';
 import { useDeleteComment } from '../apis/user/useDeleteComment';
+import UserIcon from '../assets/images/commentuser.png';
 
-const CommentList = () => {
+const CommentList: React.FC = () => {
   const [showComments, setShowComments] = useState(false);
-  const { data: comments, isLoading, isError, error } = useGetComments();
-  const { mutate: deleteUserMutation } = useDeleteComment();
+  const { data: comments, isPending, isError, error } = useGetComments();
+  const { mutate: deleteComment, isPending: isDeleting } = useDeleteComment();
 
-  const handleToggleComments = () => {
+  const toggleComments = () => {
     setShowComments(prev => !prev);
   };
 
   const handleDelete = (id: number) => {
-    deleteUserMutation(id);
+    deleteComment(id);
   };
 
   return (
     <div style={{ textAlign: 'center', padding: '30px' }}>
       <button
-        onClick={handleToggleComments}
+        onClick={toggleComments}
         style={{
           padding: '10px 20px',
           backgroundColor: '#007bff',
@@ -36,8 +35,9 @@ const CommentList = () => {
 
       {showComments && (
         <>
-          {isLoading && <p>Loading Comments...</p>}
-          {isError && <p>Error: {error?.message}</p>}
+          {isPending && <p>Loading comments...</p>}
+          {isError && <p style={{ color: 'red' }}>Error: {error?.message}</p>}
+
           <div
             style={{
               margin: '0 auto',
@@ -52,54 +52,39 @@ const CommentList = () => {
               <div
                 key={comment.id}
                 style={{
-                  color: 'darkblue',
-                  padding: '20px',
-                  borderBottom: '1px solid lightgray',
                   backgroundColor: '#f9f9f9',
+                  padding: '20px',
+                  borderBottom: '1px solid #e0e0e0',
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                   <img
-                    src={User}
-                    alt="user"
+                    src={UserIcon}
+                    alt="User"
                     style={{ width: '30px', marginRight: '10px' }}
                   />
                   <div>
-                    <h3
-                      style={{
-                        fontSize: '16px',
-                        margin: '0',
-                        fontWeight: 'bold',
-                      }}
-                    >
-                      {comment.name}
-                    </h3>
-                    <h4
-                      style={{
-                        margin: '0',
-                        color: 'gray',
-                        fontSize: '14px',
-                        fontWeight: 'normal',
-                      }}
-                    >
-                      {comment.email}
-                    </h4>
+                    <h3 style={{ margin: 0, fontSize: '16px' }}>{comment.name}</h3>
+                    <p style={{ margin: 0, fontSize: '14px', color: 'gray' }}>{comment.email}</p>
                   </div>
                 </div>
-                <p style={{ marginTop: '10px', color: 'black' }}>
-                  {comment.body}
-                </p>
+
+                <p style={{ marginTop: '10px', color: '#333' }}>{comment.body}</p>
+
                 <button
-                  onClick={() => handleDelete(comment?.id)}
+                  onClick={() => handleDelete(comment.id)}
+                  disabled={isDeleting}
                   style={{
-                    border: 'none',
+                    marginTop: '10px',
+                    padding: '6px 14px',
+                    backgroundColor: isDeleting ? '#aaa' : 'crimson',
                     color: '#fff',
-                    background: 'darkblue',
-                    padding: '5px 12px',
-                    fontFamily:'bold'
+                    border: 'none',
+                    borderRadius: '4px',
+                    cursor: isDeleting ? 'not-allowed' : 'pointer',
                   }}
                 >
-                  delete
+                  {isDeleting ? 'Deleting...' : 'Delete'}
                 </button>
               </div>
             ))}

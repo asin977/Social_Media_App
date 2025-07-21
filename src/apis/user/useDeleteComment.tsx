@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { toast } from 'react-toastify'
+import { toast } from 'react-toastify';
 
 import { DataQueryKeys } from '../data-query-keys';
 import httpClient from '../httpClients';
@@ -9,25 +9,18 @@ export const useDeleteComment = () => {
   const queryClient = useQueryClient();
 
   return useMutation<void, Error, number>({
-    mutationFn: async (id: number) => {
-      const response = await httpClient.delete<void>(
-        endpoints.deleteComments(id),
-      );
-
-      if (response.status >= 400) {
-        throw new Error('Failed to delete user.');
-      }
-      return response.data;
+    mutationFn: async (commentId: number) => {
+      await httpClient.delete(endpoints.deleteComments(commentId));
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [DataQueryKeys.COMMENT_LIST] });
-      toast.success('User deleted successfully!', {
+      toast.success('Comment deleted successfully!', {
         position: 'top-right',
       });
     },
-    onError: error => {
-      console.error('Error deleting user:', error);
-      toast.error(`Error deleting user: ${error.message || 'Unknown error'}`, {
+    onError: (error) => {
+      console.error('Error deleting comment:', error);
+      toast.error(`Error deleting comment: ${error.message || 'Unknown error'}`, {
         position: 'top-right',
       });
     },
