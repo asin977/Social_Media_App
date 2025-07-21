@@ -13,8 +13,8 @@ const CommentList = () => {
     setShowComments(prev => !prev);
   };
 
-  const handleDelete = ( post_id: number) => {
-    deleteUserMutation( post_id);
+  const handleDelete = (id: number) => {
+    deleteUserMutation(id);
   };
 
   return (
@@ -89,7 +89,18 @@ const CommentList = () => {
                 <p style={{ marginTop: '10px', color: 'black' }}>
                   {comment.body}
                 </p>
-                <button onClick={()=> handleDelete(comment?. post_id)}>delete</button>
+                <button
+                  onClick={() => handleDelete(comment?.id)}
+                  style={{
+                    border: 'none',
+                    color: '#fff',
+                    background: 'darkblue',
+                    padding: '5px 12px',
+                    fontFamily:'bold'
+                  }}
+                >
+                  delete
+                </button>
               </div>
             ))}
           </div>

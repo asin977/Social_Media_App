@@ -14,7 +14,7 @@ export const useDeleteComment = () => {
         endpoints.deleteComments(id),
       );
 
-      if (!response.config) {
+      if (response.status >= 400) {
         throw new Error('Failed to delete user.');
       }
       return response.data;
