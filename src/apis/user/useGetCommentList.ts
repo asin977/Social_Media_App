@@ -5,7 +5,7 @@ import httpClient from '../httpClients';
 import { endpoints } from '../endPoints';
 import { AddCommentPayload } from '../../types/comments';
 
-export const useGetComments = () => {
+export const useGetCommentList = () => {
   return useQuery<AddCommentPayload[]>({
     queryKey: [DataQueryKeys.COMMENT_LIST],
     queryFn: async () => {
