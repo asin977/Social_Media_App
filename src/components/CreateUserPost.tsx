@@ -55,12 +55,12 @@ export const CreateUserPost = () => {
           fontFamily: 'bold',
           border: 'none',
           background: 'darkblue',
-          padding:"8px 20px",
-          cursor:'pointer',
-          borderRadius:'4px'
+          padding: '8px 20px',
+          cursor: 'pointer',
+          borderRadius: '4px',
         }}
       >
-        ➕  New Post
+        ➕ New Post
       </button>
 
       {isOpen && (
@@ -150,7 +150,6 @@ export const CreateUserPost = () => {
   );
 };
 
-// --- Modal styles ---
 const modalOverlay: React.CSSProperties = {
   position: 'fixed',
   top: 0,
