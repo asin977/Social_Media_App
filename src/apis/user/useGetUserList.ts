@@ -5,7 +5,7 @@ import { DataQueryKeys } from '../data-query-keys';
 import { endpoints } from '../endpoints';
 import httpClient from '../httpClient';
 
-export const useGetUserDetails = () => {
+export const useGetUserList = () => {
   return useQuery<UserListAPIResponse[], Error>({
     queryKey: [DataQueryKeys.USER_LIST],
     queryFn: async () => {

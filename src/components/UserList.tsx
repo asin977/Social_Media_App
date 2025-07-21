@@ -1,9 +1,8 @@
-import { useGetUserDetails } from '../apis/user';
+import { useGetUserList } from '../apis/user';
 import UserIcon from '../assets/images/user.png';
-import EditUserForm from './EditUserList';
 
 const UserList = () => {
-  const { data: users, isLoading, isError, error } = useGetUserDetails();
+  const { data: users, isLoading, isError, error } = useGetUserList();
 
   if (isLoading) return <p>Loading users...</p>;
   if (isError) return <p>Error: {error?.message}</p>;
@@ -47,8 +46,6 @@ const UserList = () => {
           </div>
         ))}
       </div>
-
-      <EditUserForm users={users || []} />
     </>
   );
 };
