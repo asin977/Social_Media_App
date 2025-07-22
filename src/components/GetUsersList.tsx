@@ -1,34 +1,51 @@
-import { useGetUserList } from '../apis/user';
-import UserIcon from '../assets/images/user.png';
+import React from 'react';
+import { ClipLoader } from 'react-spinners';
+import 'react-toastify/dist/ReactToastify.css';
 
-const GetUserList = () => {
+import { useGetUserList, useDeleteUser } from '../apis/user';
+import { ReactComponent as DeleteIcon } from '../assets/svg/delete.svg';
+
+const UserList: React.FC = () => {
   const { data: users, isLoading, isError, error } = useGetUserList();
+  const { mutate: deleteUserMutation } = useDeleteUser();
 
   if (isLoading) {
-    return <p>Loading users...</p>;
+    return (
+      <div style={{ textAlign: 'center', marginTop: '50px' }}>
+        <ClipLoader size={40} color="#023e8a" />
+      </div>
+    );
   }
 
   if (isError) {
-    return <p>Error: {error?.message}</p>;
+    return (
+      <div style={{ color: 'red', textAlign: 'center', marginTop: '30px' }}>
+        Error loading users: {error?.message || 'Something went wrong'}
+      </div>
+    );
   }
+
+  const handleDelete = (userId: string) => {
+    deleteUserMutation(userId);
+  };
 
   return (
     <div
       style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(3,1fr)',
+        gridTemplateColumns: 'repeat(3, 1fr)',
         justifyItems: 'start',
-        textAlign: 'center',
+        textAlign: 'justify',
         marginLeft: '30px',
         marginRight: '30px',
         gap: '30px',
         marginTop: '50px',
+        marginBottom: '50px',
       }}
     >
-      <h2>Users List</h2>
-
       {users?.map(user => (
         <div
+          key={user.id}
           style={{
             color: 'darkblue',
             backgroundColor: '#e3f2fd',
@@ -38,20 +55,57 @@ const GetUserList = () => {
             flexWrap: 'wrap',
             flexDirection: 'column',
             width: '100%',
-            padding: '20px',
-            marginBottom: '30px',
+            padding: '40px',
+            opacity: '1',
+            transition:
+              'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
+
+            borderRadius: '8px',
+            cursor: 'pointer',
           }}
         >
-          <span>
-            <img src={UserIcon} alt="userIcon" style={{ width: '50px' }} />
-            <h2 key={user.id}>{user.name}</h2>
+          {user.name}
+          <span
+            style={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              marginTop: '-50px',
+              marginBottom: '20px',
+            }}
+          >
+            <button
+              style={{
+                marginRight: '20px',
+                padding: '5px 10px',
+                color: '#fff',
+                fontFamily: 'bold',
+                fontSize: '18px',
+                backgroundColor: '#023e8a',
+                border: 'none',
+                borderRadius: '4px',
+                cursor: 'pointer',
+              }}
+              onClick={() => handleDelete(user?.id?.toString())}
+              title="Delete user"
+            >
+              <DeleteIcon width={20} height={20} />
+            </button>
           </span>
-          <p style={{ color: 'black', fontFamily: 'regular' }}>{user.email}</p>
+
+          <p
+            style={{
+              color: 'black',
+              fontSize: '18px',
+              fontFamily: 'regular',
+              marginBottom: '10px',
+            }}
+          >
+            {user.email}
+          </p>
         </div>
       ))}
-      <GetUserList />
     </div>
   );
 };
 
-export default GetUserList;
+export default UserList;
