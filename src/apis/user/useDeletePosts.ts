@@ -16,7 +16,6 @@ export const useDeletePosts = () => {
     mutationFn: deletePostRequest,
     onSuccess: () => {
       toast.success('Post deleted successfully.');
-      // ✅ This line tells React Query to refetch the posts
       queryClient.invalidateQueries({ queryKey: [DataQueryKeys.POST_LIST] });
     },
     onError: () => {

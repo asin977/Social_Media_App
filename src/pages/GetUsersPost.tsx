@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
+
 import { useGetUserPosts } from '../apis/user';
 import { useDeletePosts } from '../apis/user/useDeletePosts';
-import deleteIcon from '../assets/images/delete.png';
 import UserIcon from '../assets/images/user.png';
 import { Header } from '../components/Header';
-import { toast } from 'react-toastify';
+
 
 type Post = {
   id: number;
@@ -61,8 +62,8 @@ export const GetUsersPost = () => {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
-          gap: '20px',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(500px, 1fr))',
+          gap: '30px',
           padding: '20px',
         }}
       >
@@ -84,7 +85,7 @@ export const GetUsersPost = () => {
               {post.title}
             </h3>
             <p>{post.body}</p>
-            <p style={{ color: 'darkred', fontSize: '12px' }}>
+            <p style={{ color: 'darkred', fontSize: '15px' }}>
               Author ID: {post.user_id}
             </p>
 
@@ -94,9 +95,11 @@ export const GetUsersPost = () => {
               style={{
                 marginTop: '12px',
                 padding: '8px 12px',
-                backgroundColor: isDeleting ? '#ccc' : '#ff4d4d',
+                backgroundColor: isDeleting ? '#ccc' : '#023E8A',
                 color: 'white',
                 border: 'none',
+                fontFamily: 'bold',
+                fontSize: '18opx',
                 cursor: isDeleting ? 'not-allowed' : 'pointer',
                 borderRadius: '4px',
               }}
@@ -146,7 +149,7 @@ export const GetUsersPost = () => {
               <button
                 onClick={handleConfirmDelete}
                 style={{
-                  backgroundColor: '#ff4d4d',
+                  backgroundColor: '#023E8A',
                   color: 'white',
                   padding: '8px 16px',
                   border: 'none',
