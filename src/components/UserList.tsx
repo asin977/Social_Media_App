@@ -55,7 +55,6 @@ const UserList = () => {
               padding: '50px',
               opacity: '1',
               transition: 'opacity 0.3s ease-in-out',
-             
             }}
           >
             <span>

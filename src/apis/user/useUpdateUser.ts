@@ -16,10 +16,6 @@ export const useUpdateUser = () => {
         dataToUpdate,
       );
 
-      if (response.status !== 200) {
-        throw new Error('Failed to update user.');
-      }
-
       return response.data;
     },
     onSuccess: () => {
