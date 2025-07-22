@@ -17,9 +17,7 @@ const UserList: React.FC = () => {
 
   return (
     <div>
-      <h2 style={{ color: 'darkblue', textAlign: 'center', fontSize: '35px' }}>
-        USER LIST
-      </h2>
+      
       {users?.map(user => (
         <div
           key={user.id}

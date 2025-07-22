@@ -2,8 +2,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 
 import { DataQueryKeys } from '../data-query-keys';
-import httpClient from '../httpClient';
 import { endpoints } from '../endpoints';
+import httpClient from '../httpClient';
 
 export const useDeleteUser = () => {
   const queryClient = useQueryClient();
@@ -14,9 +14,6 @@ export const useDeleteUser = () => {
         endpoints.deleteUser(userId),
       );
 
-      if (!response.config) {
-        throw new Error('Failed to delete user.');
-      }
       return response.data;
     },
     onSuccess: () => {

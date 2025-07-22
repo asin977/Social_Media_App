@@ -25,6 +25,8 @@ const GetUserList = () => {
         marginTop: '50px',
       }}
     >
+      <h2>Users List</h2>
+
       {users?.map(user => (
         <div
           style={{
@@ -47,6 +49,7 @@ const GetUserList = () => {
           <p style={{ color: 'black', fontFamily: 'regular' }}>{user.email}</p>
         </div>
       ))}
+      <GetUserList />
     </div>
   );
 };
