@@ -1,8 +1,22 @@
+import { useState } from 'react';
 import { useGetUserList } from '../apis/user';
 import UserIcon from '../assets/images/user.png';
+import EditUserList from './EditUserList';
 
 const UserList = () => {
   const { data: users, isLoading, isError, error } = useGetUserList();
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [isEditOpen, setIsEditOpen] = useState(false);
+
+  const handleEditClick = (user: any) => {
+    setSelectedUser(user);
+    setIsEditOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsEditOpen(false);
+    setSelectedUser(null);
+  };
 
   if (isLoading) {
     return <p>Loading users...</p>;
@@ -23,6 +37,7 @@ const UserList = () => {
           marginRight: '30px',
           gap: '30px',
           marginTop: '50px',
+          marginBottom: '50px',
         }}
       >
         {users?.map(user => (
@@ -37,19 +52,56 @@ const UserList = () => {
               flexWrap: 'wrap',
               flexDirection: 'column',
               width: '100%',
-              padding: '20px',
+              padding: '50px',
+              opacity: '1',
+              transition: 'opacity 0.3s ease-in-out',
+             
             }}
           >
             <span>
-              <img src={UserIcon} alt="userIcon" style={{ width: '50px' }} />
-              <h2>{user.name}</h2>
+              <img
+                src={UserIcon}
+                alt="userIcon"
+                style={{ width: '80px', position: 'absolute' }}
+              />
+              <div>
+                <h2 style={{ textAlign: 'end' }}>{user.name}</h2>
+                <p
+                  style={{
+                    color: 'black',
+                    fontFamily: 'regular',
+                    textAlign: 'end',
+                  }}
+                >
+                  {user.email}
+                </p>
+              </div>
             </span>
-            <p style={{ color: 'black', fontFamily: 'regular' }}>
-              {user.email}
-            </p>
+            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <button
+                onClick={() => handleEditClick(user)}
+                style={{
+                  padding: '5px 10px',
+                  marginTop: '10px',
+                  backgroundColor: '#1976d2',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '4px',
+                  cursor: 'pointer',
+                  maxWidth: '100px',
+                  fontSize: '18px',
+                  fontFamily: 'bold',
+                }}
+              >
+                Edit
+              </button>
+            </div>
           </div>
         ))}
       </div>
+      {isEditOpen && selectedUser && (
+        <EditUserList user={selectedUser} onClose={handleCloseModal} />
+      )}
     </>
   );
 };
