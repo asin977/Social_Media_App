@@ -21,8 +21,5 @@ export const useUpdateUser = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [DataQueryKeys.USER_LIST] });
     },
-    onError: error => {
-      console.error('Update failed:', error);
-    },
   });
 };
