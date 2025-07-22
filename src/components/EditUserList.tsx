@@ -8,7 +8,6 @@ import { useGetUserList, useUpdateUser } from '../apis/user';
 import usericon from '../assets/images/user.png';
 import { UserListAPIResponse } from '../types/user';
 import modal from './modal';
-import UserList from './UserList';
 
 const EditUserList = () => {
   const { data: users = [], isLoading, isError, error } = useGetUserList();

@@ -4,8 +4,12 @@ import UserIcon from '../assets/images/user.png';
 const UserList = () => {
   const { data: users, isLoading, isError, error } = useGetUserList();
 
-  if (isLoading) return <p>Loading users...</p>;
-  if (isError) return <p>Error: {error?.message}</p>;
+  if (isLoading) {
+    return <p>Loading users...</p>;
+  }
+  if (isError) {
+    return <p>Error: {error?.message}</p>;
+  }
 
   return (
     <>
@@ -51,5 +55,3 @@ const UserList = () => {
 };
 
 export default UserList;
-
-
