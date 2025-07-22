@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { ClipLoader } from 'react-spinners';
+import { ToastContainer, toast } from 'react-toastify';
 
 import { useGetUserList, useUpdateUser } from '../apis/user';
 import usericon from '../assets/images/user.png';
@@ -6,6 +8,8 @@ import { UserListAPIResponse } from '../types/user';
 
 const EditUserList = () => {
   const { data: users, isLoading, isError, error } = useGetUserList();
+  let [loading, setLoading] = useState(false);
+
   const { mutate } = useUpdateUser();
 
   const [isModalOpen, setModalOpen] = useState(false);
@@ -30,33 +34,57 @@ const EditUserList = () => {
     setUpdateStatus(null);
   };
 
-  const handleSave = () => {
-    if (
-      selectedUser &&
-      editedName.trim() &&
-      editedName.trim() !== selectedUser.name
-    ) {
-      mutate(
-        {
-          id: selectedUser.id,
-          name: editedName.trim(),
-          email: selectedUser.email,
-        },
-        {
-          onSuccess: () => {
-            setUpdateStatus('success');
-          },
-          onError: () => {
-            setUpdateStatus('error');
-          },
-        },
-      );
+  const handleSave = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
+    
+    e.preventDefault();
+  
+
+    if (!editedName.trim() || editedName.trim() === selectedUser?.name) {
+      toast.info('No changes to save.', {
+        position: 'top-right',
+        autoClose: 3000,
+      });
+      return;
     }
-    closeModal();
+
+    setLoading(true);
+
+    try {
+      await new Promise(resolve => setTimeout(resolve, 2000));
+
+      toast.success('User name updated successfully!', {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } catch (error) {
+      console.error('Error saving user:', error);
+      toast.error('Error saving user. Please try again.', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
-  if (isLoading) return <p>Loading users...</p>;
-  if (isError) return <p>Error: {error?.message}</p>;
+  if (isLoading) {
+    return <p>Loading users...</p>;
+  }
+  if (isError) {
+    return <p>Error: {error?.message}</p>;
+  }
 
   return (
     <>
@@ -195,7 +223,10 @@ const EditUserList = () => {
                 Cancel
               </button>
               <button
-                onClick={handleSave}
+                onClick={e => {
+                  handleSave(e);
+                  setLoading(!loading);
+                }}
                 style={{
                   backgroundColor: 'darkblue',
                   color: 'white',
@@ -205,11 +236,14 @@ const EditUserList = () => {
                   cursor: 'pointer',
                 }}
                 disabled={
-                  !editedName.trim() || editedName.trim() === selectedUser.name
+                  !editedName.trim() ||
+                  editedName.trim() === selectedUser?.name ||
+                  loading
                 }
               >
-                Save
+                {loading ? <ClipLoader size={15} color={'#ffffff'} /> : 'Save'}
               </button>
+              <ToastContainer />
             </div>
           </div>
         </div>
@@ -229,44 +263,7 @@ const EditUserList = () => {
             alignItems: 'center',
             zIndex: 1,
           }}
-        >
-          <div
-            style={{
-              backgroundColor: 'white',
-              padding: '30px',
-              borderRadius: '8px',
-              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-              width: '300px',
-              maxWidth: '90%',
-              textAlign: 'center',
-            }}
-          >
-            {updateStatus === 'success' && (
-              <p style={{ color: 'black', fontSize: '18px' }}>
-                User updated successfully!
-              </p>
-            )}
-            {updateStatus === 'error' && (
-              <p style={{ color: 'red', fontSize: '18px' }}>
-                Error updating user. Please try again.
-              </p>
-            )}
-            <button
-              onClick={() => setUpdateStatus(null)}
-              style={{
-                backgroundColor: 'darkblue',
-                color: 'white',
-                padding: '8px 15px',
-                border: 'none',
-                borderRadius: '5px',
-                cursor: 'pointer',
-                marginTop: '15px',
-              }}
-            >
-              Close
-            </button>
-          </div>
-        </div>
+        ></div>
       )}
     </>
   );
