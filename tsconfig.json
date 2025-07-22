@@ -22,10 +22,5 @@
   },
   "include": [
     "src"
-<<<<<<< HEAD
 , "src/apis/.ts"  ]
 }
-=======
-  ]
-}
->>>>>>> main
