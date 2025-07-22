@@ -1,13 +1,10 @@
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import { DataQueryKeys } from '../data-query-keys';
 import { UpdateUserPayLoad, UserListAPIResponse } from '../../types/user';
-import { endpoints } from '../endpoints'; //
+import { endpoints } from '../endpoints';
 import httpClient from '../httpClient';
 
-export const useUpdateUser = (options?: {
-  onSuccess?: () => void;
-  onError?: (error: any) => void;
-}) => {
+export const useUpdateUser = () => {
   const queryClient = useQueryClient();
 
   return useMutation<UserListAPIResponse, Error, UpdateUserPayLoad>({
@@ -18,17 +15,17 @@ export const useUpdateUser = (options?: {
         dataToUpdate,
       );
 
-      if (!response.status) {
+      if (response.status !== 200) {
         throw new Error('Failed to update user.');
       }
+
       return response.data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [DataQueryKeys.USER_LIST] });
-      options?.onSuccess?.();
     },
-    onError: (error) => {
-      options?.onError?.(error);
+    onError: error => {
+      console.error('Update failed:', error);
     },
   });
 };

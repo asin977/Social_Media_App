@@ -1,47 +1,41 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { ClipLoader } from 'react-spinners';
 import { ToastContainer, toast } from 'react-toastify';
 
+import { useQueryClient } from '@tanstack/react-query';
+import { DataQueryKeys } from '../apis/data-query-keys';
 import { useGetUserList, useUpdateUser } from '../apis/user';
 import usericon from '../assets/images/user.png';
 import { UserListAPIResponse } from '../types/user';
+import modal from './modal';
+import UserList from './UserList';
 
 const EditUserList = () => {
-  const { data: users, isLoading, isError, error } = useGetUserList();
-  let [loading, setLoading] = useState(false);
+  const { data: users = [], isLoading, isError, error } = useGetUserList();
+  const { mutate: updateUser } = useUpdateUser();
+  const queryClient = useQueryClient();
 
-  const { mutate } = useUpdateUser();
-
+  const [loading, setLoading] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<UserListAPIResponse | null>(
     null,
   );
-  const [editedName, setEditedName] = useState('');
-  const [updateStatus, setUpdateStatus] = useState<null | 'success' | 'error'>(
-    null,
-  );
+  const [inputValue, setInputValue] = useState('');
 
   const openModal = (user: UserListAPIResponse) => {
     setSelectedUser(user);
-    setEditedName(user.name);
+    setInputValue(user.name);
     setModalOpen(true);
   };
 
   const closeModal = () => {
     setModalOpen(false);
     setSelectedUser(null);
-    setEditedName('');
-    setUpdateStatus(null);
+    setInputValue('');
   };
 
-  const handleSave = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-  ) => {
-    
-    e.preventDefault();
-  
-
-    if (!editedName.trim() || editedName.trim() === selectedUser?.name) {
+  const handleSave = () => {
+    if (!inputValue.trim() || inputValue.trim() === selectedUser?.name) {
       toast.info('No changes to save.', {
         position: 'top-right',
         autoClose: 3000,
@@ -49,33 +43,32 @@ const EditUserList = () => {
       return;
     }
 
-    setLoading(true);
-
-    try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
-
-      toast.success('User name updated successfully!', {
-        position: 'top-right',
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-    } catch (error) {
-      console.error('Error saving user:', error);
-      toast.error('Error saving user. Please try again.', {
-        position: 'top-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-    } finally {
-      setLoading(false);
+    if (selectedUser) {
+      setLoading(true);
+      updateUser(
+        { id: selectedUser.id, name: inputValue },
+        {
+          onSuccess: () => {
+            queryClient.invalidateQueries({
+              queryKey: [DataQueryKeys.USER_LIST],
+            });
+            toast.success('User updated successfully!', {
+              position: 'top-right',
+              autoClose: 3000,
+            });
+            closeModal();
+          },
+          onError: () => {
+            toast.error('Failed to update user. Try again.', {
+              position: 'top-right',
+              autoClose: 3000,
+            });
+          },
+          onSettled: () => {
+            setLoading(false);
+          },
+        },
+      );
     }
   };
 
@@ -98,19 +91,18 @@ const EditUserList = () => {
       >
         USERS LIST
       </h2>
+
       <div
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(3,1fr)',
-          justifyItems: 'start',
-          textAlign: 'center',
-          marginLeft: '30px',
-          marginRight: '30px',
           gap: '40px',
+          padding: '0 30px',
           marginTop: '50px',
         }}
       >
-        {users?.map(user => (
+        {/* <UserList /> */}
+        {users.map(user => (
           <div
             key={user.id}
             style={{
@@ -118,39 +110,29 @@ const EditUserList = () => {
               backgroundColor: '#e3f2fd',
               boxShadow: '1px 2px 3px blue',
               display: 'flex',
-              justifyContent: 'center',
-              flexWrap: 'wrap',
               flexDirection: 'column',
-              width: '100%',
+              alignItems: 'center',
               padding: '20px',
             }}
           >
-            <span>
-              <img src={usericon} alt="usericon" style={{ width: '50px' }} />
-              <h2>{user.name}</h2>
-            </span>
-            <p style={{ color: 'black', fontFamily: 'regular' }}>
-              {user.email}
-            </p>
-            <div>
-              <button
-                onClick={() => openModal(user)}
-                style={{
-                  backgroundColor: 'darkblue',
-                  color: 'white',
-                  padding: '8px 15px',
-                  border: 'none',
-                  borderRadius: '5px',
-                  cursor: 'pointer',
-                  marginTop: '10px',
-                  maxWidth: '50%',
-                  fontFamily: 'bold',
-                  fontSize: '18px',
-                }}
-              >
-                Edit
-              </button>
-            </div>
+            <img src={usericon} alt="usericon" style={{ width: '50px' }} />
+            <h2>{user.name}</h2>
+            <p style={{ color: 'black' }}>{user.email}</p>
+            <button
+              onClick={() => openModal(user)}
+              style={{
+                backgroundColor: 'darkblue',
+                color: 'white',
+                padding: '8px 15px',
+                border: 'none',
+                borderRadius: '5px',
+                cursor: 'pointer',
+                marginTop: '10px',
+                fontSize: '18px',
+              }}
+            >
+              Edit
+            </button>
           </div>
         ))}
       </div>
@@ -184,16 +166,16 @@ const EditUserList = () => {
             <p>User Email: {selectedUser.email}</p>
             <div style={{ marginBottom: '15px' }}>
               <label
-                htmlFor="editedName"
+                htmlFor="userNameInput"
                 style={{ display: 'block', marginBottom: '5px' }}
               >
                 Name:
               </label>
               <input
                 type="text"
-                id="editedName"
-                value={editedName}
-                onChange={e => setEditedName(e.target.value)}
+                id="userNameInput"
+                value={inputValue}
+                onChange={e => setInputValue(e.target.value)}
                 style={{
                   width: '100%',
                   padding: '8px',
@@ -223,10 +205,7 @@ const EditUserList = () => {
                 Cancel
               </button>
               <button
-                onClick={e => {
-                  handleSave(e);
-                  setLoading(!loading);
-                }}
+                onClick={handleSave}
                 style={{
                   backgroundColor: 'darkblue',
                   color: 'white',
@@ -236,35 +215,19 @@ const EditUserList = () => {
                   cursor: 'pointer',
                 }}
                 disabled={
-                  !editedName.trim() ||
-                  editedName.trim() === selectedUser?.name ||
+                  !inputValue.trim() ||
+                  inputValue.trim() === selectedUser.name ||
                   loading
                 }
               >
-                {loading ? <ClipLoader size={15} color={'#ffffff'} /> : 'Save'}
+                {loading ? <ClipLoader size={15} color="#fff" /> : 'Save'}
               </button>
-              <ToastContainer />
             </div>
           </div>
         </div>
       )}
 
-      {updateStatus && (
-        <div
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            zIndex: 1,
-          }}
-        ></div>
-      )}
+      <ToastContainer />
     </>
   );
 };
