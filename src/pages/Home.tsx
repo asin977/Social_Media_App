@@ -14,8 +14,8 @@ export const Home = () => {
   const handleCloseModal = () => setShowModal(false);
 
   const handleUserAdded = () => {
-    setShowModal(false);
     setRefreshKey(prev => prev + 1);
+    setShowModal(false);
   };
 
   return (
@@ -29,39 +29,29 @@ export const Home = () => {
             padding: '10px 20px',
             fontSize: '16px',
             fontWeight: 'bold',
-            backgroundColor: '#007bff',
-            color: 'white',
+            backgroundColor: 'transparent',
+            color: 'darkblue',
             border: 'none',
             borderRadius: '5px',
             cursor: 'pointer',
             marginBottom: '20px',
-            background: 'transparent',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px',
           }}
         >
           <img
-            style={{
-              width: '40px',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
+            style={{ width: '40px', height: '40px' }}
             src={AddUserIcon}
-            alt="AddUserIcon"
+            alt="Add User"
           />
-          <span
-            style={{ color: 'darkblue', fontSize: '34px', textAlign: 'center' }}
-          >
-            Add User
-          </span>
+          <span style={{ fontSize: '24px' }}>Add User</span>
         </button>
 
         <UserList key={refreshKey} />
 
         {showModal && (
-          <AddUserModal
-            onClose={handleCloseModal}
-            onSuccess={handleUserAdded}
-          />
+          <AddUserModal onClose={handleCloseModal} onSuccess={handleUserAdded} />
         )}
       </div>
     </>

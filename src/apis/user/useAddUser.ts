@@ -1,18 +1,21 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { endpoints } from '../endpoints';
 import httpClient from '../httpClient';
 import { UserListAPIResponse } from '../../types/user';
-import { endpoints } from '../endpoints';
+import { DataQueryKeys } from '../data-query-keys';
 
-export const addUser = async (payload: Partial<UserListAPIResponse>) => {
+const addUserRequest = async (payload: Partial<UserListAPIResponse>) => {
   const response = await httpClient.post(endpoints.createUser(), payload);
-
-  if (!response || response.status !== 201) {
-    const data = response.data;
-    throw new Error(
-      Array.isArray(data) && data.length > 0
-        ? data[0].message
-        : data?.message || 'Failed to add user',
-    );
-  }
-
   return response.data;
+};
+
+export const useAddUser = (p0: { onSuccess: () => void; onError: (err: any) => void; }) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: addUserRequest,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [DataQueryKeys.USER_LIST] });
+    },
+  });
 };
