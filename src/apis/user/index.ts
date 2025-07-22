@@ -1,6 +1,2 @@
 export * from './useGetUserList';
-<<<<<<< HEAD
-export * from './useUpdateUser'
-
-=======
->>>>>>> main
+export * from './useUpdateUser';
