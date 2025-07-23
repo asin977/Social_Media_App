@@ -44,7 +44,6 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ user, onClose }) => {
   return (
     <Modal isOpen={true} onClose={onClose}>
       <form onSubmit={handleSaveBtn}>
-        
         <h3 style={{ color: 'darkblue', fontFamily: 'bold', fontSize: '30px' }}>
           Edit User
         </h3>
