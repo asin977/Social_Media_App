@@ -4,6 +4,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { useGetUserList } from '../apis/user';
 import UserIcon from '../assets/images/user.png';
+import { ReactComponent as EditIcon } from '../assets/svg/edit.svg';
 import NotificationContainer from '../common/NotificationContainer';
 import ErrorContainer from '../components/ErrorContainer';
 import { UserListAPIResponse } from '../types/user';
@@ -135,7 +136,7 @@ const UserList = () => {
                   fontFamily: 'bold',
                 }}
               >
-                Edit
+                <span><EditIcon width={20} height={20}/></span>
               </button>
             </div>
           </div>
