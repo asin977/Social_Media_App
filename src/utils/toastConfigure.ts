@@ -1,6 +1,6 @@
 import { ToastOptions } from 'react-toastify';
 
-export const toastConfig: ToastOptions = {
+export const toastConfigure: ToastOptions = {
   position: 'top-right',
   autoClose: 3000,
   hideProgressBar: false,

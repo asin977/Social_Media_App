@@ -1,46 +1,39 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ClipLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
-import { useQueryClient } from '@tanstack/react-query';
 
 import { useUpdateUser } from '../apis/user';
-import { DataQueryKeys } from '../apis/data-query-keys';
 import { UserListAPIResponse } from '../types/user';
-import Modal from '../common/modal';
-import { toastConfig } from '../utils/toastConfigure';
+import { toastConfigure } from '../utils/toastConfigure';
+import Modal from './common/modal';
 
 type EditUserListProps = {
   user: UserListAPIResponse;
   onClose: () => void;
 };
 
-const EditUserList: React.FC<EditUserListProps> = ({ user, onClose }) => {
-  const queryClient = useQueryClient();
-  const { mutate: updateUser } = useUpdateUser();
+const EditUserModal: React.FC<EditUserListProps> = ({ user, onClose }) => {
+  const { mutate: updateUser, isPending } = useUpdateUser();
 
-  const [inputValue, setInputValue] = useState(user.name);
-  const [loading, setLoading] = useState(false);
+  const handleSaveBtn = () => {
+    const newName = (document.getElementById('userNameInput') as HTMLInputElement).value;
 
-  const handleSave = () => {
-    if (!inputValue.trim() || inputValue.trim() === user.name) {
-      toast.info('No changes to save.', toastConfig);
+    if (!newName.trim() || newName.trim() === user.name) {
+      toast.info('No changes to save.', toastConfigure);
       return;
     }
 
     updateUser(
-      { id: user.id, name: inputValue },
+      { id: user.id, name: newName },
       {
         onSuccess: () => {
-          queryClient.invalidateQueries({
-            queryKey: [DataQueryKeys.USER_LIST],
-          });
           toast.success('User updated successfully!');
           onClose();
         },
         onError: () => {
           toast.error('Failed to update user. Try again.');
         },
-      },
+      }
     );
   };
 
@@ -62,8 +55,7 @@ const EditUserList: React.FC<EditUserListProps> = ({ user, onClose }) => {
         <input
           type="text"
           id="userNameInput"
-          value={inputValue}
-          onChange={e => setInputValue(e.target.value)}
+          defaultValue={user.name}
           style={{
             width: '100%',
             padding: '10px',
@@ -75,7 +67,7 @@ const EditUserList: React.FC<EditUserListProps> = ({ user, onClose }) => {
       </div>
       <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
         <button
-          onClick={handleSave}
+          onClick={handleSaveBtn}
           style={{
             backgroundColor: 'darkblue',
             color: 'white',
@@ -84,15 +76,13 @@ const EditUserList: React.FC<EditUserListProps> = ({ user, onClose }) => {
             borderRadius: '5px',
             cursor: 'pointer',
           }}
-          disabled={
-            !inputValue.trim() || inputValue.trim() === user.name || loading
-          }
+          disabled={isPending}
         >
-          {loading ? <ClipLoader size={15} color="#fff" /> : 'Save'}
+          {isPending ? <ClipLoader size={15} color="#fff" /> : 'Save'}
         </button>
       </div>
     </Modal>
   );
 };
 
-export default EditUserList;
+export default EditUserModal
