@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import UserIcon from '../assets/images/user.png';
 import { ReactComponent as EditIcon } from '../assets/svg/edit.svg';
 import { UserListAPIResponse } from '../types/user';
-import { transform } from 'typescript';
+
 
 type UserDeatilsProps = {
   users: UserListAPIResponse[];
