@@ -13,11 +13,11 @@ const UserList = () => {
   const [selectedUser, setSelectedUser] = useState<UserListAPIResponse | null>(
     null,
   );
-  const [isEditModalVisible, setEditModalVisible] = useState(false);
+  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
 
   const handleEditBtnClick = (user: UserListAPIResponse) => {
     setSelectedUser(user);
-    setEditModalVisible(true);
+    setIsEditModalVisible(true);
   };
 
   const handleUserSelect = (user: UserListAPIResponse) => {
@@ -25,7 +25,7 @@ const UserList = () => {
   };
 
   const handleCloseModal = () => {
-    setEditModalVisible(false);
+    setIsEditModalVisible(false);
     setSelectedUser(null);
   };
 
