@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { ClipLoader } from 'react-spinners';
-import 'react-toastify/dist/ReactToastify.css';
 
 import { useGetUserList } from '../apis/user';
 import ErrorContainer from '../components/ErrorContainer';
 import { UserListAPIResponse } from '../types/user';
 import EditUserList from './EditUserModal';
-import { PrintUserList } from './PrintUserList';
+import { UserDetailsCard } from './UserDetailsCard';
 import NotificationContainer from './common/NotificationContainer';
+import { ReactComponent as EditIcon } from '../assets/svg/edit.svg';
 
 const UserList = () => {
   const { data: users = [], isLoading, isError, error } = useGetUserList();
@@ -67,23 +67,32 @@ const UserList = () => {
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(3, 1fr)',
-          justifyItems: 'start',
           textAlign: 'justify',
-          marginLeft: '30px',
-          marginRight: '30px',
+          margin: '30px',
           gap: '30px',
-          marginTop: '50px',
-          marginBottom: '50px',
-          transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
-          borderRadius: '8px',
-          cursor: 'pointer',
         }}
       >
-        <PrintUserList
-          users={users}
-          onUserSelect={handleUserSelect}
-          onEditClick={handleEditBtnClick}
-        />
+        {users.map((user, index) => (
+          <div key={index} style={{ position: 'relative' }}>
+            <UserDetailsCard users={[user]} onUserSelect={handleUserSelect} />
+            <button
+              onClick={() => handleEditBtnClick(user)}
+              style={{
+                position: 'absolute',
+                top: '150px',
+                right: '15px',
+                padding: '5px 10px',
+                backgroundColor: '#1976d2',
+                color: 'white',
+                border: 'none',
+                borderRadius: '4px',
+                cursor: 'pointer',
+              }}
+            >
+              <EditIcon width={20} height={20} />
+            </button>
+          </div>
+        ))}
       </div>
 
       {isEditModalVisible && selectedUser && (

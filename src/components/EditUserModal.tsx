@@ -42,7 +42,7 @@ const EditUserModal: React.FC<EditUserListProps> = ({ user, onClose }) => {
       <h3 style={{ color: 'darkblue', fontFamily: 'bold', fontSize: '30px' }}>
         Edit User
       </h3>
-      <p style={{ fontFamily: 'regular', fontSize: '18px' }}>
+      <p style={{ fontFamily: 'regular', fontSize: '15px' }}>
         User Email: <strong>{user.email}</strong>
       </p>
       <div style={{ marginBottom: '15px' }}>

@@ -24,6 +24,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
         justifyContent: 'center',
         alignItems: 'center',
         zIndex: 1000,
+        padding:'45px'
       }}
     >
       <div
@@ -33,7 +34,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
           borderRadius: '8px',
           boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
           width: '400px',
-          maxWidth: '90%',
+          maxWidth: '100%',
         }}
       >
         {children}
