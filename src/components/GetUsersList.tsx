@@ -56,10 +56,6 @@ const UserList: React.FC = () => {
             flexDirection: 'column',
             width: '100%',
             padding: '40px',
-            opacity: '1',
-            transition:
-              'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
-
             borderRadius: '8px',
             cursor: 'pointer',
           }}
