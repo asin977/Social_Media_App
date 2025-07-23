@@ -8,11 +8,9 @@ import EditUserList from './EditUserModal';
 import { UserDetailsCard } from './UserDetailsCard';
 
 const UserList = () => {
-  const { data: users = [], isLoading, isError, error } = useGetUserList();
+  const { data: user, isLoading, isError, error } = useGetUserList();
 
-  const [selectedUser, setSelectedUser] = useState<UserListAPIResponse | null>(
-    null,
-  );
+  const [selectedUser, setSelectedUser] = useState<UserListAPIResponse | null>(null);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
 
   const handleEditBtnClick = (user: UserListAPIResponse) => {
@@ -31,9 +29,7 @@ const UserList = () => {
 
   if (isLoading) {
     return (
-      <div
-        style={{ display: 'flex', justifyContent: 'center', marginTop: '40px' }}
-      >
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '40px' }}>
         <ClipLoader color="#1976d2" size={60} />
       </div>
     );
@@ -77,11 +73,14 @@ const UserList = () => {
           cursor: 'pointer',
         }}
       >
-        <UserDetailsCard
-          users={users}
-          onUserSelect={handleUserSelect}
-          onEditClick={handleEditBtnClick}
-        />
+        {(user || []).map((user, index) => (
+          <UserDetailsCard
+            key={index}
+            user={user}
+            onUserSelect={handleUserSelect}
+            onEditBtnClick={handleEditBtnClick}
+          />
+        ))}
       </div>
 
       {isEditModalVisible && selectedUser && (
