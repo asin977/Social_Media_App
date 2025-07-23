@@ -13,6 +13,7 @@ function App() {
         <Routes>
         <Route path='/' element={<Main />} />
           <Route path={routes.home} element={<Home />} />
+          <Route path={routes.posts} element={<Home />} />
         </Routes>
       </BrowserRouter>
     </div>
