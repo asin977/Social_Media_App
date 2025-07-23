@@ -27,7 +27,6 @@ const EditUserList: React.FC<EditUserListProps> = ({ user, onClose }) => {
       return;
     }
 
-    setLoading(true);
     updateUser(
       { id: user.id, name: inputValue },
       {
@@ -35,14 +34,11 @@ const EditUserList: React.FC<EditUserListProps> = ({ user, onClose }) => {
           queryClient.invalidateQueries({
             queryKey: [DataQueryKeys.USER_LIST],
           });
-          toast.success('User updated successfully!', toastConfig);
+          toast.success('User updated successfully!');
           onClose();
         },
         onError: () => {
-          toast.error('Failed to update user. Try again.', toastConfig);
-        },
-        onSettled: () => {
-          setLoading(false);
+          toast.error('Failed to update user. Try again.');
         },
       },
     );
