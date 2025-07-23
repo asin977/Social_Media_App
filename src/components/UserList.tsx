@@ -2,12 +2,12 @@ import { useState } from 'react';
 import { ClipLoader } from 'react-spinners';
 
 import { useGetUserList } from '../apis/user';
+import { ReactComponent as EditIcon } from '../assets/svg/edit.svg';
 import ErrorContainer from '../components/ErrorContainer';
 import { UserListAPIResponse } from '../types/user';
 import EditUserList from './EditUserModal';
 import { UserDetailsCard } from './UserDetailsCard';
 import NotificationContainer from './common/NotificationContainer';
-import { ReactComponent as EditIcon } from '../assets/svg/edit.svg';
 
 const UserList = () => {
   const { data: users = [], isLoading, isError, error } = useGetUserList();
