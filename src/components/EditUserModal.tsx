@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 
 import { useUpdateUser } from '../apis/user';
 import { UserListAPIResponse } from '../types/user';
-import { toastConfigure } from '../utils/toastConfigure';
+
 import Modal from './common/modal';
 
 type EditUserListProps = {
@@ -21,7 +21,7 @@ const EditUserModal: React.FC<EditUserListProps> = ({ user, onClose }) => {
     ).value;
 
     if (!newName.trim() || newName.trim() === user.name) {
-      toast.info('No changes to save.', toastConfigure);
+      toast.info('No changes to save.');
       return;
     }
     const handleSucessSaveBtn = () => {
