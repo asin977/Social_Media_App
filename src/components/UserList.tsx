@@ -2,12 +2,10 @@ import { useState } from 'react';
 import { ClipLoader } from 'react-spinners';
 
 import { useGetUserList } from '../apis/user';
-import { ReactComponent as EditIcon } from '../assets/svg/edit.svg';
 import ErrorContainer from '../components/ErrorContainer';
 import { UserListAPIResponse } from '../types/user';
 import EditUserList from './EditUserModal';
 import { UserDetailsCard } from './UserDetailsCard';
-import NotificationContainer from './common/NotificationContainer';
 
 const UserList = () => {
   const { data: users = [], isLoading, isError, error } = useGetUserList();
@@ -67,39 +65,28 @@ const UserList = () => {
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(3, 1fr)',
+          justifyItems: 'start',
           textAlign: 'justify',
-          margin: '30px',
+          marginLeft: '30px',
+          marginRight: '30px',
           gap: '30px',
+          marginTop: '50px',
+          marginBottom: '50px',
+          transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
+          borderRadius: '8px',
+          cursor: 'pointer',
         }}
       >
-        {users.map((user, index) => (
-          <div key={index} style={{ position: 'relative' }}>
-            <UserDetailsCard users={[user]} onUserSelect={handleUserSelect} />
-            <button
-              onClick={() => handleEditBtnClick(user)}
-              style={{
-                position: 'absolute',
-                top: '150px',
-                right: '15px',
-                padding: '5px 10px',
-                backgroundColor: '#1976d2',
-                color: 'white',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-              }}
-            >
-              <EditIcon width={20} height={20} />
-            </button>
-          </div>
-        ))}
+        <UserDetailsCard
+          users={users}
+          onUserSelect={handleUserSelect}
+          onEditClick={handleEditBtnClick}
+        />
       </div>
 
       {isEditModalVisible && selectedUser && (
         <EditUserList user={selectedUser} onClose={handleCloseModal} />
       )}
-
-      <NotificationContainer />
     </>
   );
 };

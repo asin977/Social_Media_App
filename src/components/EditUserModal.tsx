@@ -16,24 +16,27 @@ const EditUserModal: React.FC<EditUserListProps> = ({ user, onClose }) => {
   const { mutate: updateUser, isPending } = useUpdateUser();
 
   const handleSaveBtn = () => {
-    const newName = (document.getElementById('userNameInput') as HTMLInputElement).value;
+    const newName = (
+      document.getElementById('userNameInput') as HTMLInputElement
+    ).value;
 
     if (!newName.trim() || newName.trim() === user.name) {
       toast.info('No changes to save.', toastConfigure);
       return;
     }
+    const handeSucessSaveBtn = () => {
+      toast.success('User updated sucessfully!..');
+      onClose();
+    };
 
     updateUser(
       { id: user.id, name: newName },
       {
-        onSuccess: () => {
-          toast.success('User updated successfully!');
-          onClose();
-        },
+        onSuccess: handeSucessSaveBtn,
         onError: () => {
           toast.error('Failed to update user. Try again.');
         },
-      }
+      },
     );
   };
 
@@ -85,4 +88,4 @@ const EditUserModal: React.FC<EditUserListProps> = ({ user, onClose }) => {
   );
 };
 
-export default EditUserModal
+export default EditUserModal;

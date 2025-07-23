@@ -6,6 +6,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #f8f9fa;
+  /* background-color: red; */
 }
 
 code {
@@ -31,4 +32,11 @@ html {
 @font-face {
   font-family: 'regular';
   src: url('./assets/fonts/Poppins/Poppins-Regular.ttf');
+}
+
+/* As we cannot give the hovering as inline in the userDetailsCard added the styles here  */
+
+.user-details-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
 }
