@@ -24,7 +24,7 @@ const EditUserModal: React.FC<EditUserListProps> = ({ user, onClose }) => {
       toast.info('No changes to save.', toastConfigure);
       return;
     }
-    const handeSucessSaveBtn = () => {
+    const handleSucessSaveBtn = () => {
       toast.success('User updated sucessfully!..');
       onClose();
     };
@@ -32,7 +32,7 @@ const EditUserModal: React.FC<EditUserListProps> = ({ user, onClose }) => {
     updateUser(
       { id: user.id, name: newName },
       {
-        onSuccess: handeSucessSaveBtn,
+        onSuccess: handleSucessSaveBtn,
         onError: () => {
           toast.error('Failed to update user. Try again.');
         },
