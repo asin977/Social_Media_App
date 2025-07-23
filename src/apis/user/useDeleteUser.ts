@@ -18,15 +18,13 @@ export const useDeleteUser = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [DataQueryKeys.USER_LIST] });
-      toast.success('User deleted successfully!', {
-        position: 'top-right',
-      });
+      toast.success('User deleted successfully!');
     },
     onError: error => {
       console.error('Error deleting user:', error);
-      toast.error(`Error deleting user: ${error.message || 'Unknown error'}`, {
-        position: 'top-right',
-      });
+      toast.error(
+        `Error deleting user: ${error.message || 'Unknown error'}`
+      );
     },
   });
 };

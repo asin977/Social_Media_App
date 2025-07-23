@@ -1,6 +1,5 @@
 import React from 'react';
 import { ClipLoader } from 'react-spinners';
-import 'react-toastify/dist/ReactToastify.css';
 
 import { useGetUserList, useDeleteUser } from '../apis/user';
 import { ReactComponent as DeleteIcon } from '../assets/svg/delete.svg';
