@@ -4,7 +4,7 @@ import { ClipLoader } from 'react-spinners';
 import { useGetUserList } from '../apis/user';
 import ErrorContainer from '../components/ErrorContainer';
 import { UserListAPIResponse } from '../types/user';
-import EditUserList from './EditUserModal';
+import EditUserModal from './EditUserModal';
 import { UserDetailsCard } from './UserDetailsCard';
 
 const UserList = () => {
@@ -84,7 +84,7 @@ const UserList = () => {
       </div>
 
       {isEditModalVisible && selectedUser && (
-        <EditUserList user={selectedUser} onClose={handleCloseModal} />
+        <EditUserModal user={selectedUser} onClose={handleCloseModal} />
       )}
     </>
   );
