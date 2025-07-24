@@ -1,16 +1,19 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { DataStorageKeys } from '../data-query-keys';
+import { DataQueryKeys } from '../data-query-keys';
+import { UserListAPIResponse } from '../../types/user';
 import httpClient from '../httpClient';
 import { endpoints } from '../endpoints';
-import { UserListAPIResponse } from '../../types/user';
 
 export const useGetUserList = () => {
   return useQuery<UserListAPIResponse[]>({
-    queryKey: [DataStorageKeys.USER_LIST],
+    queryKey: [DataQueryKeys.USER_LIST],
     queryFn: async () => {
-      const { data } = await httpClient.get(endpoints.getUserList());
-      return data;
+      const response = await httpClient.get<UserListAPIResponse[]>(
+        endpoints.getUserList()
+      );
+      
+      return response.data;
     },
   });
 };
