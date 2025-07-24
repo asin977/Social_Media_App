@@ -3,6 +3,7 @@ import { ClipLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
 
 import { useUpdateUser } from '../apis/user';
+import { USERNAME } from '../constants/common';
 import { UserListAPIResponse } from '../types/user';
 import Modal from './common/modal';
 
@@ -18,7 +19,7 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ user, onClose }) => {
     e.preventDefault();
     const form = e.currentTarget;
     const formData = new FormData(form);
-    const newName = formData.get('userName')?.toString().trim()
+    const newName = formData.get(USERNAME)?.toString().trim()
 
     if (!newName || newName === user.name) {
       toast.info('No changes to save.');
@@ -62,6 +63,7 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ user, onClose }) => {
             id="userNameInput"
             name="userName"
             defaultValue={user.name}
+            placeholder= {USERNAME}
             style={{
               width: '100%',
               padding: '10px',
