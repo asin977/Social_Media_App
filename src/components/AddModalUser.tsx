@@ -20,7 +20,7 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ onClose, onSuccess }) => {
 
   const { mutate: addUser, isPending, isSuccess } = useAddUser({
     onSuccess: () => {
-      toast.success('User added successfully!', { position: 'top-right' });
+      toast.success('User added successfully!');
       onSuccess();
     },
     onError: (err: any) => {
@@ -41,7 +41,7 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ onClose, onSuccess }) => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = () => {
+  const handleSubmitBtn = () => {
     const { name, email, gender, status } = formData;
     if (!name || !email || !gender || !status) {
       toast.error('Please fill all fields');
@@ -91,7 +91,7 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ onClose, onSuccess }) => {
 
         <div style={buttonContainerStyle}>
           <button
-            onClick={handleSubmit}
+            onClick={handleSubmitBtn}
             disabled={isPending}
             style={buttonStyle}
           >
