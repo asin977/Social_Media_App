@@ -1,11 +1,13 @@
 import React from 'react';
 import { ClipLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
+import { useQueryClient } from '@tanstack/react-query';
 
 import { useUpdateUser } from '../apis/user';
 import { USERNAME } from '../constants/common';
 import { UserListAPIResponse } from '../types/user';
 import Modal from './common/modal';
+import { DataQueryKeys } from '../apis/data-query-keys';
 
 type EditUserModalProps = {
   user: UserListAPIResponse;
@@ -13,6 +15,7 @@ type EditUserModalProps = {
 };
 
 const EditUserModal: React.FC<EditUserModalProps> = ({ user, onClose }) => {
+  const queryClient = useQueryClient();
   const { mutate: updateUser, isPending } = useUpdateUser();
 
   const handleSaveBtn = (e: React.FormEvent<HTMLFormElement>) => {
@@ -21,14 +24,16 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ user, onClose }) => {
     const formData = new FormData(form);
     const newName = formData.get(USERNAME)?.toString().trim();
 
-    if (!newName || newName === user.name) {
-      toast.info('No changes to save.');
-      return;
-    }
+    // if (!newName || newName === user.name) {
+    //   toast.info('No changes to save.');
+    //   return;
+    // }
 
     const handleSuccessSaveBtn = () => {
       toast.success('User updated Successfully..');
+      queryClient.invalidateQueries({ queryKey: [DataQueryKeys.USER_LIST] });
       onClose();
+      console.log('success')
     };
 
     updateUser(

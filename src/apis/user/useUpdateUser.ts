@@ -12,7 +12,7 @@ export const useUpdateUser = () => {
     mutationFn: async (payload: UpdateUserPayLoad) => {
       const { id, ...dataToUpdate } = payload;
       const response = await httpClient.put<UserListAPIResponse>(
-        endpoints.getUserDetails((id.toString())),
+        endpoints.getUserEditDetails((id)),
         dataToUpdate,
       );
 
