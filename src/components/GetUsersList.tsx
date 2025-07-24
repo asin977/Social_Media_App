@@ -1,13 +1,13 @@
 import { useGetUserList } from '../apis/user';
 import UserIcon from '../assets/images/user.png';
 
-
-const UserList = () => {
+const GetUserList = () => {
   const { data: users, isLoading, isError, error } = useGetUserList();
 
   if (isLoading) {
     return <p>Loading users...</p>;
   }
+
   if (isError) {
     return <p>Error: {error?.message}</p>;
   }
@@ -18,14 +18,13 @@ const UserList = () => {
         display: 'grid',
         gridTemplateColumns: 'repeat(3,1fr)',
         justifyItems: 'start',
-        textAlign: 'justify',
-        marginLeft: '100px',
+        textAlign: 'center',
+        marginLeft: '30px',
         marginRight: '30px',
         gap: '30px',
         marginTop: '50px',
       }}
     >
-     
       {users?.map(user => (
         <div
           style={{
@@ -34,11 +33,11 @@ const UserList = () => {
             boxShadow: '1px 2px 3px blue',
             display: 'flex',
             justifyContent: 'center',
-            alignItems:'center',
             flexWrap: 'wrap',
             flexDirection: 'column',
             width: '100%',
             padding: '20px',
+            marginBottom: '30px',
           }}
         >
           <span>
@@ -52,4 +51,4 @@ const UserList = () => {
   );
 };
 
-export default UserList;
+export default GetUserList;
