@@ -19,26 +19,26 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ user, onClose }) => {
     e.preventDefault();
     const form = e.currentTarget;
     const formData = new FormData(form);
-    const newName = formData.get(USERNAME)?.toString().trim()
+    const newName = formData.get(USERNAME)?.toString().trim();
 
     if (!newName || newName === user.name) {
       toast.info('No changes to save.');
       return;
     }
-    
+
     const handleSuccessSaveBtn = () => {
       toast.success('User updated Successfully..');
       onClose();
-    }
+    };
 
     updateUser(
       { id: user.id, name: newName },
       {
-        onSuccess:handleSuccessSaveBtn,
+        onSuccess: handleSuccessSaveBtn,
         onError: () => {
           toast.error('Failed to update user. Try again.');
         },
-      }
+      },
     );
   };
 
@@ -63,7 +63,7 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ user, onClose }) => {
             id="userNameInput"
             name="userName"
             defaultValue={user.name}
-            placeholder= {USERNAME}
+            placeholder={USERNAME}
             style={{
               width: '100%',
               padding: '10px',
@@ -73,7 +73,9 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ user, onClose }) => {
             }}
           />
         </div>
-        <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
+        <div
+          style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}
+        >
           <button
             type="submit"
             style={{
@@ -95,9 +97,3 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ user, onClose }) => {
 };
 
 export default EditUserModal;
-
-
-
-
-
-
