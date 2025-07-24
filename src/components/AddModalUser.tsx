@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { ClipLoader } from 'react-spinners';
 
@@ -18,24 +18,20 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ onClose, onSuccess }) => {
     status: '',
   });
 
-  const { mutate: addUser, isPending, isSuccess } = useAddUser({
-    onSuccess: () => {
-      toast.success('User added successfully!');
-      onSuccess();
-    },
+  const handleSucessBtn = () => {
+    toast.success('User added Sucessfully..');
+    onSuccess();
+  };
+
+  const { mutate: addUser, isPending } = useAddUser({
+    onSuccess: handleSucessBtn,
     onError: (err: any) => {
       toast.error(err?.message || 'Failed to add user');
     },
   });
 
-  useEffect(() => {
-    if (isSuccess) {
-      onClose(); 
-    }
-  }, [isSuccess, onClose]);
-
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
@@ -95,13 +91,12 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ onClose, onSuccess }) => {
             disabled={isPending}
             style={buttonStyle}
           >
-            {isPending ? (
-              <ClipLoader color="#fff" size={20} />
-            ) : (
-              'Add'
-            )}
+            {isPending ? <ClipLoader color="#fff" size={20} /> : 'Add'}
           </button>
-          <button onClick={onClose} style={{ ...buttonStyle, backgroundColor: '#6c757d' }}>
+          <button
+            onClick={onClose}
+            style={{ ...buttonStyle, backgroundColor: '#6c757d' }}
+          >
             Cancel
           </button>
         </div>
@@ -111,7 +106,6 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ onClose, onSuccess }) => {
 };
 
 export default AddUserModal;
-
 
 const modalStyles = {
   backdrop: {
@@ -124,7 +118,7 @@ const modalStyles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    zIndex: 999,
+    zIndex: 1,
   },
   modal: {
     backgroundColor: 'white',
