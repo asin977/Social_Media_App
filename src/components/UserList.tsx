@@ -2,6 +2,7 @@ import React from 'react';
 import { ClipLoader } from 'react-spinners';
 
 import { useGetUserList, useDeleteUser } from '../apis/user';
+
 import { ReactComponent as DeleteIcon } from '../assets/svg/delete.svg';
 
 const UserList: React.FC = () => {
@@ -24,7 +25,7 @@ const UserList: React.FC = () => {
     );
   }
 
-  const handleDelete = (userId: string) => {
+  const handleDeleteBtn = (userId: string) => {
     deleteUserMutation(userId);
   };
 
@@ -80,7 +81,7 @@ const UserList: React.FC = () => {
                 borderRadius: '4px',
                 cursor: 'pointer',
               }}
-              onClick={() => handleDelete(user?.id?.toString())}
+              onClick={() => handleDeleteBtn(user?.id?.toString())}
               title="Delete user"
             >
               <DeleteIcon width={20} height={20} />
