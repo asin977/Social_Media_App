@@ -13,7 +13,7 @@ const App = () => {
   return (
     <div className="App">
       <QueryClientProvider client={queryClient}>
-        <ToastContainer />
+        <ToastContainer position="top-right" autoClose={3000} />
         <BrowserRouter>
           <Routes>
             <Route path={routes.home} element={<Home />} />
