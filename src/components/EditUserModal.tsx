@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { useUpdateUser } from '../apis/user';
 import { UserListAPIResponse } from '../types/user';
 import Modal from './common/modal';
+import { USERNAME } from '../constants/common';
 
 type EditUserModalProps = {
   user: UserListAPIResponse;
@@ -19,13 +20,25 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ user, onClose }) => {
     onClose();
   };
 
+  const handleUpdateUser = (id: number, newName: string) => {
+    updateUser(
+      { id, name: newName },
+      {
+        onSuccess: handleSuccessBtn,
+        onError: () => {
+          toast.error('Failed to update user. Try again.');
+        },
+      },
+    );
+  };
+
   const handleSaveBtn = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
     const formData = new FormData(form);
-    const newName = formData.get('userName')?.toString().trim();
+    const newName = formData.get(USERNAME)?.toString().trim();
 
-    if (newName === undefined || newName.length === 0) {
+    if (!newName) {
       toast.info('Please enter a name.');
       return;
     }
@@ -35,15 +48,7 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ user, onClose }) => {
       return;
     }
 
-    updateUser(
-      { id: user.id, name: newName },
-      {
-        onSuccess: handleSuccessBtn,
-        onError: () => {
-          toast.error('Failed to update user. Try again.');
-        },
-      },
-    );
+    handleUpdateUser(user.id, newName);
   };
 
   return (
@@ -55,6 +60,7 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ user, onClose }) => {
         <p style={{ fontFamily: 'regular', fontSize: '18px' }}>
           User Email: <strong>{user.email}</strong>
         </p>
+
         <div style={{ marginBottom: '20px' }}>
           <label
             htmlFor="userNameInput"
@@ -65,7 +71,7 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ user, onClose }) => {
           <input
             type="text"
             id="userNameInput"
-            name="userName"
+            name={USERNAME}
             defaultValue={user.name}
             placeholder="Enter new name"
             style={{
@@ -77,6 +83,7 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ user, onClose }) => {
             }}
           />
         </div>
+
         <div
           style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}
         >
