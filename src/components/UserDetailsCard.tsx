@@ -14,11 +14,11 @@ type UserDetailsCardProps = {
 export const UserDetailsCard: React.FC<UserDetailsCardProps> = ({
   user,
   onUserSelect,
-  onEditBtnClick
+  onEditBtnClick,
 }) => {
   return (
     <div
-      className='user-details-card'
+      className="user-details-card"
       style={{
         border: '1px solid #ccc',
         padding: '50px',

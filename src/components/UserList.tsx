@@ -10,7 +10,9 @@ import { UserDetailsCard } from './UserDetailsCard';
 const UserList = () => {
   const { data: user, isLoading, isError, error } = useGetUserList();
 
-  const [selectedUser, setSelectedUser] = useState<UserListAPIResponse | null>(null);
+  const [selectedUser, setSelectedUser] = useState<UserListAPIResponse | null>(
+    null,
+  );
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
 
   const handleEditBtnClick = (user: UserListAPIResponse) => {
@@ -29,7 +31,9 @@ const UserList = () => {
 
   if (isLoading) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '40px' }}>
+      <div
+        style={{ display: 'flex', justifyContent: 'center', marginTop: '40px' }}
+      >
         <ClipLoader color="#1976d2" size={60} />
       </div>
     );
