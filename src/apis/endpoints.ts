@@ -1,6 +1,6 @@
 export const endpoints = {
   // users
-  getUserDetails: (id: string) => `public/v2/${id}/user`,
+  getUserEditDetails: (id: string) => `public/v2/users/${id}`,
   getUserList: () => `public/v2/users`,
   deleteUser: (userId: string) => `public/v2/users/${userId}`,
 

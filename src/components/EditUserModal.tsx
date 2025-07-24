@@ -3,7 +3,6 @@ import { ClipLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
 
 import { useUpdateUser } from '../apis/user';
-import { USERNAME } from '../constants/common';
 import { UserListAPIResponse } from '../types/user';
 import Modal from './common/modal';
 
@@ -15,26 +14,31 @@ type EditUserModalProps = {
 const EditUserModal: React.FC<EditUserModalProps> = ({ user, onClose }) => {
   const { mutate: updateUser, isPending } = useUpdateUser();
 
+  const handleSuccessBtn = () => {
+    toast.success('User updated successfully.');
+    onClose();
+  };
+
   const handleSaveBtn = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
     const formData = new FormData(form);
-    const newName = formData.get(USERNAME)?.toString().trim();
+    const newName = formData.get('userName')?.toString().trim();
 
-    if (!newName || newName === user.name) {
+    if (newName === undefined || newName.length === 0) {
+      toast.info('Please enter a name.');
+      return;
+    }
+
+    if (newName === user.name.trim()) {
       toast.info('No changes to save.');
       return;
     }
 
-    const handleSuccessSaveBtn = () => {
-      toast.success('User updated Successfully..');
-      onClose();
-    };
-
     updateUser(
       { id: user.id, name: newName },
       {
-        onSuccess: handleSuccessSaveBtn,
+        onSuccess: handleSuccessBtn,
         onError: () => {
           toast.error('Failed to update user. Try again.');
         },
@@ -48,10 +52,10 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ user, onClose }) => {
         <h3 style={{ color: 'darkblue', fontFamily: 'bold', fontSize: '30px' }}>
           Edit User
         </h3>
-        <p style={{ fontFamily: 'regular', fontSize: '15px' }}>
+        <p style={{ fontFamily: 'regular', fontSize: '18px' }}>
           User Email: <strong>{user.email}</strong>
         </p>
-        <div style={{ marginBottom: '15px' }}>
+        <div style={{ marginBottom: '20px' }}>
           <label
             htmlFor="userNameInput"
             style={{ display: 'block', marginBottom: '5px' }}
@@ -63,7 +67,7 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ user, onClose }) => {
             id="userNameInput"
             name="userName"
             defaultValue={user.name}
-            placeholder={USERNAME}
+            placeholder="Enter new name"
             style={{
               width: '100%',
               padding: '10px',
@@ -77,6 +81,22 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ user, onClose }) => {
           style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}
         >
           <button
+            type="button"
+            onClick={onClose}
+            style={{
+              backgroundColor: '#ccc',
+              color: 'black',
+              padding: '8px 15px',
+              border: 'none',
+              borderRadius: '5px',
+              cursor: 'pointer',
+              fontFamily: 'bold',
+              fontSize: '18px',
+            }}
+          >
+            Cancel
+          </button>
+          <button
             type="submit"
             style={{
               backgroundColor: 'darkblue',
@@ -85,6 +105,8 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ user, onClose }) => {
               border: 'none',
               borderRadius: '5px',
               cursor: 'pointer',
+              fontFamily: 'bold',
+              fontSize: '18px',
             }}
             disabled={isPending}
           >

@@ -1,9 +1,10 @@
 import React from 'react';
+
 import { UserListAPIResponse } from '../types/user';
 
 import UserIcon from '../assets/images/user.png';
-import { ReactComponent as EditIcon } from '../assets/svg/edit.svg';
 import { ReactComponent as DeleteIcon } from '../assets/svg/delete.svg';
+import { ReactComponent as EditIcon } from '../assets/svg/edit.svg';
 
 type UserDetailsCardProps = {
   user: UserListAPIResponse;
@@ -38,12 +39,26 @@ const UserDetailsCard: React.FC<UserDetailsCardProps> = ({
       <img
         src={UserIcon}
         alt="userIcon"
-        style={{ width: '100px', position: 'absolute', top: '10px', left: '10px' }}
+        style={{
+          width: '100px',
+          position: 'absolute',
+          top: '50px',
+          left: '80px',
+        }}
       />
-      <h3 style={{ margin: '0 0 10px 0', textAlign: 'end' }}>{user.name}</h3>
-      <p style={{ textAlign: 'end' }}>{user.email}</p>
+      <h3 style={{ margin: '0 0 10px 0', textAlign: 'end', fontSize: '23px' }}>
+        {user.name}
+      </h3>
+      <p style={{ textAlign: 'end', fontSize: '18px' }}>{user.email}</p>
 
-      <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '10px' }}>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          gap: '10px',
+          marginTop: '10px',
+        }}
+      >
         <button
           onClick={e => {
             e.stopPropagation();
@@ -70,7 +85,7 @@ const UserDetailsCard: React.FC<UserDetailsCardProps> = ({
           }}
           style={{
             padding: '5px 10px',
-            backgroundColor: '#d32f2f',
+            backgroundColor: '#1976d2',
             color: 'white',
             border: 'none',
             borderRadius: '4px',

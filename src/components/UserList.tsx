@@ -12,19 +12,19 @@ const UserList: React.FC = () => {
 
   const [editUser, setEditUser] = useState<UserListAPIResponse | null>(null);
 
-  const handleDelete = (userId: string) => {
+  const handleDeleteBtn = (userId: string) => {
     deleteUserMutation(userId);
   };
 
-  const handleEdit = (user: UserListAPIResponse) => {
-    setEditUser(user); // Open modal
+  const handleEditBtn = (user: UserListAPIResponse) => {
+    setEditUser(user);
   };
 
-  const handleCloseModal = () => {
-    setEditUser(null); // Close modal
+  const handleCloseModalBtn = () => {
+    setEditUser(null);
   };
 
-  const handleSelect = (user: UserListAPIResponse) => {
+  const handleSelectBtn = (user: UserListAPIResponse) => {
     console.log('Selected user:', user);
   };
 
@@ -63,16 +63,15 @@ const UserList: React.FC = () => {
           <UserDetailsCard
             key={user.id}
             user={user}
-            onUserSelect={handleSelect}
-            onEditBtnClick={handleEdit}
-            onDelete={handleDelete}
+            onUserSelect={handleSelectBtn}
+            onEditBtnClick={handleEditBtn}
+            onDelete={handleDeleteBtn}
           />
         ))}
       </div>
 
-      {/* Show EditUserModal if a user is selected */}
       {editUser && (
-        <EditUserModal user={editUser} onClose={handleCloseModal} />
+        <EditUserModal user={editUser} onClose={handleCloseModalBtn} />
       )}
     </>
   );
