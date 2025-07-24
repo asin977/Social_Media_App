@@ -1,20 +1,22 @@
 import React from 'react';
-
 import { UserListAPIResponse } from '../types/user';
 
 import UserIcon from '../assets/images/user.png';
 import { ReactComponent as EditIcon } from '../assets/svg/edit.svg';
+import { ReactComponent as DeleteIcon } from '../assets/svg/delete.svg';
 
 type UserDetailsCardProps = {
   user: UserListAPIResponse;
   onUserSelect: (user: UserListAPIResponse) => void;
   onEditBtnClick: (user: UserListAPIResponse) => void;
+  onDelete: (userId: string) => void;
 };
 
-export const UserDetailsCard: React.FC<UserDetailsCardProps> = ({
+const UserDetailsCard: React.FC<UserDetailsCardProps> = ({
   user,
   onUserSelect,
   onEditBtnClick,
+  onDelete,
 }) => {
   return (
     <div
@@ -29,17 +31,19 @@ export const UserDetailsCard: React.FC<UserDetailsCardProps> = ({
         boxShadow: '1px 2px 3px blue',
         opacity: '1',
         cursor: 'pointer',
+        position: 'relative',
       }}
       onClick={() => onUserSelect(user)}
     >
       <img
         src={UserIcon}
         alt="userIcon"
-        style={{ width: '100px', position: 'absolute' }}
+        style={{ width: '100px', position: 'absolute', top: '10px', left: '10px' }}
       />
       <h3 style={{ margin: '0 0 10px 0', textAlign: 'end' }}>{user.name}</h3>
       <p style={{ textAlign: 'end' }}>{user.email}</p>
-      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+
+      <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '10px' }}>
         <button
           onClick={e => {
             e.stopPropagation();
@@ -52,14 +56,34 @@ export const UserDetailsCard: React.FC<UserDetailsCardProps> = ({
             border: 'none',
             borderRadius: '4px',
             cursor: 'pointer',
-            marginTop: '10px',
+            display: 'flex',
+            alignItems: 'center',
           }}
         >
-          <span>
-            <EditIcon width={20} height={20} />
-          </span>
+          <EditIcon width={20} height={20} />
+        </button>
+
+        <button
+          onClick={e => {
+            e.stopPropagation();
+            onDelete(user.id.toString());
+          }}
+          style={{
+            padding: '5px 10px',
+            backgroundColor: '#d32f2f',
+            color: 'white',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          <DeleteIcon width={20} height={20} />
         </button>
       </div>
     </div>
   );
 };
+
+export default UserDetailsCard;

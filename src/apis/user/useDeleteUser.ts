@@ -21,10 +21,7 @@ export const useDeleteUser = () => {
       toast.success('User deleted successfully!');
     },
     onError: error => {
-      console.error('Error deleting user:', error);
-      toast.error(
-        `Error deleting user: ${error.message || 'Unknown error'}`
-      );
+      toast.error(`Error deleting user: ${error.message || 'Unknown error'}`);
     },
   });
 };

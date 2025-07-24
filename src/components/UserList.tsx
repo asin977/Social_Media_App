@@ -1,13 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ClipLoader } from 'react-spinners';
 
 import { useGetUserList, useDeleteUser } from '../apis/user';
-
-import { ReactComponent as DeleteIcon } from '../assets/svg/delete.svg';
+import { UserListAPIResponse } from '../types/user';
+import UserDetailsCard from './UserDetailsCard';
+import EditUserModal from './EditUserModal';
 
 const UserList: React.FC = () => {
   const { data: users, isLoading, isError, error } = useGetUserList();
   const { mutate: deleteUserMutation } = useDeleteUser();
+
+  const [editUser, setEditUser] = useState<UserListAPIResponse | null>(null);
+
+  const handleDelete = (userId: string) => {
+    deleteUserMutation(userId);
+  };
+
+  const handleEdit = (user: UserListAPIResponse) => {
+    setEditUser(user); // Open modal
+  };
+
+  const handleCloseModal = () => {
+    setEditUser(null); // Close modal
+  };
+
+  const handleSelect = (user: UserListAPIResponse) => {
+    console.log('Selected user:', user);
+  };
 
   if (isLoading) {
     return (
@@ -25,82 +44,37 @@ const UserList: React.FC = () => {
     );
   }
 
-  const handleDeleteBtn = (userId: string) => {
-    deleteUserMutation(userId);
-  };
-
   return (
-    <div
-      style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(3, 1fr)',
-        justifyItems: 'start',
-        textAlign: 'justify',
-        marginLeft: '30px',
-        marginRight: '30px',
-        gap: '30px',
-        marginTop: '50px',
-        marginBottom: '50px',
-      }}
-    >
-      {users?.map(user => (
-        <div
-          key={user.id}
-          style={{
-            color: 'darkblue',
-            backgroundColor: '#e3f2fd',
-            boxShadow: '1px 2px 3px blue',
-            display: 'flex',
-            justifyContent: 'center',
-            flexWrap: 'wrap',
-            flexDirection: 'column',
-            width: '100%',
-            padding: '40px',
-            borderRadius: '8px',
-            cursor: 'pointer',
-          }}
-        >
-          {user.name}
-          <span
-            style={{
-              display: 'flex',
-              justifyContent: 'flex-end',
-              marginTop: '-50px',
-              marginBottom: '20px',
-            }}
-          >
-            <button
-              style={{
-                marginRight: '20px',
-                padding: '5px 10px',
-                color: '#fff',
-                fontFamily: 'bold',
-                fontSize: '18px',
-                backgroundColor: '#023e8a',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-              }}
-              onClick={() => handleDeleteBtn(user?.id?.toString())}
-              title="Delete user"
-            >
-              <DeleteIcon width={20} height={20} />
-            </button>
-          </span>
+    <>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(3, 1fr)',
+          justifyItems: 'start',
+          textAlign: 'justify',
+          marginLeft: '30px',
+          marginRight: '30px',
+          gap: '30px',
+          marginTop: '50px',
+          marginBottom: '50px',
+        }}
+      >
+        {users?.map(user => (
+          <UserDetailsCard
+            key={user.id}
+            user={user}
+            onUserSelect={handleSelect}
+            onEditBtnClick={handleEdit}
+            onDelete={handleDelete}
+          />
+        ))}
+      </div>
 
-          <p
-            style={{
-              color: 'black',
-              fontSize: '18px',
-              fontFamily: 'regular',
-              marginBottom: '10px',
-            }}
-          >
-            {user.email}
-          </p>
-        </div>
-      ))}
-    </div>
+      {/* Show EditUserModal if a user is selected */}
+      {editUser && (
+        <EditUserModal user={editUser} onClose={handleCloseModal} />
+      )}
+    </>
   );
 };
 

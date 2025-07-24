@@ -4,6 +4,6 @@ import UserList from '../components/UserList';
 export const Home = () => (
   <>
     <Header />
-    <UserList />
+    <UserList  />
   </>
 );
