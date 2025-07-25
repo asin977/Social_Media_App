@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
 import { Header } from '../components/Header';
-import UserList from '../components/UsersList';
 import AddUserModal from '../components/AddModalUser';
 
 import AddUserIcon from '../assets/images/add-user.png';
+import UserLists from '../components/UserList';
 
 export const Home = () => {
   const [showModal, setShowModal] = useState(false);
@@ -48,7 +48,7 @@ export const Home = () => {
           <span style={{ fontSize: '24px' }}>Add User</span>
         </button>
 
-        <UserList key={refreshKey} />
+        <UserLists key={refreshKey} />
 
         {showModal && (
           <AddUserModal onClose={handleCloseModal} onSuccess={handleUserAdded} />

@@ -13,3 +13,9 @@ export type AddUserPayload = {
   gender: 'male' | 'female';
   status: 'active' | 'inactive';
 };
+
+export type UpdateUserPayLoad = {
+  id: number;
+  name?: string;
+  email?: string;
+}

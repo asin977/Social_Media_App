@@ -7,7 +7,7 @@ import { UserListAPIResponse } from '../types/user';
 import EditUserModal from './EditUserModal';
 import { UserDetailsCard } from './UserDetailsCard';
 
-const UserList = () => {
+const UserLists = () => {
   const { data: user, isLoading, isError, error } = useGetUserList();
 
   const [selectedUser, setSelectedUser] = useState<UserListAPIResponse | null>(
@@ -94,4 +94,4 @@ const UserList = () => {
   );
 };
 
-export default UserList;
+export default UserLists;
