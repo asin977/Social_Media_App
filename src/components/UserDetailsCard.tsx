@@ -23,7 +23,7 @@ const UserDetailsCard: React.FC<UserDetailsCardProps> = ({
     <div
       className="user-details-card"
       style={{
-        border: '1px solid #ccc',
+        border: '1px solid blue',
         padding: '50px',
         borderRadius: '8px',
         width: '100%',
@@ -43,7 +43,7 @@ const UserDetailsCard: React.FC<UserDetailsCardProps> = ({
           width: '100px',
           position: 'absolute',
           top: '50px',
-          left: '80px',
+          left: '20px',
         }}
       />
       <h3 style={{ margin: '0 0 10px 0', textAlign: 'end', fontSize: '23px' }}>

@@ -1,9 +1,15 @@
-const Modal: React.FC<{ isOpen: boolean; onClose: () => void; children: React.ReactNode }> = ({
-  isOpen,
-  onClose,
-  children,
-}) => {
-  if (!isOpen) return null;
+import React from 'react';
+
+type ModalProps = {
+  isOpen: boolean;
+  onClose: () => void;
+  children: React.ReactNode;
+};
+
+const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
+  if (!isOpen) {
+    return null;
+  }
 
   return (
     <div
@@ -11,40 +17,48 @@ const Modal: React.FC<{ isOpen: boolean; onClose: () => void; children: React.Re
         position: 'fixed',
         top: 0,
         left: 0,
-        width: '100vw',
-        height: '100vh',
-        backgroundColor: 'rgba(0,0,0,0.5)',
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
         display: 'flex',
-        alignItems: 'center',
         justifyContent: 'center',
+        alignItems: 'center',
         zIndex: 1000,
+        padding: '45px',
       }}
     >
       <div
         style={{
           backgroundColor: 'white',
           padding: '30px',
-          borderRadius: '10px',
-          minWidth: '300px',
-          maxWidth: '500px',
-          boxShadow: '0 0 10px rgba(0,0,0,0.3)',
+          borderRadius: '8px',
+          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+          width: '400px',
+          maxWidth: '100%',
         }}
       >
-        <button
-          onClick={onClose}
+        {children}
+        <div
           style={{
-            position: 'absolute',
-            top: 10,
-            right: 15,
-            background: 'transparent',
-            border: 'none',
-            fontSize: '20px',
-            cursor: 'pointer',
+            display: 'flex',
+            justifyContent: 'flex-end',
+            marginTop: '15px',
           }}
         >
-          ×
-        </button>
-        {children}
+          <button
+            onClick={onClose}
+            style={{
+              backgroundColor: '#ccc',
+              color: 'black',
+              padding: '6px 12px',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer',
+            }}
+          >
+            Close
+          </button>
+        </div>
       </div>
     </div>
   );

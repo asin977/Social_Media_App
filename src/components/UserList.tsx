@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { ClipLoader } from 'react-spinners';
 
-import { useGetUserList, useDeleteUser } from '../apis/user';
+import { useDeleteUser, useGetUserList } from '../apis/user';
 import { UserListAPIResponse } from '../types/user';
-import UserDetailsCard from './UserDetailsCard';
 import EditUserModal from './EditUserModal';
+import ErrorContainer from './ErrorContainer';
+import UserDetailsCard from './UserDetailsCard';
 
 const UserList: React.FC = () => {
   const { data: users, isLoading, isError, error } = useGetUserList();
@@ -24,9 +25,7 @@ const UserList: React.FC = () => {
     setEditUser(null);
   };
 
-  const handleSelectBtn = (user: UserListAPIResponse) => {
-    console.log('Selected user:', user);
-  };
+  const handleSelectBtn = (user: UserListAPIResponse) => {};
 
   if (isLoading) {
     return (
@@ -39,13 +38,26 @@ const UserList: React.FC = () => {
   if (isError) {
     return (
       <div style={{ color: 'red', textAlign: 'center', marginTop: '30px' }}>
-        Error loading users: {error?.message || 'Something went wrong'}
+        <ErrorContainer message={error?.message || 'Something went wrong'} />
       </div>
     );
   }
 
   return (
     <>
+      <h1
+        style={{
+          color: 'darkblue',
+          fontSize: '50px',
+          margin: '0',
+          paddingTop: '20px',
+          fontFamily: 'bold',
+          textAlign: 'start',
+          marginLeft: '35px',
+        }}
+      >
+        Users
+      </h1>
       <div
         style={{
           display: 'grid',
@@ -55,8 +67,11 @@ const UserList: React.FC = () => {
           marginLeft: '30px',
           marginRight: '30px',
           gap: '30px',
-          marginTop: '50px',
+          margin: '20px',
           marginBottom: '50px',
+          paddingLeft: '20px',
+          paddingRight: '20px',
+          paddingBottom: '20px',
         }}
       >
         {users?.map(user => (
