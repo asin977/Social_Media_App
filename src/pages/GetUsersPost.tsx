@@ -17,7 +17,7 @@ export const GetUsersPost = () => {
   return (
     <>
       <Header />
-      <h2 style={{ color: 'darkblue', fontSize: '30px', textAlign: 'center',}}>
+      <h2 style={{ color: 'darkblue', fontSize: '30px', textAlign: 'center' }}>
         USER POST
       </h2>
       <CreateUserPost />
@@ -27,9 +27,11 @@ export const GetUsersPost = () => {
           gridTemplateColumns: 'repeat(3, 1fr)',
           justifyItems: 'start',
           textAlign: 'justify',
-          margin: '50px 30px 0 100px',
+          marginLeft: '50px',
+          marginRight: '50px',
           gap: '30px',
-          marginBottom:'35px'
+          marginBottom: '35px',
+          padding: '20px',
         }}
       >
         {posts?.map(post => (
@@ -52,7 +54,7 @@ export const GetUsersPost = () => {
             }}
           >
             <img
-              style={{ width: '40%', marginBottom: '10px' }}
+              style={{ width: '20%', marginBottom: '10px' }}
               src={UserIcon}
               alt="User Icon"
             />
