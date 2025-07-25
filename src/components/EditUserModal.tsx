@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { useUpdateUser } from '../apis/user';
 import { UserListAPIResponse } from '../types/user';
 import Modal from './common/modal';
-import { USERNAME } from '../constants/common';
+import { FETCHEDUSERNAME } from '../constants/common';
 
 type EditUserModalProps = {
   user: UserListAPIResponse;
@@ -25,9 +25,7 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ user, onClose }) => {
       { id, name: newName },
       {
         onSuccess: handleSuccessBtn,
-        onError: () => {
-          toast.error('Failed to update user. Try again.');
-        },
+        onError: () => toast.error('Failed to update the user.Try again..'),
       },
     );
   };
@@ -36,7 +34,7 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ user, onClose }) => {
     e.preventDefault();
     const form = e.currentTarget;
     const formData = new FormData(form);
-    const newName = formData.get(USERNAME)?.toString().trim();
+    const newName = formData.get(FETCHEDUSERNAME)?.toString().trim();
 
     if (!newName) {
       toast.info('Please enter a name.');
@@ -71,7 +69,7 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ user, onClose }) => {
           <input
             type="text"
             id="userNameInput"
-            name={USERNAME}
+            name={FETCHEDUSERNAME}
             defaultValue={user.name}
             placeholder="Enter new name"
             style={{

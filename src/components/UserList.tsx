@@ -11,18 +11,19 @@ const UserList: React.FC = () => {
   const { data: users, isLoading, isError, error } = useGetUserList();
   const { mutate: deleteUserMutation } = useDeleteUser();
 
-  const [editUser, setEditUser] = useState<UserListAPIResponse | null>(null);
+  const [activeUserForEditing, setActiveUserForEditing] =
+    useState<UserListAPIResponse | null>(null);
 
   const handleDeleteBtn = (userId: string) => {
     deleteUserMutation(userId);
   };
 
   const handleEditBtn = (user: UserListAPIResponse) => {
-    setEditUser(user);
+    setActiveUserForEditing(user);
   };
 
   const handleCloseModalBtn = () => {
-    setEditUser(null);
+    setActiveUserForEditing(null);
   };
 
   const handleSelectBtn = (user: UserListAPIResponse) => {};
@@ -84,8 +85,11 @@ const UserList: React.FC = () => {
         ))}
       </div>
 
-      {editUser && (
-        <EditUserModal user={editUser} onClose={handleCloseModalBtn} />
+      {activeUserForEditing && (
+        <EditUserModal
+          user={activeUserForEditing}
+          onClose={handleCloseModalBtn}
+        />
       )}
     </>
   );
