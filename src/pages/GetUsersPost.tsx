@@ -15,18 +15,20 @@ export const GetUsersPost = () => {
   return (
     <>
       <Header />
-      <h2 style={{ color: 'darkblue', fontSize: '30px' }}>USER POST</h2>
+      <h2 style={{ color: 'darkblue', fontSize: '30px', textAlign: 'center' }}>
+        USER POST
+      </h2>
       <div
         style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3,1fr)',
+          display:'grid',
+          gridTemplateColumns: 'repeat(3, 1fr)',
           justifyItems: 'start',
           textAlign: 'justify',
-          marginLeft: '100px',
-          marginRight: '30px',
+          marginLeft: '50px',
+          marginRight: '50px',
           gap: '30px',
-          marginTop: '50px',
-          marginBottom: '50px',
+          marginBottom: '35px',
+          padding: '20px',
         }}
       >
         {posts?.map(post => (
@@ -42,17 +44,17 @@ export const GetUsersPost = () => {
               flexDirection: 'column',
               width: '100%',
               padding: '20px',
-              fontFamily: 'bold',
-              fontSize: '20px',
+              fontFamily: 'Arial, sans-serif',
+              fontSize: '18px',
+              borderRadius: '10px',
             }}
           >
-            <span>
-              <img style={{ width: '60px' }} src={UserIcon} />
+            <span style={{display:'flex',justifyContent:'center'}}>
+              <img style={{ width: '28%', marginBottom: '10px' }} src={UserIcon} alt='UserIcon'/>
             </span>
-            <h2 style={{ color: 'darkblue', display: 'grid' }}>{post.title}</h2>
+            <h2 style={{ color: 'darkblue', textAlign: 'center' }}>{post.title}</h2>
             <p>{post.body}</p>
-            <p style={{ color: 'darkred' }}>{post.user_id}</p>
-            
+            <p style={{ color: 'darkred' }}>User ID: {post.user_id}</p>
           </div>
         ))}
       </div>
