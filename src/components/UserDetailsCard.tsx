@@ -92,6 +92,7 @@ const UserDetailsCard: React.FC<UserDetailsCardProps> = ({
             cursor: 'pointer',
             display: 'flex',
             alignItems: 'center',
+            fontFamily: 'bold',
           }}
         >
           <DeleteIcon width={20} height={20} />

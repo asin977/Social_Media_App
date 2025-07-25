@@ -68,7 +68,6 @@ const UserList: React.FC = () => {
           marginRight: '30px',
           gap: '30px',
           margin: '20px',
-          marginBottom: '50px',
           paddingLeft: '20px',
           paddingRight: '20px',
           paddingBottom: '20px',
