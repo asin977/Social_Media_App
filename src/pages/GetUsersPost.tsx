@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
+import { ClipLoader } from 'react-spinners';
 
 import { useGetUserPosts } from '../apis/user';
 import { useDeletePosts } from '../apis/user/useDeletePosts';
 import UserIcon from '../assets/images/user.png';
 import { Header } from '../components/Header';
-
 
 type Post = {
   id: number;
@@ -43,8 +43,13 @@ export const GetUsersPost = () => {
     });
   };
 
-  if (isPending) return <p>Loading posts...</p>;
-  if (isError) return <p>Error: {error?.message}</p>;
+  if (isPending) {
+    return <p>Loading posts...</p>;
+  }
+
+  if (isError) {
+    return <p>Error: {error?.message}</p>;
+  }
 
   return (
     <>
@@ -104,8 +109,10 @@ export const GetUsersPost = () => {
                 borderRadius: '4px',
               }}
             >
+            <ClipLoader style={{color:'#fff'}}/>
               {isDeleting ? 'Deleting...' : 'Delete'}
             </button>
+            {/* use clipLoaders instead of this */}
           </div>
         ))}
       </div>
@@ -136,7 +143,7 @@ export const GetUsersPost = () => {
           >
             <h3>Confirm Delete</h3>
             <p>
-              Are you sure you want to delete{' '}
+              Are you sure you want to delete:
               <strong>{postToDelete.title}</strong>?
             </p>
             <div
