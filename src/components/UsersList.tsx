@@ -1,8 +1,10 @@
 import React from 'react';
+
 import { useGetUserList } from '../apis/user/useGetUserList';
-import UserIcon from '../assets/images/user.png';
 import { UserListAPIResponse } from '../types/user';
 import StatusIndicatorChip from './StatusIndicatorChip';
+
+import UserIcon from '../assets/images/user.png';
 
 const UserList: React.FC = () => {
   const { data: users, isLoading, isError, error } = useGetUserList();
@@ -13,24 +15,33 @@ const UserList: React.FC = () => {
   return (
     <div
       style={{
-        display: 'flex',
-        flexDirection: 'column',
-        flexGrow: 1,
+        display: 'grid',
+        gridTemplateColumns: 'repeat(3, 1fr)',
+        justifyItems: 'start',
         textAlign: 'justify',
-        marginLeft: '200px',
-        gap: '20px',
-        marginTop: '50px',
+        marginLeft: '30px',
+        marginRight: '30px',
+        gap: '30px',
+        margin: '20px',
+        paddingLeft: '20px',
+        paddingRight: '20px',
+        paddingBottom: '20px',
       }}
     >
       {users?.map((user: UserListAPIResponse) => (
         <div
           key={user.id}
           style={{
+            border: '1px solid blue',
+            padding: '50px',
+            borderRadius: '8px',
+            width: '100%',
             color: 'darkblue',
-            maxWidth: '90%',
-            marginBottom: '12px',
-            borderBottom: '1px solid #ccc',
-            paddingBottom: '12px',
+            backgroundColor: ' rgb(227, 242, 253)',
+            boxShadow: 'blue 1px 2px 3px',
+            opacity: 1,
+            cursor: ' pointer',
+            position: 'relative',
           }}
         >
           <h2
@@ -42,7 +53,8 @@ const UserList: React.FC = () => {
               marginBottom: '8px',
             }}
           >
-            <StatusIndicatorChip status={user.isActive ? 'active' : 'inactive'} />
+            <StatusIndicatorChip status={user.isActive} />
+
             <img
               src={UserIcon}
               alt="user-icon"

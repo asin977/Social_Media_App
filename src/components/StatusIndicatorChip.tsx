@@ -1,17 +1,18 @@
 import React from 'react';
 
 interface StatusIndicatorChipProps {
-  status: 'active' | 'inactive';
+  status: boolean;
 }
 
-const StatusIndicatorChip: React.FC<StatusIndicatorChipProps> = ({ status }) => {
-  const color = status === 'active' ? 'green' : 'red';
-  const label = status === 'active' ? 'Active' : 'Inactive';
+const StatusIndicatorChip: React.FC<StatusIndicatorChipProps> = ({
+  status,
+}) => {
+  const color = status ? 'green' : 'red';
+  const label = status ? 'Active' : 'Inactive';
 
   return (
     <span
-      title={label} 
-      aria-label={label} 
+      aria-label={label}
       role="status"
       style={{
         display: 'inline-block',
