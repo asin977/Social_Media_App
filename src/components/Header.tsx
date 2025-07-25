@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import UserIcon from '../assets/images/group.png';
+import UserIcon from '../assets/images/usersIcon.png';
 
 export const Header = () => (
   <div
@@ -16,11 +16,12 @@ export const Header = () => (
   >
     <h2
       style={{
+        color: '#f8f9fa',
+        fontSize: '25px',
         margin: '0px',
-        color: '#fff',
-        marginRight: '20px',
         fontFamily: 'bold',
-        fontSize: '30px',
+        display: 'flex',
+        marginRight: '15px',
       }}
     >
       SOCIAL
