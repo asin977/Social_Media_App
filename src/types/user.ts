@@ -7,3 +7,9 @@ export type UserListAPIResponse = {
   status: string;
   isActive:boolean
 };
+
+export type UpdateUserPayLoad = {
+  id: number;
+  name?: string;
+  email?: string;
+};
