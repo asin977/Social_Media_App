@@ -1,1 +1,1 @@
-export const FETCHEDUSERNAME = 'fetchedusername';
+export const NAME = 'name';

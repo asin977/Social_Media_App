@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { useUpdateUser } from '../apis/user';
 import { UserListAPIResponse } from '../types/user';
 import Modal from './common/modal';
-import { FETCHEDUSERNAME } from '../constants/common';
+import { NAME } from '../constants/common';
 
 type EditUserModalProps = {
   user: UserListAPIResponse;
@@ -34,7 +34,7 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ user, onClose }) => {
     e.preventDefault();
     const form = e.currentTarget;
     const formData = new FormData(form);
-    const newName = formData.get(FETCHEDUSERNAME)?.toString().trim();
+    const newName = formData.get(NAME)?.toString().trim();
 
     if (!newName) {
       toast.info('Please enter a name.');
@@ -69,7 +69,7 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ user, onClose }) => {
           <input
             type="text"
             id="userNameInput"
-            name={FETCHEDUSERNAME}
+            name={NAME}
             defaultValue={user.name}
             placeholder="Enter new name"
             style={{

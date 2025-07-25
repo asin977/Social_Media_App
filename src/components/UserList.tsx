@@ -14,15 +14,15 @@ const UserList: React.FC = () => {
   const [activeUserForEditing, setActiveUserForEditing] =
     useState<UserListAPIResponse | null>(null);
 
-  const handleDeleteBtn = (userId: string) => {
+  const handleDeleteBtnClick = (userId: string) => {
     deleteUserMutation(userId);
   };
 
-  const handleEditBtn = (user: UserListAPIResponse) => {
+  const handleEditBtnClick = (user: UserListAPIResponse) => {
     setActiveUserForEditing(user);
   };
 
-  const handleCloseModalBtn = () => {
+  const handleCloseModalBtnClick = () => {
     setActiveUserForEditing(null);
   };
 
@@ -79,8 +79,8 @@ const UserList: React.FC = () => {
             key={user.id}
             user={user}
             onUserSelect={handleSelectBtn}
-            onEditBtnClick={handleEditBtn}
-            onDelete={handleDeleteBtn}
+            onEditBtnClick={handleEditBtnClick}
+            onDelete={handleDeleteBtnClick}
           />
         ))}
       </div>
@@ -88,7 +88,7 @@ const UserList: React.FC = () => {
       {activeUserForEditing && (
         <EditUserModal
           user={activeUserForEditing}
-          onClose={handleCloseModalBtn}
+          onClose={handleCloseModalBtnClick}
         />
       )}
     </>
