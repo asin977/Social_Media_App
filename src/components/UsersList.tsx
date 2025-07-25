@@ -1,12 +1,17 @@
+import {ClipLoader} from 'react-spinners'
+
 import { useGetUserList } from '../apis/user';
 import UserIcon from '../assets/images/user.png';
-
 
 const UserList = () => {
   const { data: users, isLoading, isError, error } = useGetUserList();
 
   if (isLoading) {
-    return <p>Loading users...</p>;
+    return (
+      <div style={{ textAlign: 'center', marginTop: '50px' }}>
+        <ClipLoader size={40} color="#023e8a" />
+      </div>
+    );
   }
   if (isError) {
     return <p>Error: {error?.message}</p>;
@@ -19,13 +24,12 @@ const UserList = () => {
         gridTemplateColumns: 'repeat(3,1fr)',
         justifyItems: 'start',
         textAlign: 'justify',
-        marginLeft: '100px',
+        marginLeft: '30px',
         marginRight: '30px',
         gap: '30px',
-        marginTop: '50px',
+        paddingBottom: '20px',
       }}
     >
-     
       {users?.map(user => (
         <div
           style={{
@@ -34,7 +38,7 @@ const UserList = () => {
             boxShadow: '1px 2px 3px blue',
             display: 'flex',
             justifyContent: 'center',
-            alignItems:'center',
+            alignItems: 'center',
             flexWrap: 'wrap',
             flexDirection: 'column',
             width: '100%',

@@ -10,7 +10,7 @@ type AddUserModalProps = {
   onSuccess: () => void;
 };
 
-const AddUserModal: React.FC<AddUserModalProps> = ({ onClose, onSuccess }) => {
+const AddUserModal: React.FC<AddUserModalProps> = ({ onClose }) => {
   const [formData, setFormData] = useState<Partial<UserListAPIResponse>>({
     name: '',
     email: '',
@@ -18,17 +18,23 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ onClose, onSuccess }) => {
     status: '',
   });
 
-  const handleSucessBtn = () => {
-    toast.success('User added Sucessfully..');
-    onSuccess();
+  const handleSuccessBtn = () => {
+    toast.success('User added successfully...');
+    onClose();
   };
 
   const { mutate: addUser, isPending } = useAddUser({
-    onSuccess: handleSucessBtn,
+    onSuccess: handleSuccessBtn,
+
     onError: (err: any) => {
       toast.error(err?.message || 'Failed to add user');
     },
   });
+  
+  const handleSubmitDoubleClick = () => {
+    handleSubmit()
+    onClose()
+  }
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -37,7 +43,7 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ onClose, onSuccess }) => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmitBtn = () => {
+  const handleSubmit = () => {
     const { name, email, gender, status } = formData;
     if (!name || !email || !gender || !status) {
       toast.error('Please fill all fields');
@@ -87,7 +93,7 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ onClose, onSuccess }) => {
 
         <div style={buttonContainerStyle}>
           <button
-            onClick={handleSubmitBtn}
+            onClick={handleSubmitDoubleClick}
             disabled={isPending}
             style={buttonStyle}
           >
@@ -118,7 +124,7 @@ const modalStyles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    zIndex: 1,
+    zIndex: 999,
   },
   modal: {
     backgroundColor: 'white',

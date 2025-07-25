@@ -9,7 +9,10 @@ const addUserRequest = async (payload: Partial<UserListAPIResponse>) => {
   return response.data;
 };
 
-export const useAddUser = (p0: { onSuccess: () => void; onError: (err: any) => void; }) => {
+export const useAddUser = (p0: {
+  onSuccess: () => void;
+  onError: (err: any) => void;
+}) => {
   const queryClient = useQueryClient();
 
   return useMutation({
