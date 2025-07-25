@@ -1,5 +1,3 @@
-import React from 'react';
-
 import UserIcon from '../assets/images/usersIcon.png';
 import AddNewUser from '../assets/images/add-user.png';
 
