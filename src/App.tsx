@@ -9,7 +9,7 @@ import './App.css';
 
 const queryClient = new QueryClient();
 
-function App() {
+const App = () => {
   return (
     <div className="App">
       <QueryClientProvider client={queryClient}>
@@ -23,6 +23,6 @@ function App() {
       </QueryClientProvider>
     </div>
   );
-}
+};
 
 export default App;

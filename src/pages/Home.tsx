@@ -1,12 +1,9 @@
-import React from 'react';
-import { ToastContainer, toast } from 'react-toastify';
-
-
 import { Header } from '../components/Header';
+import GetUserList from '../components/GetUsersList';
 
 export const Home = () => (
   <>
     <Header />
-    <ToastContainer />
+    <GetUserList />
   </>
 );
