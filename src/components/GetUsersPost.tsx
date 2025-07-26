@@ -1,7 +1,7 @@
 import { useGetUserPosts } from '../apis/user';
+import { CreateUserPost } from './CreateUserPost';
 import { Header } from './Header';
 import { UserPostCard } from './userPostCard';
-import { CreateUserPost } from './CreateUserPost';
 
 export const GetUsersPost = () => {
   const { data: posts, isLoading, isError, error } = useGetUserPosts();

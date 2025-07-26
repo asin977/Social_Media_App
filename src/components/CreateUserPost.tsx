@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { useCreateUserPost } from '../apis/user/useCreateUserPost';
 import { useFetchUsers } from '../apis/user/useFetchUsers';
 import { UserPostCard } from '../components/userPostCard';
+import Modal from '../components/common/modal';
 
 import PostIcon from '../assets/images/post.png';
 
@@ -122,49 +123,67 @@ export const CreateUserPost = () => {
         New Post
       </button>
 
-      {isOpen && (
-        <div style={modalOverlay}>
-          <div style={modalContent}>
-            <button onClick={() => setIsOpen(false)} style={closeButton}>
-              ×
-            </button>
-            <h2 style={{ color: 'darkblue', textAlign: 'center' }}>
-              Create New Post
-            </h2>
-            <form onSubmit={handleSubmit} style={{ textAlign: 'center' }}>
-              <input
-                name="title"
-                placeholder="Title"
-                onChange={handleChange}
-                value={form.title}
-                required
-                style={inputStyle}
-              />
+      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+        <h2 style={{ color: 'darkblue', textAlign: 'center' }}>
+          Create New Post
+        </h2>
+        <form onSubmit={handleSubmit} style={{ textAlign: 'center' }}>
+          <input
+            name="title"
+            placeholder="Title"
+            onChange={handleChange}
+            value={form.title}
+            required
+            style={{
+              padding: '5px 10px',
+              border: 'none',
+              fontSize: '18px',
+              boxShadow: '10px 10px 20px black',
+              marginBottom: '20px',
+              width: '100%',
+            }}
+          />
 
-              <textarea
-                name="body"
-                placeholder="Body"
-                onChange={handleChange}
-                value={form.body}
-                required
-                style={{ ...inputStyle, height: '100px', resize: 'vertical' }}
-              />
+          <textarea
+            name="body"
+            placeholder="Body"
+            onChange={handleChange}
+            value={form.body}
+            required
+            style={{
+              padding: '5px 10px',
+              border: 'none',
+              fontSize: '18px',
+              boxShadow: '10px 10px 20px black',
+              marginBottom: '20px',
+              width: '100%',
+              height: '100px',
+              resize: 'vertical',
+            }}
+          />
 
-              <button
-                type="submit"
-                disabled={createPost.isPending}
-                style={submitButtonStyle}
-              >
-                {createPost.isPending ? (
-                  <ClipLoader size={20} color="#fff" />
-                ) : (
-                  'Create Post'
-                )}
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
+          <button
+            type="submit"
+            disabled={createPost.isPending}
+            style={{
+              backgroundColor: '#023E8A',
+              color: '#fff',
+              padding: '6px 12px',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer',
+              fontFamily: 'bold',
+              fontSize: '18px',
+            }}
+          >
+            {createPost.isPending ? (
+              <ClipLoader size={20} color="#fff" />
+            ) : (
+              'Create Post'
+            )}
+          </button>
+        </form>
+      </Modal>
 
       {createdPosts.length > 0 && (
         <div
@@ -187,54 +206,4 @@ export const CreateUserPost = () => {
       )}
     </>
   );
-};
-
-const modalOverlay: React.CSSProperties = {
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  right: 0,
-  bottom: 0,
-  backgroundColor: 'rgba(0,0,0,0.5)',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  zIndex: 1000,
-};
-
-const modalContent: React.CSSProperties = {
-  backgroundColor: 'white',
-  padding: '20px',
-  borderRadius: '8px',
-  width: '400px',
-  position: 'relative',
-};
-
-const closeButton: React.CSSProperties = {
-  position: 'absolute',
-  top: '10px',
-  right: '15px',
-  fontSize: '20px',
-  background: 'none',
-  border: 'none',
-  cursor: 'pointer',
-};
-
-const inputStyle: React.CSSProperties = {
-  padding: '5px 10px',
-  border: 'none',
-  fontSize: '18px',
-  boxShadow: '10px 10px 20px black',
-  marginBottom: '20px',
-  width: '100%',
-};
-
-const submitButtonStyle: React.CSSProperties = {
-  padding: '5px 10px',
-  border: 'none',
-  background: 'darkblue',
-  fontWeight: 'bold',
-  color: '#fff',
-  fontSize: '18px',
-  cursor: 'pointer',
 };

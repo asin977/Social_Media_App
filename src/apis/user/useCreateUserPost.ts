@@ -1,28 +1,30 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'react-toastify';
+
 import httpClient from '../../apis/httpClient';
 import { endpoints } from '../endpoints';
 
-type CreateUserPostPayload = {
+type UserPost = {
   user_id: number;
   title: string;
   body: string;
+  id?: number;
 };
 
-type CreateUserPostResponse = {
-  id: number;
+type UserPostInput = {
+  user_id: number;
   title: string;
   body: string;
-  user_id: number;
 };
 
 export const useCreateUserPost = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<CreateUserPostResponse, Error, CreateUserPostPayload>({
+  return useMutation<UserPost, Error, UserPostInput>({
     mutationFn: async ({ user_id, title, body }) => {
       const response = await httpClient.post(
         endpoints.createUserPost(user_id),
-        { title, body,user_id },
+        { user_id, title, body },
       );
       return response.data;
     },
@@ -30,7 +32,7 @@ export const useCreateUserPost = () => {
       queryClient.invalidateQueries({ queryKey: ['posts'] });
     },
     onError: error => {
-      console.error('Post creation failed:', error.message);
+      toast.error(error.message || 'Post creation failed');
     },
   });
 };
