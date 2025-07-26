@@ -109,7 +109,7 @@ export const GetUsersPost = () => {
                 borderRadius: '4px',
               }}
             >
-            <ClipLoader style={{color:'#fff'}}/>
+              <ClipLoader style={{ color: '#fff' }} />
               {isDeleting ? 'Deleting...' : 'Delete'}
             </button>
             {/* use clipLoaders instead of this */}
