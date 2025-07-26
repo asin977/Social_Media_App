@@ -1,17 +1,16 @@
 import React from 'react';
-
 import UserIcon from '../assets/images/user.png';
 
 type UserPostCardProps = {
   title: string;
   body: string;
-  userId: number;
+  user_id: number;
 };
 
 export const UserPostCard: React.FC<UserPostCardProps> = ({
   title,
   body,
-  userId,
+  user_id,
 }) => {
   return (
     <div
@@ -59,7 +58,7 @@ export const UserPostCard: React.FC<UserPostCardProps> = ({
         {body}
       </p>
       <p style={{ color: 'darkred', fontFamily: 'bold' }}>
-        Author ID: {userId}
+        Author ID: {user_id}
       </p>
     </div>
   );

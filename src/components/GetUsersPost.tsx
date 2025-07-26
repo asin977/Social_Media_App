@@ -22,7 +22,7 @@ export const GetUsersPost = () => {
           fontSize: '40px',
           fontFamily: 'bold',
           textAlign: 'start',
-          marginLeft:'60px'
+          marginLeft: '60px',
         }}
       >
         User Posts
@@ -42,7 +42,7 @@ export const GetUsersPost = () => {
             key={post.id}
             title={post.title}
             body={post.body}
-            userId={post.userId}
+            user_id={post.user_id}
           />
         ))}
       </div>
