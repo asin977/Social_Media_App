@@ -1,8 +1,12 @@
 import { useState } from 'react';
+import { ClipLoader } from 'react-spinners';
+import { toast } from 'react-toastify';
 
-import { useCreateUserPost } from '../apis/user';
+import { useCreateUserPost } from '../apis/user/useCreateUserPost';
 import { useFetchUsers } from '../apis/user/useFetchUsers';
-import PostIcon from '../assets/images/post.png'
+import { UserPostCard } from '../components/userPostCard';
+
+import PostIcon from '../assets/images/post.png';
 
 export const CreateUserPost = () => {
   const { data: users, isLoading: isUserLoading } = useFetchUsers();
@@ -15,58 +19,80 @@ export const CreateUserPost = () => {
   });
 
   const [isOpen, setIsOpen] = useState(false);
+  const [createdPosts, setCreatedPosts] = useState<
+    { title: string; body: string; userId: number }[]
+  >([]);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
   ) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setForm(prev => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
+    const parsedUserId = parseInt(form.userId);
+    if (isNaN(parsedUserId)) {
+      toast.error('Please select a valid user.');
+      return;
+    }
+
     const payload = {
       title: form.title,
       body: form.body,
-      user_id: parseInt(form.userId),
+      user_id: parsedUserId,
+    };
+
+    const handleSuccessBtn = () => {
+      toast.success('Post Created Successfully...');
     };
 
     createPost.mutate(payload, {
-      onSuccess: data => {
-        console.log('Post created:', data);
-        alert('Post created successfully');
+      onSuccess: () => {
+        handleSuccessBtn();
+        setCreatedPosts(prev => [
+          ...prev,
+          {
+            title: payload.title,
+            body: payload.body,
+            userId: parsedUserId,
+          },
+        ]);
         setForm({ title: '', body: '', userId: '' });
         setIsOpen(false);
       },
-      onError: error => {
-        console.error('Post creation failed:', error.message);
-        alert('Failed to create post');
-      },
+      onError: () => toast.error('Failed to create new post.Try again.'),
     });
   };
 
-  if (isUserLoading) return <p>Loading users...</p>;
+  if (isUserLoading) {
+    return <p>Loading users...</p>;
+  }
 
   return (
     <>
       <div style={{ position: 'absolute', right: '1%', top: '9%' }}>
         <select
+          name="userId"
+          onChange={handleChange}
+          value={form.userId}
+          required
           style={{
             padding: '10px',
             border: 'none',
             background: 'darkblue',
             color: 'white',
-            fontFamily: 'bold',
+            fontWeight: 'bold',
             marginBottom: '20px',
           }}
-          name="userId"
-          onChange={handleChange}
-          value={form.userId}
-          required
         >
           <option value="">Select User</option>
           {users?.map(user => (
-            <option key={user.id} value={user.id}>
+            <option key={user.id} value={user.id.toString()}>
               {user.name}
             </option>
           ))}
@@ -77,18 +103,23 @@ export const CreateUserPost = () => {
         onClick={() => setIsOpen(true)}
         style={{
           color: 'white',
-          fontFamily: 'bold',
+          fontWeight: 'bold',
           border: 'none',
           background: 'darkblue',
           padding: '8px 20px',
           cursor: 'pointer',
           borderRadius: '4px',
-          position:'absolute',
-          top:'9%',
-          left:'1%'
+          position: 'absolute',
+          top: '1%',
+          left: '3%',
         }}
       >
-        <span><img src={PostIcon} alt="postIcon" style={{width:'30px'}}/></span> New Post
+        <img
+          src={PostIcon}
+          alt="postIcon"
+          style={{ width: '30px', marginRight: '8px' }}
+        />
+        New Post
       </button>
 
       {isOpen && (
@@ -97,59 +128,61 @@ export const CreateUserPost = () => {
             <button onClick={() => setIsOpen(false)} style={closeButton}>
               ×
             </button>
-            <h2 style={{ color: 'darkblue' }}>Create New Post</h2>
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <form onSubmit={handleSubmit}>
-                <input
-                  name="title"
-                  placeholder="Title"
-                  onChange={handleChange}
-                  value={form.title}
-                  required
-                  style={{
-                    padding: '5px 10px',
-                    border: 'none',
-                    fontSize: '18px',
-                    boxShadow: '10px 10px 20px black',
-                    marginBottom: '20px',
-                  }}
-                />
-                <input
-                  name="body"
-                  placeholder="Body"
-                  onChange={handleChange}
-                  value={form.body}
-                  required
-                  style={{
-                    padding: '5px 10px',
-                    border: 'none',
-                    fontSize: '18px',
-                    boxShadow: '10px 10px 20px black',
-                    marginBottom: '20px',
-                  }}
-                />
+            <h2 style={{ color: 'darkblue', textAlign: 'center' }}>
+              Create New Post
+            </h2>
+            <form onSubmit={handleSubmit} style={{ textAlign: 'center' }}>
+              <input
+                name="title"
+                placeholder="Title"
+                onChange={handleChange}
+                value={form.title}
+                required
+                style={inputStyle}
+              />
 
-                <button
-                  type="submit"
-                  disabled={createPost.isPending}
-                  style={{
-                    padding: '5px 10px',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginLeft: '130px',
-                    border: 'none',
-                    background: 'darkblue',
-                    fontFamily: 'bold',
-                    color: '#fff',
-                    fontSize: '18px',
-                  }}
-                >
-                  {createPost.isPending ? 'Creating...' : 'Create Post'}
-                </button>
-              </form>
-            </div>
+              <textarea
+                name="body"
+                placeholder="Body"
+                onChange={handleChange}
+                value={form.body}
+                required
+                style={{ ...inputStyle, height: '100px', resize: 'vertical' }}
+              />
+
+              <button
+                type="submit"
+                disabled={createPost.isPending}
+                style={submitButtonStyle}
+              >
+                {createPost.isPending ? (
+                  <ClipLoader size={20} color="#fff" />
+                ) : (
+                  'Create Post'
+                )}
+              </button>
+            </form>
           </div>
+        </div>
+      )}
+
+      {createdPosts.length > 0 && (
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+            gap: '30px',
+            padding: '20px 50px',
+          }}
+        >
+          {createdPosts.map((post, index) => (
+            <UserPostCard
+              key={index}
+              title={post.title}
+              body={post.body}
+              userId={post.userId}
+            />
+          ))}
         </div>
       )}
     </>
@@ -184,5 +217,24 @@ const closeButton: React.CSSProperties = {
   fontSize: '20px',
   background: 'none',
   border: 'none',
+  cursor: 'pointer',
+};
+
+const inputStyle: React.CSSProperties = {
+  padding: '5px 10px',
+  border: 'none',
+  fontSize: '18px',
+  boxShadow: '10px 10px 20px black',
+  marginBottom: '20px',
+  width: '100%',
+};
+
+const submitButtonStyle: React.CSSProperties = {
+  padding: '5px 10px',
+  border: 'none',
+  background: 'darkblue',
+  fontWeight: 'bold',
+  color: '#fff',
+  fontSize: '18px',
   cursor: 'pointer',
 };
