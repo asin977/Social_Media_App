@@ -7,7 +7,7 @@ export type CreateUserPostPayload = {
 export type Posts = {
   name: string;
   id: number;
-  userId: number;
+  user_id: number;
   title: string;
   body: string;
 };

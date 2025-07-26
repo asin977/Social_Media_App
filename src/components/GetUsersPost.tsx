@@ -29,7 +29,6 @@ export const GetUsersPost = () => {
         User Posts
       </h2>
 
-      {/* Add CreateUserPost at the top */}
       <div style={{ margin: '0 20px 20px' }}>
         <CreateUserPost />
       </div>
@@ -49,7 +48,7 @@ export const GetUsersPost = () => {
             key={post.id}
             title={post.title}
             body={post.body}
-            userId={post.userId}
+            userId={post.user_id}
           />
         ))}
       </div>
