@@ -7,7 +7,7 @@ import { Post } from '../../types/posts';
 
 export const useGetUserPosts = () => {
   return useQuery<Post[]>({
-    queryKey: [DataQueryKeys.USERS_LIST],
+    queryKey: [DataQueryKeys.POST_LIST],
     queryFn: async () => {
       const { data } = await httpClient.get(endpoints.getPosts());
       return data;
