@@ -3,7 +3,7 @@ import { ClipLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
 
 import { useCreateUserPost } from '../apis/post/useCreateUserPost';
-import { useFetchUsers } from '../apis/user/useFetchUsers';
+import { useFetchUsers } from '../apis/user';
 import Modal from '../components/common/modal';
 import { UserPostCard } from './userPostCard';
 

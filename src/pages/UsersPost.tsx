@@ -1,4 +1,4 @@
-import { UserPostList } from '../components/GetUsersPost';
+import { UserPostList } from '../components/UserPostList';
 
 export const UsersPost = () => (
   <>
