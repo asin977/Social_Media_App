@@ -14,9 +14,12 @@ type Post = {
 export const GetUsersPost = () => {
   const { data: posts, isPending, isError, error } = useGetUserPosts();
 
-  if (isPending) return <p>Loading posts...</p>;
-  if (isError) return <p>Error: {error?.message}</p>;
-
+  if (isPending) {
+    return <p>Loading posts...</p>;
+  }
+  if (isError) {
+    return <p>Error: {error?.message}</p>;
+  }
   return (
     <>
       <Header />
