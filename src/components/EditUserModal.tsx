@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { useUpdateUser } from '../apis/user';
 import { UserListAPIResponse } from '../types/user';
 import Modal from './common/modal';
-import { NAME } from '../constants/common';
+import { INPUTFIELDNAME } from '../constants/common';
 
 type EditUserModalProps = {
   user: UserListAPIResponse;
@@ -15,7 +15,7 @@ type EditUserModalProps = {
 const EditUserModal: React.FC<EditUserModalProps> = ({ user, onClose }) => {
   const { mutate: updateUser, isPending } = useUpdateUser();
 
-  const handleSuccessBtn = () => {
+  const handleSuccessSaveBtn = () => {
     toast.success('User updated successfully.');
     onClose();
   };
@@ -24,17 +24,17 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ user, onClose }) => {
     updateUser(
       { id, name: newName },
       {
-        onSuccess: handleSuccessBtn,
+        onSuccess: handleSuccessSaveBtn,
         onError: () => toast.error('Failed to update the user.Try again..'),
       },
     );
   };
 
-  const handleSaveBtn = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSaveBtnClick = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
     const formData = new FormData(form);
-    const newName = formData.get(NAME)?.toString().trim();
+    const newName = formData.get(INPUTFIELDNAME)?.toString().trim();
 
     if (!newName) {
       toast.info('Please enter a name.');
@@ -51,7 +51,7 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ user, onClose }) => {
 
   return (
     <Modal isOpen={true} onClose={onClose}>
-      <form onSubmit={handleSaveBtn}>
+      <form onSubmit={handleSaveBtnClick}>
         <h3 style={{ color: 'darkblue', fontFamily: 'bold', fontSize: '30px' }}>
           Edit User
         </h3>
@@ -69,7 +69,7 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ user, onClose }) => {
           <input
             type="text"
             id="userNameInput"
-            name={NAME}
+            name={INPUTFIELDNAME}
             defaultValue={user.name}
             placeholder="Enter new name"
             style={{

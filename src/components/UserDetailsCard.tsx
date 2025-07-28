@@ -10,7 +10,7 @@ type UserDetailsCardProps = {
   user: UserListAPIResponse;
   onUserSelect: (user: UserListAPIResponse) => void;
   onEditBtnClick: (user: UserListAPIResponse) => void;
-  onDelete: (userId: string) => void;
+  onDelete: (userId: number) => void;
 };
 
 const UserDetailsCard: React.FC<UserDetailsCardProps> = ({
@@ -81,7 +81,7 @@ const UserDetailsCard: React.FC<UserDetailsCardProps> = ({
         <button
           onClick={e => {
             e.stopPropagation();
-            onDelete(user.id.toString());
+            onDelete(user.id);
           }}
           style={{
             padding: '5px 10px',
@@ -92,7 +92,7 @@ const UserDetailsCard: React.FC<UserDetailsCardProps> = ({
             cursor: 'pointer',
             display: 'flex',
             alignItems: 'center',
-            fontFamily:'bold'
+            fontFamily: 'bold',
           }}
         >
           <DeleteIcon width={20} height={20} />

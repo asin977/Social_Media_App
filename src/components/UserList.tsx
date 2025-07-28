@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ClipLoader } from 'react-spinners';
+import { toast } from 'react-toastify';
 
 import { useDeleteUser, useGetUserList } from '../apis/user';
 import { UserListAPIResponse } from '../types/user';
@@ -14,8 +15,15 @@ const UserList: React.FC = () => {
   const [activeUserForEditing, setActiveUserForEditing] =
     useState<UserListAPIResponse | null>(null);
 
-  const handleDeleteBtnClick = (userId: string) => {
-    deleteUserMutation(userId);
+  const handleSuccessSaveBtn = () => {
+    toast.success('User deleted Successfully.');
+  };
+
+  const handleDeleteBtnClick = (userId: number) => {
+    deleteUserMutation(userId, {
+      onSuccess: handleSuccessSaveBtn,
+      onError: () => toast.error('Failed to delete the user'),
+    });
   };
 
   const handleEditBtnClick = (user: UserListAPIResponse) => {
