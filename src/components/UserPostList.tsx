@@ -1,9 +1,9 @@
-import { useGetUserPosts } from '../apis/user';
+import { useGetUserPosts } from '../apis/post';
 import ErrorContainer from './ErrorContainer';
 import { Header } from './Header';
 import { UserPostCard } from './UserPostCard';
 
-export const GetUsersPost = () => {
+export const UserPostList = () => {
   const { data: posts, isLoading, isError } = useGetUserPosts();
 
   if (isLoading) {
@@ -43,7 +43,7 @@ export const GetUsersPost = () => {
             key={post.id}
             title={post.title}
             body={post.body}
-            user_id={post.user_id}
+            userId={post.user_id}
           />
         ))}
       </div>
