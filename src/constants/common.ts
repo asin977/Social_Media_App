@@ -1,1 +1,1 @@
-export const INPUTFIELDNAME = 'InputFieldName';
+export const INPUT_FIELD_NAME = 'InputFieldName';
