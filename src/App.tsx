@@ -16,8 +16,8 @@ const App = () => {
         <ToastContainer />
         <BrowserRouter>
           <Routes>
-            <Route path={routes.userspost} element={<UsersPost />} />
             <Route path={routes.home} element={<Home />} />
+            <Route path={routes.userspost} element={<UsersPost />} />
           </Routes>
         </BrowserRouter>
       </QueryClientProvider>
