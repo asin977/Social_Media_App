@@ -4,6 +4,7 @@ import { UserListAPIResponse } from '../types/user';
 
 import UserIcon from '../assets/images/user.png';
 import { ReactComponent as EditIcon } from '../assets/svg/edit.svg';
+import StatusIndicatorChip from './StatusIndicatorChip';
 
 type UserDetailsCardProps = {
   user: UserListAPIResponse;
@@ -29,6 +30,7 @@ export const UserDetailsCard: React.FC<UserDetailsCardProps> = ({
         boxShadow: '1px 2px 3px blue',
         opacity: '1',
         cursor: 'pointer',
+        position: 'relative',
       }}
       onClick={() => onUserSelect(user)}
     >
@@ -37,8 +39,13 @@ export const UserDetailsCard: React.FC<UserDetailsCardProps> = ({
         alt="userIcon"
         style={{ width: '100px', position: 'absolute' }}
       />
+      <span style={{ position: 'absolute', bottom: '120px', right: '518px' }}>
+        <StatusIndicatorChip status={true} />
+      </span>
+
       <h3 style={{ margin: '0 0 10px 0', textAlign: 'end' }}>{user.name}</h3>
       <p style={{ textAlign: 'end' }}>{user.email}</p>
+
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
         <button
           onClick={e => {

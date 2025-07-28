@@ -1,8 +1,8 @@
 import React from 'react';
 
-interface StatusIndicatorChipProps {
+type StatusIndicatorChipProps = {
   status: boolean;
-}
+};
 
 const StatusIndicatorChip: React.FC<StatusIndicatorChipProps> = ({
   status,
