@@ -29,7 +29,7 @@ export const GetUsersPost = () => {
           fontSize: '40px',
           textAlign: 'start',
           fontFamily: 'bold',
-          marginLeft: '30px',
+          marginLeft: '40px',
           marginBottom: '0px',
         }}
       >
@@ -42,6 +42,8 @@ export const GetUsersPost = () => {
           gridTemplateColumns: 'repeat(auto-fill, minmax(500px, 1fr))',
           gap: '30px',
           padding: '20px',
+          marginLeft: '30px',
+          marginRight: '30px',
         }}
       >
         {posts?.map((post: Post) => (
