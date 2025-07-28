@@ -10,7 +10,7 @@ export const useDeleteUser = () => {
   return useMutation<void, Error, number>({
     mutationFn: async (userId: number) => {
       const response = await httpClient.delete<void>(
-        endpoints.deleteUser(userId.toFixed()),
+        endpoints.deleteUser(userId.toString()),
       );
 
       return response.data;
