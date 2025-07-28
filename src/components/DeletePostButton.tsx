@@ -17,14 +17,14 @@ export const DeletePostButton: React.FC<DeletePostButtonProps> = ({
   const [confirming, setConfirming] = useState(false);
   const { mutate: deletePost, isPending: isDeleting, error } = useDeletePosts();
 
-  const handleSuccessBtn = () => {
+  const handleSuccessSaveBtn = () => {
     toast.success('Post deleted successfully');
     setConfirming(false);
   };
 
-  const handleDelete = () => {
+  const handleDeleteBtn = () => {
     deletePost(postId, {
-      onSuccess: handleSuccessBtn,
+      onSuccess: handleSuccessSaveBtn,
       onError: () => {
         toast.error('Failed to delete post');
         setConfirming(false);
@@ -68,7 +68,7 @@ export const DeletePostButton: React.FC<DeletePostButtonProps> = ({
           }}
         >
           <button
-            onClick={handleDelete}
+            onClick={handleDeleteBtn}
             disabled={isDeleting}
             style={{
               backgroundColor: '#023E8A',
