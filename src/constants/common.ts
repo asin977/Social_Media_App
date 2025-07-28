@@ -1,1 +1,1 @@
-export const USERNAME_FORM_FIELD = 'userFormField';
+export const USERNAME_FORM_FIELD = 'usernameFormField';
