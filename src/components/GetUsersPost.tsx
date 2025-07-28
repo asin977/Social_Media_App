@@ -1,16 +1,17 @@
 import { useGetUserPosts } from '../apis/user';
+import ErrorContainer from './ErrorContainer';
 import { Header } from './Header';
 import { UserPostCard } from './UserPostCard';
 
 export const GetUsersPost = () => {
-  const { data: posts, isLoading, isError, error } = useGetUserPosts();
+  const { data: posts, isLoading, isError } = useGetUserPosts();
 
   if (isLoading) {
     return <p>Loading Users...</p>;
   }
 
   if (isError) {
-    return <p>Error: {error?.message}</p>;
+    <ErrorContainer message={'Failed to fetch the posts'} />;
   }
 
   return (
