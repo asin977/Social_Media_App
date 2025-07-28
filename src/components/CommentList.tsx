@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useGetComments } from '../apis/user/useGetCommentList';
+import { useGetComments } from '../apis/comments/useGetCommentList';
 import User from '../assets/images/commentuser.png';
 
 const CommentList = () => {
