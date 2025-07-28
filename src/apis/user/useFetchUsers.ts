@@ -14,6 +14,5 @@ export const useFetchUsers = () => {
     queryKey: [DataQueryKeys.USERS_LIST],
     queryFn: () =>
       httpClient.get(endpoints.getUserList()).then(res => res.data),
-    staleTime: 0,
   });
 };

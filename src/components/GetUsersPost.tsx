@@ -3,7 +3,7 @@ import { CreateUserPost } from './CreateUserPost';
 import { Header } from './Header';
 import { UserPostCard } from './userPostCard';
 
-export const GetUsersPost = () => {
+export const UserPostList = () => {
   const { data: posts, isLoading, isError, error } = useGetUserPosts();
 
   if (isLoading) {

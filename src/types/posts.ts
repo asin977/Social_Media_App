@@ -1,5 +1,5 @@
 export type CreateUserPostPayload = {
-  user_id: number;
+  userId: number;
   title: string;
   body: string;
 };

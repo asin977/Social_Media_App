@@ -45,7 +45,7 @@ export const CreateUserPost = () => {
     const payload = {
       title: form.title,
       body: form.body,
-      user_id: parsedUserId,
+      userId: parsedUserId,
     };
 
     const handleSuccessSaveBtn = () => {
