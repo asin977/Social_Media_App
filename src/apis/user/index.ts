@@ -1,2 +1,1 @@
-export * from './useGetUserPosts';
-
+export * from './useFetchUsers'

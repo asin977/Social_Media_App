@@ -1,4 +1,4 @@
-import { useGetUserPosts } from '../apis/user';
+import { useGetUserPosts } from '../apis/post';
 import { CreateUserPost } from './CreateUserPost';
 import { Header } from './Header';
 import { UserPostCard } from './userPostCard';

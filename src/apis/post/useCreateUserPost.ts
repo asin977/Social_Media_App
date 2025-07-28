@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import httpClient from '../../apis/httpClient';
+import httpClient from '../httpClient';
 import { endpoints } from '../endpoints';
 
 type UserPost = {

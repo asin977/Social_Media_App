@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { ClipLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
 
-import { useCreateUserPost } from '../apis/user/useCreateUserPost';
+import { useCreateUserPost } from '../apis/post/useCreateUserPost';
 import { useFetchUsers } from '../apis/user/useFetchUsers';
 import Modal from '../components/common/modal';
 import { UserPostCard } from './userPostCard';
