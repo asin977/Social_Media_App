@@ -1,5 +1,4 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { toast } from 'react-toastify';
 
 import httpClient from '../../apis/httpClient';
 import { endpoints } from '../endpoints';
@@ -30,9 +29,6 @@ export const useCreateUserPost = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['posts'] });
-    },
-    onError: error => {
-      toast.error(error.message || 'Post creation failed');
     },
   });
 };

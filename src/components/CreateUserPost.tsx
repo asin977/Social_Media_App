@@ -4,8 +4,8 @@ import { toast } from 'react-toastify';
 
 import { useCreateUserPost } from '../apis/user/useCreateUserPost';
 import { useFetchUsers } from '../apis/user/useFetchUsers';
-import { UserPostCard } from '../components/userPostCard';
 import Modal from '../components/common/modal';
+import { UserPostCard } from '../components/userPostCard';
 
 import PostIcon from '../assets/images/post.png';
 
@@ -24,7 +24,7 @@ export const CreateUserPost = () => {
     { title: string; body: string; userId: number }[]
   >([]);
 
-  const handleChange = (
+  const handleChangeBtn = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >,
@@ -33,7 +33,7 @@ export const CreateUserPost = () => {
     setForm(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmitBtn = (e: React.FormEvent) => {
     e.preventDefault();
 
     const parsedUserId = parseInt(form.userId);
@@ -48,13 +48,13 @@ export const CreateUserPost = () => {
       user_id: parsedUserId,
     };
 
-    const handleSuccessBtn = () => {
+    const handleSuccessSaveBtn = () => {
       toast.success('Post Created Successfully...');
     };
 
     createPost.mutate(payload, {
       onSuccess: () => {
-        handleSuccessBtn();
+        handleSuccessSaveBtn();
         setCreatedPosts(prev => [
           ...prev,
           {
@@ -79,7 +79,7 @@ export const CreateUserPost = () => {
       <div style={{ position: 'absolute', right: '1%', top: '9%' }}>
         <select
           name="userId"
-          onChange={handleChange}
+          onChange={handleChangeBtn}
           value={form.userId}
           required
           style={{
@@ -91,7 +91,7 @@ export const CreateUserPost = () => {
             marginBottom: '20px',
           }}
         >
-          <option value="">Select User</option>
+          <option value="">👤 Select User</option>
           {users?.map(user => (
             <option key={user.id} value={user.id.toString()}>
               {user.name}
@@ -127,11 +127,11 @@ export const CreateUserPost = () => {
         <h2 style={{ color: 'darkblue', textAlign: 'center' }}>
           Create New Post
         </h2>
-        <form onSubmit={handleSubmit} style={{ textAlign: 'center' }}>
+        <form onSubmit={handleSubmitBtn} style={{ textAlign: 'center' }}>
           <input
             name="title"
             placeholder="Title"
-            onChange={handleChange}
+            onChange={handleChangeBtn}
             value={form.title}
             required
             style={{
@@ -147,7 +147,7 @@ export const CreateUserPost = () => {
           <textarea
             name="body"
             placeholder="Body"
-            onChange={handleChange}
+            onChange={handleChangeBtn}
             value={form.body}
             required
             style={{
@@ -159,6 +159,7 @@ export const CreateUserPost = () => {
               width: '100%',
               height: '100px',
               resize: 'vertical',
+              fontFamily: 'regular',
             }}
           />
 
