@@ -1,17 +1,11 @@
-import { useGetUserPosts } from '../apis/user';
-import { Header } from '../components/Header';
+import { useGetUserPosts } from '../apis/post';
+import { Post } from '../types/posts';
+import { DeletePostButton } from './DeletePostButton';
+import { Header } from './Header';
+
 import UserIcon from '../assets/images/user.png';
 
-import { DeletePostButton } from '../components/DeletePostButton';
-
-type Post = {
-  id: number;
-  title: string;
-  body: string;
-  user_id: number;
-};
-
-export const GetUsersPost = () => {
+export const UserPostList = () => {
   const { data: posts, isPending, isError, error } = useGetUserPosts();
 
   if (isPending) {

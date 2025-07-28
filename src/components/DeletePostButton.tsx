@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { ClipLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
 
-import { useDeletePosts } from '../apis/user/useDeletePosts';
+import { useDeletePosts } from '../apis/post/useDeletePosts';
+import Modal from './common/modal';
 
 type DeletePostButtonProps = {
   postId: number;
@@ -14,7 +15,6 @@ export const DeletePostButton: React.FC<DeletePostButtonProps> = ({
   postTitle,
 }) => {
   const [confirming, setConfirming] = useState(false);
-
   const { mutate: deletePost, isPending: isDeleting, error } = useDeletePosts();
 
   const handleSuccessBtn = () => {
@@ -52,75 +52,60 @@ export const DeletePostButton: React.FC<DeletePostButtonProps> = ({
         {isDeleting ? <ClipLoader size={20} color="#fff" /> : 'Delete'}
       </button>
 
-      {confirming && (
+      <Modal isOpen={confirming} onClose={() => setConfirming(false)}>
+        <h3>Confirm Delete</h3>
+        <p>
+          Are you sure you want to delete: <strong>{postTitle}</strong>?
+        </p>
         <div
           style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: 'rgba(0,0,0,0.5)',
+            marginTop: '20px',
             display: 'flex',
-            alignItems: 'center',
             justifyContent: 'center',
-            zIndex: 1000,
+            flexDirection: 'column',
+            alignContent: 'center',
+            gap: '12px',
           }}
         >
-          <div
+          <button
+            onClick={handleDelete}
+            disabled={isDeleting}
             style={{
-              backgroundColor: '#fff',
-              padding: '30px',
-              borderRadius: '10px',
-              width: '300px',
-              textAlign: 'center',
+              backgroundColor: '#023E8A',
+              color: 'white',
+              padding: '8px 16px',
+              border: 'none',
+              borderRadius: '5px',
+              fontFamily: 'bold',
+              fontSize: '18px',
+              cursor: 'pointer',
             }}
           >
-            <h3>Confirm Delete</h3>
-            <p>
-              Are you sure you want to delete:
-              <strong> {postTitle}</strong>?
-            </p>
-            <div
-              style={{
-                marginTop: '20px',
-                display: 'flex',
-                justifyContent: 'space-around',
-              }}
-            >
-              <button
-                onClick={handleDelete}
-                disabled={isDeleting}
-                style={{
-                  backgroundColor: '#023E8A',
-                  color: 'white',
-                  padding: '8px 16px',
-                  border: 'none',
-                  borderRadius: '5px',
-                }}
-              >
-                Yes
-              </button>
-              <button
-                onClick={() => setConfirming(false)}
-                style={{
-                  backgroundColor: '#ccc',
-                  padding: '8px 16px',
-                  border: 'none',
-                  borderRadius: '5px',
-                }}
-              >
-                Cancel
-              </button>
-            </div>
-            {error && (
-              <p style={{ color: 'red', marginTop: '10px' }}>
-                Error: {error.message}
-              </p>
-            )}
-          </div>
+            Yes
+          </button>
+
+          <button
+            onClick={() => setConfirming(false)}
+            style={{
+              backgroundColor: '#023E8A',
+              color: 'white',
+              padding: '8px 16px',
+              border: 'none',
+              borderRadius: '5px',
+              fontFamily: 'bold',
+              fontSize: '18px',
+              cursor: 'pointer',
+            }}
+          >
+            Cancel
+          </button>
         </div>
-      )}
+        {error && (
+          <p style={{ color: 'red', marginTop: '10px' }}>
+            Error: {error.message}
+          </p>
+        )}
+      </Modal>
     </>
   );
 };

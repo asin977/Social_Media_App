@@ -48,11 +48,13 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
           <button
             onClick={onClose}
             style={{
-              backgroundColor: '#ccc',
-              color: 'black',
-              padding: '6px 12px',
+              backgroundColor: '#023E8A',
+              color: 'white',
+              padding: '8px 16px',
               border: 'none',
-              borderRadius: '4px',
+              borderRadius: '5px',
+              fontFamily: 'bold',
+              fontSize: '18px',
               cursor: 'pointer',
             }}
           >

@@ -1,7 +1,7 @@
-import { GetUsersPost } from '../components/GetUsersPost';
+import { UserPostList } from '../components/UserPostList';
 
 export const UsersPost = () => (
   <>
-    <GetUsersPost />
+    <UserPostList />
   </>
 );
