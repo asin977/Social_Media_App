@@ -1,55 +1,49 @@
-import { useState } from 'react';
+import { useGetCommentList } from '../apis/comments';
+import { Header } from './Header';
+import { PostCommentCard } from './postCommentCard';
 
-import { useGetComments } from '../apis/comments/useGetCommentList';
-import { PostCommentCard } from '../components/postCommentCard';
+export const CommentList = () => {
+  const { data: comments, isLoading, isError, error } = useGetCommentList();
 
-const CommentList = () => {
-  const [showComments, setShowComments] = useState(false);
-  const { data: comments, isLoading, isError, error } = useGetComments();
+  if (isLoading) {
+    return <p>Loading Comments...</p>;
+  }
 
-  const handleToggleComments = () => {
-    setShowComments(prev => !prev);
-  };
+  if (isError) {
+    return <p>Error: {error?.message}</p>;
+  }
 
   return (
-    <div style={{ textAlign: 'center', padding: '30px' }}>
-      <button
-        onClick={handleToggleComments}
+    <>
+      <Header />
+      <h2
         style={{
-          padding: '10px 20px',
-          backgroundColor: '#007bff',
-          color: 'white',
-          border: 'none',
-          borderRadius: '5px',
-          cursor: 'pointer',
-          marginBottom: '20px',
+          color: 'darkblue',
+          fontSize: '40px',
+          fontFamily: 'bold',
+          textAlign: 'start',
+          marginLeft: '60px',
         }}
       >
-        {showComments ? 'Hide Comments' : 'Show Comments'}
-      </button>
+        Post Comments
+      </h2>
 
-      {showComments && (
-        <>
-          {isLoading && <p>Loading Comments...</p>}
-          {isError && <p>Error: {error?.message}</p>}
-          <div
-            style={{
-              margin: '0 auto',
-              maxWidth: '800px',
-              textAlign: 'left',
-              borderRadius: '10px',
-              overflow: 'hidden',
-              boxShadow: '0 0 10px rgba(0,0,0,0.1)',
-            }}
-          >
-            {comments?.map(comment => (
-              <PostCommentCard key={comment.id} {...comment} />
-            ))}
-          </div>
-        </>
-      )}
-    </div>
+      <div style={{ margin: '0 20px 20px' }}></div>
+
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(3, minmax(500px, 1fr))',
+          textAlign: 'justify',
+          margin: '0 50px 35px',
+          gap: '30px',
+          padding: '20px',
+        }}
+      >
+        {comments?.map(comment => (
+          <PostCommentCard key={comment.id} {...comment} />
+        ))}
+      </div>
+    </>
   );
 };
-
-export default CommentList;
