@@ -1,3 +1,2 @@
-export * from './useGetCommentList';
-export * from './useAddComments';
+export * from '../comments/useAddComments';
 export * from './useGetUserList';
