@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import UserIcon from '../assets/images/usersIcon.png';
 
 export const Header = () => (
@@ -28,19 +30,23 @@ export const Header = () => (
       alt="User Icon"
       style={{ height: '50px', marginRight: '12px' }}
     />
-    <button
+
+    <Link
+      to="/posts"
       style={{
         border: 'none',
         padding: '8px 20px',
         background: '#0077b6',
         color: 'white',
-        fontFamily: 'bold',
+        fontWeight: 'bold',
         borderRadius: '5px',
         fontSize: '18px',
         cursor: 'pointer',
+        textDecoration: 'none',
+        display: 'inline-block',
       }}
     >
       Posts ➡️
-    </button>
+    </Link>
   </div>
 );
