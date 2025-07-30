@@ -1,7 +1,8 @@
 export const endpoints = {
   // users
-  getUserDetails: (id: string) => `public/v2/users/${id}`,
-  getUserList: () => 'public/v2/users',
+  getUserList: () => `public/v2/users`,
+  deleteUser: (userId: string) => `public/v2/users/${userId}`,
+  updateUserDetails: (id: string) => `public/v2/users/${id}`,
 
   // posts
   getPosts: () => 'public/v2/posts',

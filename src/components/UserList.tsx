@@ -1,47 +1,54 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { ClipLoader } from 'react-spinners';
+import { toast } from 'react-toastify';
 
-import { useGetUserList } from '../apis/user';
-import ErrorContainer from '../components/ErrorContainer';
+import { useDeleteUser, useGetUserList } from '../apis/user';
 import { UserListAPIResponse } from '../types/user';
 import EditUserModal from './EditUserModal';
-import { UserDetailsCard } from './UserDetailsCard';
+import ErrorContainer from './ErrorContainer';
+import UserDetailsCard from './UserDetailsCard';
 
-const UserList = () => {
-  const { data: user, isLoading, isError, error } = useGetUserList();
+const UserList: React.FC = () => {
+  const { data: users, isLoading, isError, error } = useGetUserList();
+  const { mutate: deleteUserMutation } = useDeleteUser();
 
-  const [selectedUser, setSelectedUser] = useState<UserListAPIResponse | null>(
-    null,
-  );
-  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
+  const [activeUserForEditing, setActiveUserForEditing] =
+    useState<UserListAPIResponse | null>(null);
+
+  const handleSuccessSaveBtn = () => {
+    toast.success('User deleted Successfully.');
+  };
+
+  const handleDeleteBtnClick = (userId: number) => {
+    deleteUserMutation(userId, {
+      onSuccess: handleSuccessSaveBtn,
+      onError: () => toast.error('Failed to delete the user'),
+    });
+  };
 
   const handleEditBtnClick = (user: UserListAPIResponse) => {
-    setSelectedUser(user);
-    setIsEditModalVisible(true);
+    setActiveUserForEditing(user);
   };
 
-  const handleUserSelect = (user: UserListAPIResponse) => {
-    setSelectedUser(user);
+  const handleCloseModalBtnClick = () => {
+    setActiveUserForEditing(null);
   };
 
-  const handleCloseModal = () => {
-    setIsEditModalVisible(false);
-    setSelectedUser(null);
-  };
+  const handleSelectBtn = (user: UserListAPIResponse) => {};
 
   if (isLoading) {
     return (
-      <div
-        style={{ display: 'flex', justifyContent: 'center', marginTop: '40px' }}
-      >
-        <ClipLoader color="#1976d2" size={60} />
+      <div style={{ textAlign: 'center', marginTop: '50px' }}>
+        <ClipLoader size={40} color="#023e8a" />
       </div>
     );
   }
 
   if (isError) {
     return (
-      <ErrorContainer message={error?.message || 'Something went wrong'} />
+      <div style={{ color: 'red', textAlign: 'center', marginTop: '30px' }}>
+        <ErrorContainer message={error?.message || 'Something went wrong'} />
+      </div>
     );
   }
 
@@ -49,18 +56,17 @@ const UserList = () => {
     <>
       <h1
         style={{
-          fontSize: '50px',
-          fontFamily: 'bold',
-          textAlign: 'left',
           color: 'darkblue',
-          paddingLeft: '40px',
-          margin: '0px',
-          marginTop: '12px',
+          fontSize: '50px',
+          margin: '0',
+          paddingTop: '20px',
+          fontFamily: 'bold',
+          textAlign: 'start',
+          marginLeft: '35px',
         }}
       >
         Users
       </h1>
-
       <div
         style={{
           display: 'grid',
@@ -70,25 +76,28 @@ const UserList = () => {
           marginLeft: '30px',
           marginRight: '30px',
           gap: '30px',
-          marginTop: '50px',
-          marginBottom: '50px',
-          transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
-          borderRadius: '8px',
-          cursor: 'pointer',
+          margin: '20px',
+          paddingLeft: '20px',
+          paddingRight: '20px',
+          paddingBottom: '20px',
         }}
       >
-        {(user || []).map((user, index) => (
+        {users?.map(user => (
           <UserDetailsCard
-            key={index}
+            key={user.id}
             user={user}
-            onUserSelect={handleUserSelect}
+            onUserSelect={handleSelectBtn}
             onEditBtnClick={handleEditBtnClick}
+            onDelete={handleDeleteBtnClick}
           />
         ))}
       </div>
 
-      {isEditModalVisible && selectedUser && (
-        <EditUserModal user={selectedUser} onClose={handleCloseModal} />
+      {activeUserForEditing && (
+        <EditUserModal
+          user={activeUserForEditing}
+          onClose={handleCloseModalBtnClick}
+        />
       )}
     </>
   );

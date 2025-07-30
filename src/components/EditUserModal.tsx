@@ -3,9 +3,9 @@ import { ClipLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
 
 import { useUpdateUser } from '../apis/user';
-import { USERNAME } from '../constants/common';
 import { UserListAPIResponse } from '../types/user';
 import Modal from './common/modal';
+import { USERNAME_FORM_FIELD } from '../constants/common';
 
 type EditUserModalProps = {
   user: UserListAPIResponse;
@@ -15,43 +15,51 @@ type EditUserModalProps = {
 const EditUserModal: React.FC<EditUserModalProps> = ({ user, onClose }) => {
   const { mutate: updateUser, isPending } = useUpdateUser();
 
-  const handleSaveBtn = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const form = e.currentTarget;
-    const formData = new FormData(form);
-    const newName = formData.get(USERNAME)?.toString().trim();
+  const handleSuccessSaveBtn = () => {
+    toast.success('User updated successfully.');
+    onClose();
+  };
 
-    if (!newName || newName === user.name) {
-      toast.info('No changes to save.');
-      return;
-    }
-
-    const handleSuccessSaveBtn = () => {
-      toast.success('User updated Successfully..');
-      onClose();
-    };
-
+  const handleUpdateUser = (id: number, newName: string) => {
     updateUser(
-      { id: user.id, name: newName },
+      { id, name: newName },
       {
         onSuccess: handleSuccessSaveBtn,
-        onError: () => {
-          toast.error('Failed to update user. Try again.');
-        },
+        onError: () => toast.error('Failed to update the user.Try again..'),
       },
     );
   };
 
+  const handleSaveBtnClick = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const newName = formData.get(USERNAME_FORM_FIELD)?.toString().trim();
+
+    if (!newName) {
+      toast.info('Please enter a name.');
+      return;
+    }
+
+    if (newName === user.name.trim()) {
+      toast.info('No changes to save.');
+      return;
+    }
+
+    handleUpdateUser(user.id, newName);
+  };
+
   return (
     <Modal isOpen={true} onClose={onClose}>
-      <form onSubmit={handleSaveBtn}>
+      <form onSubmit={handleSaveBtnClick}>
         <h3 style={{ color: 'darkblue', fontFamily: 'bold', fontSize: '30px' }}>
           Edit User
         </h3>
-        <p style={{ fontFamily: 'regular', fontSize: '15px' }}>
+        <p style={{ fontFamily: 'regular', fontSize: '18px' }}>
           User Email: <strong>{user.email}</strong>
         </p>
-        <div style={{ marginBottom: '15px' }}>
+
+        <div style={{ marginBottom: '20px' }}>
           <label
             htmlFor="userNameInput"
             style={{ display: 'block', marginBottom: '5px' }}
@@ -61,9 +69,9 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ user, onClose }) => {
           <input
             type="text"
             id="userNameInput"
-            name="userName"
+            name={USERNAME_FORM_FIELD}
             defaultValue={user.name}
-            placeholder={USERNAME}
+            placeholder="Enter new name"
             style={{
               width: '100%',
               padding: '10px',
@@ -73,9 +81,26 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ user, onClose }) => {
             }}
           />
         </div>
+
         <div
           style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}
         >
+          <button
+            type="button"
+            onClick={onClose}
+            style={{
+              backgroundColor: '#ccc',
+              color: 'black',
+              padding: '8px 15px',
+              border: 'none',
+              borderRadius: '5px',
+              cursor: 'pointer',
+              fontFamily: 'bold',
+              fontSize: '18px',
+            }}
+          >
+            Cancel
+          </button>
           <button
             type="submit"
             style={{
@@ -85,6 +110,8 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ user, onClose }) => {
               border: 'none',
               borderRadius: '5px',
               cursor: 'pointer',
+              fontFamily: 'bold',
+              fontSize: '18px',
             }}
             disabled={isPending}
           >
