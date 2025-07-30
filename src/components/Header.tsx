@@ -1,5 +1,3 @@
-import React from 'react';
-
 import UserIcon from '../assets/images/usersIcon.png';
 
 export const Header = () => (
@@ -42,7 +40,7 @@ export const Header = () => (
         cursor: 'pointer',
       }}
     >
-     ⬅ Home
+      ⬅ Home
     </button>
   </div>
 );
