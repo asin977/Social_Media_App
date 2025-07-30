@@ -31,7 +31,7 @@ export const Header = () => (
       style={{ height: '40px', marginRight: '12px' }}
     />
     <Link
-      to="/home"
+      to="/usersPost"
       style={{
         color: 'white',
         fontFamily: 'bold',
@@ -41,7 +41,7 @@ export const Header = () => (
         textDecoration: 'none',
       }}
     >
-      HOME
+      USERSPOST
     </Link>
   </div>
 );

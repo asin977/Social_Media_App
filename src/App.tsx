@@ -17,7 +17,7 @@ const App = () => {
         <BrowserRouter>
           <Routes>
             <Route path={routes.home} element={<Home />} />
-            <Route path={routes.userspost} element={<UsersPost />} />
+            <Route path={routes.usersPost} element={<UsersPost />} />
           </Routes>
         </BrowserRouter>
       </QueryClientProvider>
