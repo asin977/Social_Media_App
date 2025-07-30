@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import { DataQueryKeys } from '../apis/data-query-keys';
 import { useUpdateUser } from '../apis/user';
 import { USERNAME } from '../constants/common';
-import { UserListAPIResponse } from '../types/user';re
+import { UserListAPIResponse } from '../types/user';
 import Modal from './common/modal';
 
 type EditUserModalProps = {
