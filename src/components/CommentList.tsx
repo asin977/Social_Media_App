@@ -115,7 +115,14 @@ export const CommentList = () => {
             borderRadius: '4px',
           }}
         >
-        <span><img src={AddCommentIcon} alt={AddCommentIcon} style={{width:"30px"}} /></span> Add Comment
+          <span>
+            <img
+              src={AddCommentIcon}
+              alt={AddCommentIcon}
+              style={{ width: '30px' }}
+            />
+          </span>{' '}
+          Add Comment
         </button>
         <button
           onClick={() => setIsViewModalOpen(true)}
