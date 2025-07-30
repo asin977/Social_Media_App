@@ -1,6 +1,6 @@
 export type UserListAPIResponse = {
   id: number;
-  user: string;
+  username: string;
   name: string;
   email: string;
   gender: string;

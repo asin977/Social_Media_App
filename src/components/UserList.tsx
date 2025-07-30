@@ -4,7 +4,6 @@ import { ClipLoader } from 'react-spinners';
 import { useGetUserList } from '../apis/user';
 import ErrorContainer from '../components/ErrorContainer';
 import { UserListAPIResponse } from '../types/user';
-import EditUserModal from './EditUserModal';
 import { UserDetailsCard } from './UserDetailsCard';
 
 const UserLists = () => {
@@ -20,13 +19,8 @@ const UserLists = () => {
     setIsEditModalVisible(true);
   };
 
-  const handleUserSelect = (user: UserListAPIResponse) => {
+  const handleUserSelectBtn = (user: UserListAPIResponse) => {
     setSelectedUser(user);
-  };
-
-  const handleCloseModal = () => {
-    setIsEditModalVisible(false);
-    setSelectedUser(null);
   };
 
   if (isLoading) {
@@ -49,7 +43,7 @@ const UserLists = () => {
     <>
       <h1
         style={{
-          fontSize: '50px',
+          fontSize: '35px',
           fontFamily: 'bold',
           textAlign: 'left',
           color: 'darkblue',
@@ -58,7 +52,7 @@ const UserLists = () => {
           marginTop: '12px',
         }}
       >
-        Users
+        Users List
       </h1>
 
       <div
@@ -70,7 +64,6 @@ const UserLists = () => {
           marginLeft: '30px',
           marginRight: '30px',
           gap: '30px',
-          marginTop: '50px',
           marginBottom: '50px',
           transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
           borderRadius: '8px',
@@ -81,15 +74,11 @@ const UserLists = () => {
           <UserDetailsCard
             key={index}
             user={user}
-            onUserSelect={handleUserSelect}
+            onUserSelect={handleUserSelectBtn}
             onEditBtnClick={handleEditBtnClick}
           />
         ))}
       </div>
-
-      {isEditModalVisible && selectedUser && (
-        <EditUserModal user={selectedUser} onClose={handleCloseModal} />
-      )}
     </>
   );
 };

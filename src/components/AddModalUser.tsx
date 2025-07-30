@@ -3,6 +3,12 @@ import { toast } from 'react-toastify';
 import { ClipLoader } from 'react-spinners';
 
 import { UserListAPIResponse } from '../types/user';
+import {
+  USER_EMAIL,
+  USERNAME,
+  USER_GENDER,
+  USER_STATUS,
+} from '../constants/common';
 import { useAddUser } from '../apis/user/useAddUser';
 
 type AddUserModalProps = {
@@ -12,10 +18,10 @@ type AddUserModalProps = {
 
 const AddUserModal: React.FC<AddUserModalProps> = ({ onClose }) => {
   const [formData, setFormData] = useState<Partial<UserListAPIResponse>>({
-    name: '',
-    email: '',
-    gender: '',
-    status: '',
+    [USERNAME]: 'name',
+    [USER_EMAIL]: 'email',
+    [USER_GENDER]: 'gender',
+    [USER_STATUS]: 'status',
   });
 
   const handleSuccessBtn = () => {
@@ -30,11 +36,11 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ onClose }) => {
       toast.error(err?.message || 'Failed to add user');
     },
   });
-  
+
   const handleSubmitDoubleClick = () => {
-    handleSubmit()
-    onClose()
-  }
+    handleSubmit();
+    onClose();
+  };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -54,8 +60,29 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ onClose }) => {
   };
 
   return (
-    <div style={modalStyles.backdrop}>
-      <div style={modalStyles.modal}>
+    <div
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex: 999,
+      }}
+    >
+      <div
+        style={{
+          backgroundColor: 'white',
+          padding: '30px',
+          borderRadius: '10px',
+          width: '400px',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+        }}
+      >
         <h2 style={{ marginBottom: '20px' }}>Add New User</h2>
 
         {['name', 'email'].map(field => (
@@ -65,7 +92,14 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ onClose }) => {
             placeholder={field}
             value={formData[field as keyof typeof formData] || ''}
             onChange={handleChange}
-            style={inputStyle}
+            style={{
+              width: '100%',
+              marginBottom: '12px',
+              padding: '10px',
+              fontSize: '16px',
+              borderRadius: '4px',
+              border: '1px solid #ccc',
+            }}
           />
         ))}
 
@@ -73,7 +107,14 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ onClose }) => {
           name="gender"
           value={formData.gender || ''}
           onChange={handleChange}
-          style={inputStyle}
+          style={{
+            width: '100%',
+            marginBottom: '12px',
+            padding: '10px',
+            fontSize: '16px',
+            borderRadius: '4px',
+            border: '1px solid #ccc',
+          }}
         >
           <option value="">Gender</option>
           <option value="male">Male</option>
@@ -84,24 +125,55 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ onClose }) => {
           name="status"
           value={formData.status || ''}
           onChange={handleChange}
-          style={inputStyle}
+          style={{
+            width: '100%',
+            marginBottom: '12px',
+            padding: '10px',
+            fontSize: '16px',
+            borderRadius: '4px',
+            border: '1px solid #ccc',
+          }}
         >
           <option value="">Status</option>
           <option value="active">Active</option>
           <option value="inactive">Inactive</option>
         </select>
 
-        <div style={buttonContainerStyle}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            marginTop: '20px',
+          }}
+        >
           <button
             onClick={handleSubmitDoubleClick}
             disabled={isPending}
-            style={buttonStyle}
+            style={{
+              color: '#fff',
+              fontSize: '16px',
+              backgroundColor: '#023e8a',
+              border: 'none',
+              padding: '10px 20px',
+              borderRadius: '4px',
+              cursor: 'pointer',
+              minWidth: '90px',
+            }}
           >
             {isPending ? <ClipLoader color="#fff" size={20} /> : 'Add'}
           </button>
           <button
             onClick={onClose}
-            style={{ ...buttonStyle, backgroundColor: '#6c757d' }}
+            style={{
+              color: '#fff',
+              fontSize: '16px',
+              backgroundColor: '#023e8a',
+              border: 'none',
+              padding: '10px 20px',
+              borderRadius: '4px',
+              cursor: 'pointer',
+              minWidth: '90px',
+            }}
           >
             Cancel
           </button>
@@ -112,51 +184,3 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ onClose }) => {
 };
 
 export default AddUserModal;
-
-const modalStyles = {
-  backdrop: {
-    position: 'fixed' as const,
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    zIndex: 999,
-  },
-  modal: {
-    backgroundColor: 'white',
-    padding: '30px',
-    borderRadius: '10px',
-    width: '400px',
-    boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
-  },
-};
-
-const inputStyle = {
-  width: '100%',
-  marginBottom: '12px',
-  padding: '10px',
-  fontSize: '16px',
-  borderRadius: '4px',
-  border: '1px solid #ccc',
-};
-
-const buttonStyle = {
-  color: '#fff',
-  fontSize: '16px',
-  backgroundColor: '#023e8a',
-  border: 'none',
-  padding: '10px 20px',
-  borderRadius: '4px',
-  cursor: 'pointer',
-  minWidth: '90px',
-};
-
-const buttonContainerStyle = {
-  display: 'flex',
-  justifyContent: 'space-between',
-  marginTop: '20px',
-};
