@@ -1,17 +1,36 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+
 import httpClient from '../httpClients';
 import { endpoints } from '../endPoints';
-import { AddCommentPayload } from '../../types/comments';
+
+type UserComment = {
+  postId: number;
+  name: string;
+  body: string;
+  id?: number;
+  email: string;
+};
+
+type UserCommentInput = {
+  postId: number;
+  name: string;
+  body: string;
+  email: string;
+};
 
 export const useAddComments = () => {
-  return useMutation({
-    mutationFn: async (payload: AddCommentPayload) => {
-      const { postId, ...rest } = payload;
-      const { data } = await httpClient.post(
-        endpoints.createPostComment(postId),
-        rest
+  const queryClient = useQueryClient();
+
+  return useMutation<UserComment, Error, UserCommentInput>({
+    mutationFn: async ({ postId, name, email, body }) => {
+      const response = await httpClient.post(
+        endpoints.addCommentToPost(postId),
+        { postId, name, email, body },
       );
-      return data;
+      return response.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['comments'] });
     },
   });
 };

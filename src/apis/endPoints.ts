@@ -8,5 +8,5 @@ export const endpoints = {
 
   // comments
   getComments: () => '/public/v2/comments',
-  createPostComment: (postId: number) => `/public/v2/posts/${postId}/comments`,
+  addCommentToPost: (postId: number) => `/public/v2/posts/${postId}/comments`,
 };

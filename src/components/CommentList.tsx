@@ -9,6 +9,9 @@ import Modal from '../components/common/modal';
 import { Header } from './Header';
 import { PostCommentCard } from './postCommentCard';
 
+import CommentIcon from '../assets/images/comments.png';
+import AddCommentIcon from '../assets/images/message.png';
+
 export const CommentList = () => {
   const {
     data: comments,
@@ -112,7 +115,7 @@ export const CommentList = () => {
             borderRadius: '4px',
           }}
         >
-          ➕ Add Comment
+        <span><img src={AddCommentIcon} alt={AddCommentIcon} style={{width:"30px"}} /></span> Add Comment
         </button>
         <button
           onClick={() => setIsViewModalOpen(true)}
@@ -125,7 +128,14 @@ export const CommentList = () => {
             borderRadius: '4px',
           }}
         >
-          💬 View All Comments
+          <span>
+            <img
+              src={CommentIcon}
+              alt={CommentIcon}
+              style={{ width: '30px' }}
+            />
+          </span>{' '}
+          View All Comments
         </button>
       </div>
 
