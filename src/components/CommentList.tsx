@@ -1,179 +1,256 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { ClipLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
-import { useAddComments, useGetUserList } from '../apis/user';
 
-type CommentFormProps = {
-  postId: number;
-  onSuccess?: () => void;
-};
+import { useAddComments, useGetCommentList } from '../apis/comments';
+import { useGetUserPosts } from '../apis/posts';
+import { useGetUserList } from '../apis/user';
+import Modal from '../components/common/modal';
+import { Header } from './Header';
+import { PostCommentCard } from './postCommentCard';
 
-const CommentForm: React.FC<CommentFormProps> = ({ postId, onSuccess }) => {
-  const [body, setBody] = useState('');
-  const [selectedUserId, setSelectedUserId] = useState<number | ''>('');
-
+export const CommentList = () => {
   const {
-    data: users = [],
-    isLoading: usersLoading,
-    isError: usersError,
-  } = useGetUserList();
+    data: comments,
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useGetCommentList();
+  const { data: users, isLoading: isUserLoading } = useGetUserList();
+  const { data: posts, isLoading: isPostsLoading } = useGetUserPosts();
+  const addComment = useAddComments();
 
-  const {
-    mutate: addComment,
-    isPending: isAdding,
-    isError: isAddError,
-    error: addError,
-    reset: resetAddError,
-  } = useAddComments();
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
 
-  const selectedUser = users.find(u => u.id === selectedUserId);
+  const [form, setForm] = useState({
+    postId: '',
+    userId: '',
+    body: '',
+    email: '',
+  });
 
-  useEffect(() => {
-    setBody('');
-    setSelectedUserId('');
-    resetAddError();
-  }, [postId]);
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
+  ) => {
+    const { name, value } = e.target;
+    setForm(prev => ({ ...prev, [name]: value }));
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!postId || postId <= 0) {
-      toast.error('Invalid post ID. Please select a valid post.');
+    const parsedPostId = parseInt(form.postId);
+    const parsedUserId = parseInt(form.userId);
+    if (isNaN(parsedPostId) || isNaN(parsedUserId)) {
+      toast.error('Please select a valid post and user');
       return;
     }
 
-    if (!selectedUser) {
-      toast.error('Please select a user.');
-      return;
-    }
+    const selectedUser = users?.find(u => u.id === parsedUserId);
 
-    if (!body.trim()) {
-      toast.error('Comment body cannot be empty.');
-      return;
-    }
+    const payload = {
+      postId: parsedPostId,
+      userId: parsedUserId,
+      email: form.email || selectedUser?.email || 'unknown@example.com',
+      body: form.body,
+      name: selectedUser?.name || 'Unknown User',
+    };
 
-    addComment(
-      {
-        postId,
-        name: selectedUser.name,
-        email: selectedUser.email,
-        body,
+    addComment.mutate(payload, {
+      onSuccess: () => {
+        toast.success('Comment added successfully!');
+        setForm({ postId: '', userId: '', body: '', email: '' });
+        setIsAddModalOpen(false);
+        refetch();
       },
-      {
-        onSuccess: () => {
-          setBody('');
-          setSelectedUserId('');
-          toast.success('Comment added successfully!');
-          onSuccess?.();
-        },
-        onError: () => {
-          toast.error('Failed to add comment. Please check inputs.');
-        },
-      },
-    );
+      onError: () => toast.error('Failed to add comment.'),
+    });
   };
 
-  const isSubmitDisabled =
-    isAdding || usersLoading || !selectedUserId || !body.trim();
+  if (isLoading || isUserLoading || isPostsLoading) {
+    return <p>Loading Comments, Users, or Posts...</p>;
+  }
+  if (isError) {
+    return <p>Error: {error?.message}</p>;
+  }
 
   return (
-    <div style={styles.container}>
-      <h2>Add a Comment</h2>
-      <form onSubmit={handleSubmit} style={styles.form}>
-        <div style={styles.field}>
-          <label>Select User:</label>
+    <>
+      <Header />
+      <h2
+        style={{
+          color: 'darkblue',
+          fontSize: '40px',
+          fontWeight: 'bold',
+          textAlign: 'start',
+          marginLeft: '60px',
+        }}
+      >
+        Post Comments
+      </h2>
+
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          gap: '10px',
+          padding: '0 60px 20px',
+        }}
+      >
+        <button
+          onClick={() => setIsAddModalOpen(true)}
+          style={{
+            background: 'darkblue',
+            color: 'white',
+            fontWeight: 'bold',
+            padding: '10px 20px',
+            border: 'none',
+            borderRadius: '4px',
+          }}
+        >
+          ➕ Add Comment
+        </button>
+        <button
+          onClick={() => setIsViewModalOpen(true)}
+          style={{
+            background: '#219EBC',
+            color: 'white',
+            fontWeight: 'bold',
+            padding: '10px 20px',
+            border: 'none',
+            borderRadius: '4px',
+          }}
+        >
+          💬 View All Comments
+        </button>
+      </div>
+
+      <Modal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)}>
+        <h2
+          style={{
+            textAlign: 'center',
+            color: 'darkblue',
+            fontSize: '24px',
+            marginBottom: '20px',
+          }}
+        >
+          Add New Comment
+        </h2>
+        <form onSubmit={handleSubmit} style={{ textAlign: 'center' }}>
           <select
-            value={selectedUserId}
-            onChange={e => setSelectedUserId(Number(e.target.value))}
-            disabled={usersLoading || usersError}
+            name="postId"
+            value={form.postId}
+            onChange={handleChange}
             required
+            style={{
+              padding: '10px',
+              marginBottom: '15px',
+              width: '100%',
+              fontWeight: 'bold',
+              border: '1px solid #ccc',
+            }}
           >
-            <option value="" disabled>
-              {usersLoading ? 'Loading users...' : 'Select user'}
-            </option>
-            {users.map(user => (
+            <option value="">📄 Select Post</option>
+            {posts?.map(post => (
+              <option key={post.id} value={post.id}>
+                {post.title}
+              </option>
+            ))}
+          </select>
+
+          <select
+            name="userId"
+            value={form.userId}
+            onChange={handleChange}
+            required
+            style={{
+              padding: '10px',
+              marginBottom: '15px',
+              width: '100%',
+              fontWeight: 'bold',
+              background: 'darkblue',
+              color: 'white',
+              border: 'none',
+            }}
+          >
+            <option value="">👤 Select User</option>
+            {users?.map(user => (
               <option key={user.id} value={user.id}>
                 {user.name} ({user.email})
               </option>
             ))}
           </select>
-          {usersError && <p style={styles.error}>Failed to load users.</p>}
-        </div>
 
-        <div style={styles.field}>
-          <label>Comment:</label>
           <textarea
-            value={body}
-            onChange={e => setBody(e.target.value)}
-            placeholder="Write your comment..."
+            name="body"
+            placeholder="Comment"
+            value={form.body}
+            onChange={handleChange}
             required
-            rows={4}
-            style={styles.textarea}
-            disabled={isAdding}
+            style={{
+              padding: '10px',
+              marginBottom: '15px',
+              fontSize: '16px',
+              width: '100%',
+              boxShadow: '5px 5px 10px black',
+              border: 'none',
+              height: '100px',
+              resize: 'vertical',
+              fontFamily: 'inherit',
+            }}
           />
-        </div>
 
-        {isAddError && (
-          <p style={styles.error}>
-            {(addError as any)?.response?.data?.[0]?.message ||
-              addError.message}
-          </p>
-        )}
+          <button
+            type="submit"
+            disabled={addComment.isPending}
+            style={{
+              background: 'darkblue',
+              color: 'white',
+              fontWeight: 'bold',
+              padding: '10px 20px',
+              border: 'none',
+              borderRadius: '4px',
+            }}
+          >
+            {addComment.isPending ? (
+              <ClipLoader size={20} color="#fff" />
+            ) : (
+              'Submit Comment'
+            )}
+          </button>
+        </form>
+      </Modal>
 
-        <button
-          type="submit"
-          disabled={isSubmitDisabled}
+      <Modal isOpen={isViewModalOpen} onClose={() => setIsViewModalOpen(false)}>
+        <h2
           style={{
-            ...styles.submitBtn,
-            backgroundColor: isSubmitDisabled ? '#999' : '#007bff',
-            cursor: isSubmitDisabled ? 'not-allowed' : 'pointer',
+            textAlign: 'center',
+            color: 'darkblue',
+            fontSize: '24px',
+            marginBottom: '20px',
           }}
         >
-          {isAdding ? 'Adding...' : 'Submit Comment'}
-        </button>
-      </form>
-    </div>
+          All Comments
+        </h2>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+            gap: '20px',
+            maxHeight: '70vh',
+            overflowY: 'auto',
+            padding: '10px',
+          }}
+        >
+          {comments?.map(comment => (
+            <PostCommentCard key={comment.id} {...comment} />
+          ))}
+        </div>
+      </Modal>
+    </>
   );
 };
-
-const styles: Record<string, React.CSSProperties> = {
-  container: {
-    padding: 20,
-    maxWidth: 600,
-    margin: '20px auto',
-    backgroundColor: '#f9f9f9',
-    borderRadius: 8,
-    boxShadow: '0 1px 5px rgba(0,0,0,0.1)',
-  },
-  form: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: 15,
-  },
-  field: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  textarea: {
-    padding: 10,
-    fontSize: 14,
-    borderRadius: 4,
-    border: '1px solid #ccc',
-    resize: 'vertical',
-  },
-  submitBtn: {
-    padding: '10px 16px',
-    fontSize: 15,
-    fontWeight: 600,
-    borderRadius: 4,
-    border: 'none',
-    color: '#fff',
-    transition: '0.3s ease background',
-  },
-  error: {
-    color: 'red',
-    fontSize: 14,
-    marginTop: 4,
-  },
-};
-
-export default CommentForm;
