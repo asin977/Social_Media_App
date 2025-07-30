@@ -40,7 +40,7 @@ export const Header = () => (
         cursor: 'pointer',
       }}
     >
-     ⬅ Home
+      ⬅ Home
     </button>
   </div>
 );

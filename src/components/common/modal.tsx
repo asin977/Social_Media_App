@@ -54,8 +54,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
               border: 'none',
               borderRadius: '4px',
               cursor: 'pointer',
-              fontFamily:'bold',
-              fontSize:"18px"
+              fontFamily: 'bold',
+              fontSize: '18px',
             }}
           >
             Close

@@ -10,7 +10,7 @@ export const useGetCommentList = () => {
     queryKey: [DataQueryKeys.COMMENT_LIST],
     queryFn: async () => {
       const { data } = await httpClient.get(endpoints.getComments());
-      
+
       return data;
     },
   });
