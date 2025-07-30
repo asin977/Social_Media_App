@@ -30,7 +30,7 @@ export const Home = () => {
             fontSize: '16px',
             fontWeight: 'bold',
             backgroundColor: 'transparent',
-            color: 'darkblue',
+            color: '#fff',
             border: 'none',
             borderRadius: '5px',
             cursor: 'pointer',
@@ -38,6 +38,8 @@ export const Home = () => {
             display: 'flex',
             alignItems: 'center',
             gap: '10px',
+            position: 'absolute',
+            top: '1%',
           }}
         >
           <img
