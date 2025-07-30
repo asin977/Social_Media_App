@@ -24,16 +24,16 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ user, onClose }) => {
     const formData = new FormData(form);
     const newName = formData.get(USERNAME)?.toString().trim();
 
-    // if (!newName || newName === user.name) {
-    //   toast.info('No changes to save.');
-    //   return;
-    // }
+    if (!newName || newName === user.name) {
+      toast.info('No changes to save.');
+      return;
+    }
 
     const handleSuccessSaveBtn = () => {
       toast.success('User updated Successfully..');
       queryClient.invalidateQueries({ queryKey: [DataQueryKeys.USER_LIST] });
       onClose();
-      console.log('success')
+      console.log('success');
     };
 
     updateUser(
