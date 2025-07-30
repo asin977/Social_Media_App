@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import UserIcon from '../assets/images/usersIcon.png';
 
 export const Header = () => (
@@ -26,21 +28,20 @@ export const Header = () => (
     <img
       src={UserIcon}
       alt="User Icon"
-      style={{ height: '50px', marginRight: '12px' }}
+      style={{ height: '40px', marginRight: '12px' }}
     />
-    <button
+    <Link
+      to="/usersPost"
       style={{
-        border: 'none',
-        padding: '8px 20px',
-        background: '#0077b6',
         color: 'white',
         fontFamily: 'bold',
         borderRadius: '5px',
         fontSize: '18px',
         cursor: 'pointer',
+        textDecoration: 'none',
       }}
     >
-      Posts ➡️
-    </button>
+      USERSPOST
+    </Link>
   </div>
 );

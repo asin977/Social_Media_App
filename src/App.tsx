@@ -2,7 +2,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
-import { Home } from './pages';
+import { Home, UsersPost } from './pages';
 import { routes } from './routes';
 
 import './App.css';
@@ -17,6 +17,7 @@ const App = () => {
         <BrowserRouter>
           <Routes>
             <Route path={routes.home} element={<Home />} />
+            <Route path={routes.usersPost} element={<UsersPost />} />
           </Routes>
         </BrowserRouter>
       </QueryClientProvider>
