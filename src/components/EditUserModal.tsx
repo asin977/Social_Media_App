@@ -1,13 +1,13 @@
+import { useQueryClient } from '@tanstack/react-query';
 import React from 'react';
 import { ClipLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
-import { useQueryClient } from '@tanstack/react-query';
 
+import { DataQueryKeys } from '../apis/data-query-keys';
 import { useUpdateUser } from '../apis/user';
 import { USERNAME } from '../constants/common';
-import { UserListAPIResponse } from '../types/user';
+import { UserListAPIResponse } from '../types/user';re
 import Modal from './common/modal';
-import { DataQueryKeys } from '../apis/data-query-keys';
 
 type EditUserModalProps = {
   user: UserListAPIResponse;
