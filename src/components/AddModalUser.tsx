@@ -18,19 +18,19 @@ type AddUserModalProps = {
 
 const AddUserModal: React.FC<AddUserModalProps> = ({ onClose }) => {
   const [formData, setFormData] = useState<Partial<UserListAPIResponse>>({
-    [USERNAME]: 'name',
-    [USER_EMAIL]: 'email',
-    [USER_GENDER]: 'gender',
-    [USER_STATUS]: 'status',
+    [USERNAME]: '',
+    [USER_EMAIL]: '',
+    [USER_GENDER]: '',
+    [USER_STATUS]: '',
   });
 
-  const handleSuccessBtn = () => {
+  const handleSuccessSaveBtn = () => {
     toast.success('User added successfully...');
     onClose();
   };
 
   const { mutate: addUser, isPending } = useAddUser({
-    onSuccess: handleSuccessBtn,
+    onSuccess: handleSuccessSaveBtn,
 
     onError: (err: any) => {
       toast.error(err?.message || 'Failed to add user');

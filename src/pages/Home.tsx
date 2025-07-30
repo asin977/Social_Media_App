@@ -51,7 +51,10 @@ export const Home = () => {
         <UserLists key={refreshKey} />
 
         {showModal && (
-          <AddUserModal onClose={handleCloseModal} onSuccess={handleUserAdded} />
+          <AddUserModal
+            onClose={handleCloseModal}
+            onSuccess={handleUserAdded}
+          />
         )}
       </div>
     </>
