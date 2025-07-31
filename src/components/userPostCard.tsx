@@ -41,7 +41,7 @@ export const UserPostCard: React.FC<UserPostCardProps> = ({
         style={{
           color: 'darkblue',
           margin: '10px 0px',
-          fontSize: '18px',
+          fontSize: '25px',
           fontWeight: 'bold',
           fontFamily: 'bold',
           textAlign: 'justify',
