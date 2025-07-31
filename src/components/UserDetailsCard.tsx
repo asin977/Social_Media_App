@@ -10,7 +10,7 @@ type UserDetailsCardProps = {
   onUserSelect: (user: UserListAPIResponse) => void;
 };
 
-export const UserDetailsCard: React.FC<UserDetailsCardProps> = ({
+const UserDetailsCard: React.FC<UserDetailsCardProps> = ({
   user,
   onUserSelect,
 }) => {
@@ -60,3 +60,5 @@ export const UserDetailsCard: React.FC<UserDetailsCardProps> = ({
     </div>
   );
 };
+
+export default UserDetailsCard;

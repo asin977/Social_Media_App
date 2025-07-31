@@ -5,7 +5,7 @@ export type UserListAPIResponse = {
   email: string;
   gender: string;
   status: string;
-  isActive:boolean
+  isActive: boolean;
 };
 
 export type UpdateUserPayLoad = {
