@@ -1,9 +1,10 @@
 import { useState } from 'react';
 
+import AddUserModal from '../components/AddModalUser';
 import { Header } from '../components/Header';
 import UserLists from '../components/UserList';
+
 import AddUserIcon from '../assets/images/add-user.png';
-import AddUserModal from '../components/AddModalUser';
 
 const UserManagementPage = () => {
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
@@ -32,7 +33,9 @@ const UserManagementPage = () => {
               src={AddUserIcon}
               alt="Add User"
             />
-            <span style={{ fontSize: '24px' }}>Add User</span>
+            <span style={{ fontSize: '24px', fontFamily: 'bold' }}>
+              Add User
+            </span>
           </button>
         </div>
 
