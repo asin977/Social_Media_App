@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ClipLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
 
-import { useAddUser } from '../apis/user/useAddUser';
+import { useAddUser } from '../apis/user';
 import Modal from '../components/common/modal';
 import {
   USERNAME,

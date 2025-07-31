@@ -18,4 +18,4 @@ export type UpdateUserPayLoad = {
   id: number;
   name?: string;
   email?: string;
-}
+};

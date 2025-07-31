@@ -1,8 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { endpoints } from '../endpoints';
-import httpClient from '../httpClient';
+
 import { UserListAPIResponse } from '../../types/user';
 import { DataQueryKeys } from '../data-query-keys';
+import { endpoints } from '../endpoints';
+import httpClient from '../httpClient';
 
 const addUserRequest = async (payload: Partial<UserListAPIResponse>) => {
   const response = await httpClient.post(endpoints.createUser(), payload);
