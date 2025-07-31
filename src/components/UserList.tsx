@@ -16,7 +16,7 @@ const UserList = () => {
   const handleUserSelectBtn = (user: UserListAPIResponse) => {
     setSelectedUser(user);
   };
-  
+
   if (isLoading) {
     return (
       <div style={{ textAlign: 'center', marginTop: '50px' }}>
