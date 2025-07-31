@@ -1,5 +1,4 @@
 import { useGetCommentList } from '../apis/comments';
-import { Header } from './Header';
 import { PostCommentCard } from './postCommentCard';
 
 export const CommentList = () => {
@@ -15,7 +14,6 @@ export const CommentList = () => {
 
   return (
     <>
-      <Header />
       <h2
         style={{
           color: 'darkblue',

@@ -7,7 +7,6 @@ import { UserListAPIResponse } from '../types/user';
 import EditUserModal from './EditUserModal';
 import ErrorContainer from './ErrorContainer';
 import UserDetailsCard from './UserDetailsCard';
-import { Header } from './Header';
 
 const UserList: React.FC = () => {
   const { data: users, isLoading, isError, error } = useGetUserList();
@@ -55,7 +54,6 @@ const UserList: React.FC = () => {
 
   return (
     <>
-      <Header />
       <h1
         style={{
           color: 'darkblue',
