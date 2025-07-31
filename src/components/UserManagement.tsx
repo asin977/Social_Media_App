@@ -2,11 +2,11 @@ import { useState } from 'react';
 
 import AddUserModal from '../components/AddModalUser';
 import { Header } from '../components/Header';
-import UserLists from '../components/UserList';
+import { UserList } from '../components/UserList';
 
 import AddUserIcon from '../assets/images/add-user.png';
 
-const UserManagementPage = () => {
+export const UserManagementPage = () => {
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
 
   return (
@@ -39,7 +39,7 @@ const UserManagementPage = () => {
           </button>
         </div>
 
-        <UserLists />
+        <UserList />
         <AddUserModal
           isOpen={isAddModalVisible}
           onClose={() => setIsAddModalVisible(false)}
@@ -51,5 +51,3 @@ const UserManagementPage = () => {
     </>
   );
 };
-
-export default UserManagementPage;

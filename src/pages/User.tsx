@@ -1,4 +1,4 @@
-import UserManagementPage from '../components/UserManagement';
+import { UserManagementPage } from '../components/UserManagement';
 
 export const User = () => {
   return (

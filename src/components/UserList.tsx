@@ -2,11 +2,11 @@ import { useState } from 'react';
 import { ClipLoader } from 'react-spinners';
 
 import { useGetUserList } from '../apis/user/useGetUserList';
-import ErrorContainer from '../components/ErrorContainer';
+import { ErrorContainer } from '../components/ErrorContainer';
 import { UserListAPIResponse } from '../types/user';
 import { UserDetailsCard } from './UserDetailsCard';
 
-const UserList = () => {
+export const UserList = () => {
   const { data: users, isLoading, isError, error, refetch } = useGetUserList();
 
   const [selectedUser, setSelectedUser] = useState<UserListAPIResponse | null>(
@@ -70,5 +70,3 @@ const UserList = () => {
     </>
   );
 };
-
-export default UserList;

@@ -3,7 +3,7 @@ import { ClipLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
 
 import { useAddUser } from '../apis/user';
-import Modal from '../components/common/modal';
+import { Modal } from '../components/common/modal';
 import {
   USER_NAME,
   USER_EMAIL,
@@ -62,7 +62,16 @@ const AddUserModal: React.FC<AddUserModalProps> = ({
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <h2 style={{ marginBottom: '20px' }}>Add New User</h2>
+      <h2
+        style={{
+          marginBottom: '20px',
+          color: 'darkblue',
+          fontFamily: 'bold',
+          fontSize: '30px',
+        }}
+      >
+        Add New User
+      </h2>
       <input
         name="name"
         placeholder="Name"
