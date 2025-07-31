@@ -1,40 +1,21 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ClipLoader } from 'react-spinners';
-import { toast } from 'react-toastify';
 
-import { useDeleteUser, useGetUserList } from '../apis/user';
-import { UserListAPIResponse } from '../types/user';
-import EditUserModal from './EditUserModal';
+import { useGetUserList } from '../apis/user';
 import ErrorContainer from './ErrorContainer';
+import { UserListAPIResponse } from '../types/user';
 import UserDetailsCard from './UserDetailsCard';
 
-const UserList: React.FC = () => {
+const UserList = () => {
   const { data: users, isLoading, isError, error } = useGetUserList();
-  const { mutate: deleteUserMutation } = useDeleteUser();
 
-  const [activeUserForEditing, setActiveUserForEditing] =
-    useState<UserListAPIResponse | null>(null);
+  const [selectedUser, setSelectedUser] = useState<UserListAPIResponse | null>(
+    null,
+  );
 
-  const handleSuccessSaveBtn = () => {
-    toast.success('User deleted Successfully.');
+  const handleUserSelectBtn = (user: UserListAPIResponse) => {
+    setSelectedUser(user);
   };
-
-  const handleDeleteBtnClick = (userId: number) => {
-    deleteUserMutation(userId, {
-      onSuccess: handleSuccessSaveBtn,
-      onError: () => toast.error('Failed to delete the user'),
-    });
-  };
-
-  const handleEditBtnClick = (user: UserListAPIResponse) => {
-    setActiveUserForEditing(user);
-  };
-
-  const handleCloseModalBtnClick = () => {
-    setActiveUserForEditing(null);
-  };
-
-  const handleSelectBtn = (user: UserListAPIResponse) => {};
 
   if (isLoading) {
     return (
@@ -65,7 +46,7 @@ const UserList: React.FC = () => {
           marginLeft: '35px',
         }}
       >
-        Users
+        Users List
       </h1>
       <div
         style={{
@@ -86,19 +67,10 @@ const UserList: React.FC = () => {
           <UserDetailsCard
             key={user.id}
             user={user}
-            onUserSelect={handleSelectBtn}
-            onEditBtnClick={handleEditBtnClick}
-            onDelete={handleDeleteBtnClick}
+            onUserSelect={handleUserSelectBtn}
           />
         ))}
       </div>
-
-      {activeUserForEditing && (
-        <EditUserModal
-          user={activeUserForEditing}
-          onClose={handleCloseModalBtnClick}
-        />
-      )}
     </>
   );
 };

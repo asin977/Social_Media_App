@@ -1,10 +1,11 @@
 export type UserListAPIResponse = {
-  isActive: boolean;
   id: number;
   user: string;
   name: string;
   email: string;
   gender: string;
+  status: string;
+  isActive: boolean;
 };
 
 export type UpdateUserPayLoad = {
