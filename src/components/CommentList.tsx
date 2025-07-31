@@ -84,17 +84,6 @@ export const CommentList = () => {
   return (
     <>
       <Header />
-      <h2
-        style={{
-          color: 'darkblue',
-          fontSize: '40px',
-          fontWeight: 'bold',
-          textAlign: 'start',
-          marginLeft: '60px',
-        }}
-      >
-        Post Comments
-      </h2>
 
       <div
         style={{
@@ -102,6 +91,7 @@ export const CommentList = () => {
           justifyContent: 'flex-end',
           gap: '10px',
           padding: '0 60px 20px',
+          marginTop: '50px',
         }}
       >
         <button
