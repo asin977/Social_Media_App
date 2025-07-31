@@ -33,11 +33,11 @@ const AddUserModal: React.FC<AddUserModalProps> = ({
   const handleSucessSaveBtn = () => {
     toast.success('User Successfully added');
     onSuccess();
+    onClose();
   };
 
   const { mutate: addUser, isPending } = useAddUser({
     onSuccess: handleSucessSaveBtn,
-
     onError: (err: any) => toast.error(err?.message || 'Failed to add user'),
   });
 
@@ -45,7 +45,10 @@ const AddUserModal: React.FC<AddUserModalProps> = ({
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData(prev => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const handleSubmitBtnClick = () => {
@@ -54,14 +57,12 @@ const AddUserModal: React.FC<AddUserModalProps> = ({
       toast.error('Please fill all fields');
       return;
     }
-
     addUser({ name, email, gender, status });
   };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <h2 style={{ marginBottom: '20px' }}>Add New User</h2>
-
       <input
         name="name"
         placeholder="Name"
@@ -90,7 +91,6 @@ const AddUserModal: React.FC<AddUserModalProps> = ({
           border: '1px solid #ccc',
         }}
       />
-
       <select
         name="gender"
         value={formData.gender || ''}
@@ -108,7 +108,6 @@ const AddUserModal: React.FC<AddUserModalProps> = ({
         <option value="male">Male</option>
         <option value="female">Female</option>
       </select>
-
       <select
         name="status"
         value={formData.status || ''}
@@ -126,7 +125,6 @@ const AddUserModal: React.FC<AddUserModalProps> = ({
         <option value="active">Active</option>
         <option value="inactive">Inactive</option>
       </select>
-
       <div
         style={{
           display: 'flex',

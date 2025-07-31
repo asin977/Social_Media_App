@@ -2,14 +2,13 @@ import { useState } from 'react';
 import { ClipLoader } from 'react-spinners';
 
 import { useGetUserList } from '../apis/user/useGetUserList';
-import AddUserModal from '../components/AddModalUser';
 import ErrorContainer from '../components/ErrorContainer';
 import { UserListAPIResponse } from '../types/user';
 import { UserDetailsCard } from './UserDetailsCard';
 
 const UserList = () => {
   const { data: users, isLoading, isError, error, refetch } = useGetUserList();
-  const [isAddModalVisible, setIsAddModalVisible] = useState(false);
+
   const [selectedUser, setSelectedUser] = useState<UserListAPIResponse | null>(
     null,
   );
@@ -68,15 +67,6 @@ const UserList = () => {
           />
         ))}
       </div>
-
-      <AddUserModal
-        isOpen={isAddModalVisible}
-        onClose={() => setIsAddModalVisible(false)}
-        onSuccess={() => {
-          setIsAddModalVisible(false);
-          refetch();
-        }}
-      />
     </>
   );
 };
