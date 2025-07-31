@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { useAddUser } from '../apis/user';
 import Modal from '../components/common/modal';
 import {
-  USERNAME,
+  USER_NAME,
   USER_EMAIL,
   USER_GENDER,
   USER_STATUS,
@@ -24,7 +24,7 @@ const AddUserModal: React.FC<AddUserModalProps> = ({
   onSuccess,
 }) => {
   const [formData, setFormData] = useState<Partial<UserListAPIResponse>>({
-    [USERNAME]: '',
+    [USER_NAME]: '',
     [USER_EMAIL]: '',
     [USER_GENDER]: '',
     [USER_STATUS]: '',
