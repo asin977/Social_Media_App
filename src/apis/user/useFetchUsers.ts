@@ -11,7 +11,7 @@ export type User = {
 
 export const useFetchUsers = () => {
   return useQuery<User[]>({
-    queryKey: [DataQueryKeys.USERS_LIST],
+    queryKey: [DataQueryKeys.USER_LIST],
     queryFn: () =>
       httpClient.get(endpoints.getUserList()).then(res => res.data),
   });
