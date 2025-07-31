@@ -1,22 +1,14 @@
 import { useState } from 'react';
 
 import { Header } from '../components/Header';
-import AddUserModal from '../components/AddModalUser';
 import UserLists from '../components/UserList';
 
 import AddUserIcon from '../assets/images/add-user.png';
 
 const UserManagementPage = () => {
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
-  const [refreshKey, setRefreshKey] = useState(0);
 
   const handleOpenModal = () => setIsAddModalVisible(true);
-  const handleCloseModal = () => setIsAddModalVisible(false);
-
-  const handleUserAdded = () => {
-    setRefreshKey(prev => prev + 1);
-    setIsAddModalVisible(false);
-  };
 
   return (
     <>
@@ -50,13 +42,7 @@ const UserManagementPage = () => {
           <span style={{ fontSize: '24px' }}>Add User</span>
         </button>
 
-        <UserLists key={refreshKey} />
-
-        <AddUserModal
-          isOpen={isAddModalVisible}
-          onClose={handleCloseModal}
-          onSuccess={handleUserAdded}
-        />
+        <UserLists />
       </div>
     </>
   );

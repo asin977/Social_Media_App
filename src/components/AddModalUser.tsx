@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import { toast } from 'react-toastify';
 import { ClipLoader } from 'react-spinners';
+import { toast } from 'react-toastify';
 
-import Modal from '../components/common/modal';
 import { useAddUser } from '../apis/user/useAddUser';
-import { UserListAPIResponse } from '../types/user';
+import Modal from '../components/common/modal';
 import {
   USERNAME,
   USER_EMAIL,
   USER_GENDER,
   USER_STATUS,
 } from '../constants/common';
+import { UserListAPIResponse } from '../types/user';
 
 type AddUserModalProps = {
   isOpen: boolean;
@@ -30,26 +30,25 @@ const AddUserModal: React.FC<AddUserModalProps> = ({
     [USER_STATUS]: '',
   });
 
-  const { mutate: addUser, isPending } = useAddUser({
-    onSuccess: () => {
-      console.log('User successfully added');
-      toast.success('User added successfully');
-      onSuccess();
-    },
+  const handleSucessSaveBtn = () => {
+    toast.success('User Successfully added');
+    onSuccess();
+  };
 
-    onError: (err: any) => {
-      toast.error(err?.message || 'Failed to add user');
-    },
+  const { mutate: addUser, isPending } = useAddUser({
+    onSuccess: handleSucessSaveBtn,
+
+    onError: (err: any) => toast.error(err?.message || 'Failed to add user'),
   });
 
-  const handleChange = (
+  const handleChangeBtn = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = () => {
+  const handleSubmitBtnClick = () => {
     const { name, email, gender, status } = formData;
     if (!name || !email || !gender || !status) {
       toast.error('Please fill all fields');
@@ -67,7 +66,7 @@ const AddUserModal: React.FC<AddUserModalProps> = ({
         name="name"
         placeholder="Name"
         value={formData.name || ''}
-        onChange={handleChange}
+        onChange={handleChangeBtn}
         style={{
           width: '100%',
           marginBottom: '12px',
@@ -81,7 +80,7 @@ const AddUserModal: React.FC<AddUserModalProps> = ({
         name="email"
         placeholder="Email"
         value={formData.email || ''}
-        onChange={handleChange}
+        onChange={handleChangeBtn}
         style={{
           width: '100%',
           marginBottom: '12px',
@@ -95,7 +94,7 @@ const AddUserModal: React.FC<AddUserModalProps> = ({
       <select
         name="gender"
         value={formData.gender || ''}
-        onChange={handleChange}
+        onChange={handleChangeBtn}
         style={{
           width: '100%',
           marginBottom: '12px',
@@ -113,7 +112,7 @@ const AddUserModal: React.FC<AddUserModalProps> = ({
       <select
         name="status"
         value={formData.status || ''}
-        onChange={handleChange}
+        onChange={handleChangeBtn}
         style={{
           width: '100%',
           marginBottom: '12px',
@@ -136,7 +135,7 @@ const AddUserModal: React.FC<AddUserModalProps> = ({
         }}
       >
         <button
-          onClick={handleSubmit}
+          onClick={handleSubmitBtnClick}
           disabled={isPending}
           style={{
             color: '#fff',
@@ -146,6 +145,8 @@ const AddUserModal: React.FC<AddUserModalProps> = ({
             borderRadius: '4px',
             cursor: 'pointer',
             minWidth: '90px',
+            fontFamily: 'bold',
+            fontSize: '18px',
           }}
         >
           {isPending ? <ClipLoader color="#fff" size={20} /> : 'Add'}
@@ -153,13 +154,15 @@ const AddUserModal: React.FC<AddUserModalProps> = ({
         <button
           onClick={onClose}
           style={{
-            backgroundColor: '#ccc',
-            color: 'black',
-            padding: '10px 20px',
+            color: '#fff',
+            backgroundColor: '#023e8a',
             border: 'none',
+            padding: '10px 20px',
             borderRadius: '4px',
             cursor: 'pointer',
             minWidth: '90px',
+            fontFamily: 'bold',
+            fontSize: '18px',
           }}
         >
           Cancel

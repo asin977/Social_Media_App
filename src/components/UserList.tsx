@@ -1,56 +1,62 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ClipLoader } from 'react-spinners';
+
 import { useGetUserList } from '../apis/user/useGetUserList';
 import AddUserModal from '../components/AddModalUser';
-import { UserListAPIResponse } from '../types/user';
 import ErrorContainer from '../components/ErrorContainer';
+import { UserListAPIResponse } from '../types/user';
 import { UserDetailsCard } from './UserDetailsCard';
 
 const UserList = () => {
   const { data: users, isLoading, isError, error, refetch } = useGetUserList();
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
-  const [selectedUser, setSelectedUser] = useState<UserListAPIResponse | null>(null);
+  const [selectedUser, setSelectedUser] = useState<UserListAPIResponse | null>(
+    null,
+  );
 
   if (isLoading) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '40px' }}>
+      <div
+        style={{ display: 'flex', justifyContent: 'center', marginTop: '40px' }}
+      >
         <ClipLoader color="#1976d2" size={60} />
       </div>
     );
   }
 
   if (isError) {
-    return <ErrorContainer message={error?.message || 'Something went wrong'} />;
+    return (
+      <ErrorContainer message={error?.message || 'Something went wrong'} />
+    );
   }
 
   return (
     <>
-      <h1 style={{ fontSize: '50px', fontWeight: 'bold', color: 'darkblue', marginLeft: '40px' }}>
-        Users
-      </h1>
-
-      <button
-        onClick={() => setIsAddModalVisible(true)}
+      <h1
         style={{
+          fontSize: '50px',
+          fontWeight: 'bold',
+          color: 'darkblue',
           marginLeft: '40px',
-          marginBottom: '20px',
-          padding: '10px 20px',
-          backgroundColor: '#1976d2',
-          color: 'white',
-          border: 'none',
-          borderRadius: '5px',
-          cursor: 'pointer',
+          textAlign: 'left',
         }}
       >
-        Add User
-      </button>
+        Users List
+      </h1>
 
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+          gridTemplateColumns: 'repeat(3, 1fr)',
+          justifyItems: 'start',
+          textAlign: 'justify',
+          marginLeft: '30px',
+          marginRight: '30px',
           gap: '30px',
-          padding: '0 30px',
+          margin: '20px',
+          paddingLeft: '20px',
+          paddingRight: '20px',
+          paddingBottom: '20px',
         }}
       >
         {(users || []).map(user => (
@@ -58,7 +64,7 @@ const UserList = () => {
             key={user.id}
             user={user}
             onUserSelect={() => setSelectedUser(user)}
-            onEditBtnClick={() => {}} 
+            onEditBtnClick={() => {}}
           />
         ))}
       </div>
@@ -68,7 +74,7 @@ const UserList = () => {
         onClose={() => setIsAddModalVisible(false)}
         onSuccess={() => {
           setIsAddModalVisible(false);
-          refetch(); 
+          refetch();
         }}
       />
     </>

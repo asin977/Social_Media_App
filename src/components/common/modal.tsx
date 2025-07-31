@@ -8,7 +8,7 @@ type ModalProps = {
 
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
   if (!isOpen) {
-    return null
+    return null;
   }
 
   return (
@@ -24,7 +24,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
         justifyContent: 'center',
         alignItems: 'center',
         zIndex: 1000,
-        padding:'45px'
+        padding: '45px',
       }}
     >
       <div
@@ -38,16 +38,25 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
         }}
       >
         {children}
-        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '15px' }}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'flex-end',
+            marginTop: '15px',
+          }}
+        >
           <button
             onClick={onClose}
             style={{
-              backgroundColor: '#ccc',
-              color: 'black',
-              padding: '6px 12px',
+              color: '#fff',
+              backgroundColor: '#023e8a',
               border: 'none',
+              padding: '10px 20px',
               borderRadius: '4px',
               cursor: 'pointer',
+              minWidth: '90px',
+              fontFamily: 'bold',
+              fontSize: '18px',
             }}
           >
             Close
