@@ -1,1 +1,2 @@
-export * from './UsersPosts';
+export * from './UsersPost';
+export * from './Users';

@@ -1,6 +1,6 @@
 import { CommentList } from '../components/CommentList';
 
-export const UserPost = () => (
+export const UsersPost = () => (
   <>
     <CommentList />
   </>

@@ -2,8 +2,8 @@ import { useQuery } from '@tanstack/react-query';
 
 import { CommentResponse } from '../../types/comments';
 import { DataQueryKeys } from '../data-query-keys';
-import { endpoints } from '../endPoints';
-import httpClient from '../httpClients';
+import { endpoints } from '../endpoints';
+import httpClient from '../httpClient';
 
 export const useGetCommentList = () => {
   return useQuery<CommentResponse[]>({
