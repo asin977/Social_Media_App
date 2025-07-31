@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { useCreateUserPost } from '../apis/post/useCreateUserPost';
 import { useFetchUsers } from '../apis/user';
 import Modal from '../components/common/modal';
+import { POST_BODY, POST_TITLE, USER_ID } from '../constants/common';
 import { UserPostCard } from './userPostCard';
 
 import PostIcon from '../assets/images/post.png';
@@ -14,9 +15,9 @@ export const CreateUserPost = () => {
   const createPost = useCreateUserPost();
 
   const [form, setForm] = useState({
-    title: '',
-    body: '',
-    userId: '',
+    [POST_TITLE]: '',
+    [POST_BODY]: '',
+    [USER_ID]: '',
   });
 
   const [isOpen, setIsOpen] = useState(false);
@@ -43,8 +44,8 @@ export const CreateUserPost = () => {
     }
 
     const payload = {
-      title: form.title,
-      body: form.body,
+      title: form.postTitle,
+      body: form.postBody,
       userId: parsedUserId,
     };
 
@@ -63,7 +64,7 @@ export const CreateUserPost = () => {
             userId: parsedUserId,
           },
         ]);
-        setForm({ title: '', body: '', userId: '' });
+        setForm({ postTitle: '', postBody: '', userId: '' });
         setIsOpen(false);
       },
       onError: () => toast.error('Failed to create new post.Try again.'),
@@ -129,10 +130,10 @@ export const CreateUserPost = () => {
         </h2>
         <form onSubmit={handleSubmitBtn} style={{ textAlign: 'center' }}>
           <input
-            name="title"
+            name="postTitle"
             placeholder="Title"
             onChange={handleChangeBtn}
-            value={form.title}
+            value={form.postTitle}
             required
             style={{
               padding: '5px 10px',
@@ -145,10 +146,10 @@ export const CreateUserPost = () => {
           />
 
           <textarea
-            name="body"
+            name="postBody"
             placeholder="Body"
             onChange={handleChangeBtn}
-            value={form.body}
+            value={form.postBody}
             required
             style={{
               padding: '5px 10px',
