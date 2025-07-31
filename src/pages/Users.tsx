@@ -1,7 +1,7 @@
 import { Header } from '../components/Header';
 import UserList from '../components/UserList';
 
-export const Home = () => {
+export const Users = () => {
   return (
     <>
       <Header />

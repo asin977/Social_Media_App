@@ -4,19 +4,15 @@ import { UserListAPIResponse } from '../types/user';
 import StatusIndicatorChip from './StatusIndicatorChip';
 
 import UserIcon from '../assets/images/user.png';
-import { ReactComponent as EditIcon } from '../assets/svg/edit.svg';
-
 
 type UserDetailsCardProps = {
   user: UserListAPIResponse;
   onUserSelect: (user: UserListAPIResponse) => void;
-  onEditBtnClick: (user: UserListAPIResponse) => void;
 };
 
 export const UserDetailsCard: React.FC<UserDetailsCardProps> = ({
   user,
   onUserSelect,
-  onEditBtnClick,
 }) => {
   return (
     <div
@@ -51,38 +47,15 @@ export const UserDetailsCard: React.FC<UserDetailsCardProps> = ({
             justifyContent: 'flex-end',
           }}
         >
-          <StatusIndicatorChip status={user.status === 'active'} />
+          <div style={{ position: 'absolute', left: '29px', bottom: '63px' }}>
+            <StatusIndicatorChip status={user.status === 'active'} />
+          </div>
 
           <h3 style={{ margin: '0 0 10px 8px', textAlign: 'end' }}>
             {user.name}
           </h3>
         </div>
         <p style={{ textAlign: 'end', margin: 0 }}>{user.email}</p>
-
-        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-          <button
-            onClick={e => {
-              e.stopPropagation();
-              onEditBtnClick(user);
-            }}
-            style={{
-              padding: '5px 10px',
-              backgroundColor: '#1976d2',
-              color: 'white',
-              border: 'none',
-              borderRadius: '4px',
-              cursor: 'pointer',
-              marginTop: '10px',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '5px',
-            }}
-            aria-label="Edit user"
-          >
-            <EditIcon width={20} height={20} />
-            Edit
-          </button>
-        </div>
       </div>
     </div>
   );

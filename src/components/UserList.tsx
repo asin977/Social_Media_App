@@ -4,7 +4,6 @@ import { ClipLoader } from 'react-spinners';
 import { useGetUserList } from '../apis/user';
 import ErrorContainer from '../components/ErrorContainer';
 import { UserListAPIResponse } from '../types/user';
-import EditUserModal from './EditUserModal';
 import { UserDetailsCard } from './UserDetailsCard';
 
 const UserList = () => {
@@ -13,20 +12,9 @@ const UserList = () => {
   const [selectedUser, setSelectedUser] = useState<UserListAPIResponse | null>(
     null,
   );
-  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
-
-  const handleEditBtnClick = (user: UserListAPIResponse) => {
-    setSelectedUser(user);
-    setIsEditModalVisible(true);
-  };
 
   const handleUserSelect = (user: UserListAPIResponse) => {
     setSelectedUser(user);
-  };
-
-  const handleCloseModal = () => {
-    setIsEditModalVisible(false);
-    setSelectedUser(null);
   };
 
   if (isLoading) {
@@ -58,7 +46,7 @@ const UserList = () => {
           marginTop: '12px',
         }}
       >
-        Users
+        Users List
       </h1>
 
       <div
@@ -82,14 +70,9 @@ const UserList = () => {
             key={index}
             user={user}
             onUserSelect={handleUserSelect}
-            onEditBtnClick={handleEditBtnClick}
           />
         ))}
       </div>
-
-      {isEditModalVisible && selectedUser && (
-        <EditUserModal user={selectedUser} onClose={handleCloseModal} />
-      )}
     </>
   );
 };
