@@ -17,7 +17,6 @@ const App = () => {
         <BrowserRouter>
           <Routes>
             <Route path={routes.userspost} element={<UsersPost />} />
-
             <Route path={routes.home} element={<Users />} />
           </Routes>
         </BrowserRouter>
