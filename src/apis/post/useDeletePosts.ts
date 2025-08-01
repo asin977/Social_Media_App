@@ -16,6 +16,6 @@ export const useDeletePosts = () => {
     mutationFn: deletePostRequest,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [DataQueryKeys.POST_LIST] });
-    }
+    },
   });
 };
