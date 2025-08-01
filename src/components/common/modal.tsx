@@ -52,10 +52,10 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
               color: '#fff',
               padding: '6px 12px',
               border: 'none',
-              borderRadius: '4px',
+              borderRadius: '5px',
+              fontFamily: 'bold',
+              fontSize: '18px',
               cursor: 'pointer',
-              fontFamily:'bold',
-              fontSize:"18px"
             }}
           >
             Close

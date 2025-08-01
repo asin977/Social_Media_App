@@ -4,9 +4,10 @@ export const endpoints = {
   deleteUser: (userId: string) => `public/v2/users/${userId}`,
   updateUserDetails: (id: string) => `public/v2/users/${id}`,
 
-  // posts
-  getPosts: () => 'public/v2/posts',
+  // post
+  getPosts: () => '/public/v2/posts',
+  deletePost: (postId: number) => `public/v2/posts/${postId}`,
 
   // comments
-  getComments: () => 'public/v2/comments',
+  getComments: () => '/public/v2/comments',
 };
