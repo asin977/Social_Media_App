@@ -2,8 +2,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { UpdateUserPayLoad, UserListAPIResponse } from '../../types/user';
 import { DataQueryKeys } from '../data-query-keys';
-import { endpoints } from '../endpoints';
-import httpClient from '../httpClient';
+import { endpoints } from '../endPoints';
+import httpClient from '../httpClients';
 
 export const useUpdateUser = () => {
   const queryClient = useQueryClient();
