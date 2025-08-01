@@ -10,6 +10,7 @@ export const useGetUserPosts = () => {
     queryKey: [DataQueryKeys.POST_LIST],
     queryFn: async () => {
       const { data } = await httpClient.get(endpoints.getPosts());
+
       return data;
     },
   });
