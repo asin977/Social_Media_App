@@ -1,54 +1,31 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ClipLoader } from 'react-spinners';
-import { toast } from 'react-toastify';
 
-import { useDeleteUser, useGetUserList } from '../apis/user';
+import { useGetUserList } from '../apis/user/useGetUserList';
+import { ErrorContainer } from '../components/ErrorContainer';
 import { UserListAPIResponse } from '../types/user';
-import EditUserModal from './EditUserModal';
-import ErrorContainer from './ErrorContainer';
-import UserDetailsCard from './UserDetailsCard';
+import { UserDetailsCard } from './UserDetailsCard';
 
-const UserList: React.FC = () => {
-  const { data: users, isLoading, isError, error } = useGetUserList();
-  const { mutate: deleteUserMutation } = useDeleteUser();
+export const UserList = () => {
+  const { data: users, isLoading, isError, error, refetch } = useGetUserList();
 
-  const [activeUserForEditing, setActiveUserForEditing] =
-    useState<UserListAPIResponse | null>(null);
-
-  const handleSuccessSaveBtn = () => {
-    toast.success('User deleted Successfully.');
-  };
-
-  const handleDeleteBtnClick = (userId: number) => {
-    deleteUserMutation(userId, {
-      onSuccess: handleSuccessSaveBtn,
-      onError: () => toast.error('Failed to delete the user'),
-    });
-  };
-
-  const handleEditBtnClick = (user: UserListAPIResponse) => {
-    setActiveUserForEditing(user);
-  };
-
-  const handleCloseModalBtnClick = () => {
-    setActiveUserForEditing(null);
-  };
-
-  const handleSelectBtn = (user: UserListAPIResponse) => {};
+  const [selectedUser, setSelectedUser] = useState<UserListAPIResponse | null>(
+    null,
+  );
 
   if (isLoading) {
     return (
-      <div style={{ textAlign: 'center', marginTop: '50px' }}>
-        <ClipLoader size={40} color="#023e8a" />
+      <div
+        style={{ display: 'flex', justifyContent: 'center', marginTop: '40px' }}
+      >
+        <ClipLoader color="#1976d2" size={60} />
       </div>
     );
   }
 
   if (isError) {
     return (
-      <div style={{ color: 'red', textAlign: 'center', marginTop: '30px' }}>
-        <ErrorContainer message={error?.message || 'Something went wrong'} />
-      </div>
+      <ErrorContainer message={error?.message || 'Something went wrong'} />
     );
   }
 
@@ -56,17 +33,16 @@ const UserList: React.FC = () => {
     <>
       <h1
         style={{
-          color: 'darkblue',
           fontSize: '50px',
-          margin: '0',
-          paddingTop: '20px',
-          fontFamily: 'bold',
-          textAlign: 'start',
-          marginLeft: '35px',
+          fontWeight: 'bold',
+          color: 'darkblue',
+          marginLeft: '40px',
+          textAlign: 'left',
         }}
       >
-        Users
+        Users List
       </h1>
+
       <div
         style={{
           display: 'grid',
@@ -82,25 +58,15 @@ const UserList: React.FC = () => {
           paddingBottom: '20px',
         }}
       >
-        {users?.map(user => (
+        {(users || []).map(user => (
           <UserDetailsCard
             key={user.id}
             user={user}
-            onUserSelect={handleSelectBtn}
-            onEditBtnClick={handleEditBtnClick}
-            onDelete={handleDeleteBtnClick}
+            onUserSelect={() => setSelectedUser(user)}
+            onEditBtnClick={() => {}}
           />
         ))}
       </div>
-
-      {activeUserForEditing && (
-        <EditUserModal
-          user={activeUserForEditing}
-          onClose={handleCloseModalBtnClick}
-        />
-      )}
     </>
   );
 };
-
-export default UserList;

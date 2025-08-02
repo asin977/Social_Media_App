@@ -1,3 +1,2 @@
 export * from './useGetUserList';
-export * from './useDeleteUser';
-export * from './useUpdateUser';
+export * from './useAddUser';
