@@ -16,7 +16,7 @@ const App = () => {
         <ToastContainer position="top-right" autoClose={3000} />
         <BrowserRouter>
           <Routes>
-            <Route path={routes.home} element={<Users />} />
+            <Route path={routes.users} element={<Users />} />
           </Routes>
         </BrowserRouter>
       </QueryClientProvider>

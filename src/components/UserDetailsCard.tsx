@@ -19,7 +19,7 @@ const UserDetailsCard: React.FC<UserDetailsCardProps> = ({
       className="user-details-card"
       style={{
         border: '1px solid #ccc',
-        padding: '20px',
+        padding: '35px',
         borderRadius: '8px',
         width: '100%',
         color: 'darkblue',
@@ -47,7 +47,7 @@ const UserDetailsCard: React.FC<UserDetailsCardProps> = ({
             justifyContent: 'flex-end',
           }}
         >
-          <div style={{ position: 'absolute', left: '29px', bottom: '63px' }}>
+          <div style={{ position: 'absolute', left: '40px', bottom: '63px' }}>
             <StatusIndicatorChip status={user.status === 'active'} />
           </div>
 

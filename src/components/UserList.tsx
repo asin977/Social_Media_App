@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { ClipLoader } from 'react-spinners';
 
 import { useGetUserList } from '../apis/user';
-import ErrorContainer from './ErrorContainer';
 import { UserListAPIResponse } from '../types/user';
+import ErrorContainer from './ErrorContainer';
 import UserDetailsCard from './UserDetailsCard';
 
 const UserList = () => {
@@ -41,9 +41,8 @@ const UserList = () => {
           fontSize: '50px',
           margin: '0',
           paddingTop: '20px',
-          fontFamily: 'bold',
           textAlign: 'start',
-          marginLeft: '35px',
+          marginLeft: '55px',
         }}
       >
         Users List
@@ -58,8 +57,8 @@ const UserList = () => {
           marginRight: '30px',
           gap: '30px',
           margin: '20px',
-          paddingLeft: '20px',
-          paddingRight: '20px',
+          paddingLeft: '50px',
+          paddingRight: '50px',
           paddingBottom: '20px',
         }}
       >

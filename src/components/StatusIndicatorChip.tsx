@@ -16,8 +16,8 @@ const StatusIndicatorChip: React.FC<StatusIndicatorChipProps> = ({
       role="status"
       style={{
         display: 'inline-block',
-        width: '12px',
-        height: '12px',
+        width: '14px',
+        height: '14px',
         borderRadius: '50%',
         backgroundColor: color,
         cursor: 'default',
