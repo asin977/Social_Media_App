@@ -1,7 +1,7 @@
 import { useGetUserPosts } from '../apis/post';
 import { CreateUserPost } from './CreateUserPost';
 import { Header } from './Header';
-import { UserPostCard } from './userPostCard';
+import { UserPostCard } from './UserPostCard';
 
 export const UserPostList = () => {
   const { data: posts, isLoading, isError, error } = useGetUserPosts();
@@ -21,9 +21,9 @@ export const UserPostList = () => {
         style={{
           color: 'darkblue',
           fontSize: '40px',
-          fontFamily: 'bold',
           textAlign: 'start',
-          marginLeft: '60px',
+          marginLeft: '90px',
+          marginBottom: '0px',
         }}
       >
         User Posts
@@ -39,8 +39,8 @@ export const UserPostList = () => {
           gridTemplateColumns: 'repeat(3, minmax(500px, 1fr))',
           textAlign: 'justify',
           margin: '0 50px 35px',
-          gap: '30px',
-          padding: '20px',
+          gap: '60px',
+          padding: '50px',
         }}
       >
         {posts?.map(post => (

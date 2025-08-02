@@ -6,7 +6,7 @@ import { useCreateUserPost } from '../apis/post/useCreateUserPost';
 import { useFetchUsers } from '../apis/user';
 import Modal from '../components/common/modal';
 import { POST_BODY, POST_TITLE, USER_ID } from '../constants/common';
-import { UserPostCard } from './userPostCard';
+import { UserPostCard } from './UserPostCard';
 
 import PostIcon from '../assets/images/post.png';
 
@@ -77,22 +77,25 @@ export const CreateUserPost = () => {
 
   return (
     <>
-      <div style={{ position: 'absolute', right: '1%', top: '9%' }}>
+      <div style={{ position: 'absolute', right: '5%', top: '9%' }}>
         <select
           name="userId"
           onChange={handleChangeBtn}
           value={form.userId}
           required
           style={{
-            padding: '10px',
+            padding: '15px',
             border: 'none',
             background: 'darkblue',
             color: 'white',
             fontWeight: 'bold',
             marginBottom: '20px',
+            borderRadius:'3px',
+            boxShadow:'1px 2px 3px 4px darkblue',
+            cursor:'pointer'
           }}
         >
-          <option value="">👤 Select User</option>
+          <option value="" >👤 Select User</option>
           {users?.map(user => (
             <option key={user.id} value={user.id.toString()}>
               {user.name}
@@ -192,7 +195,7 @@ export const CreateUserPost = () => {
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-            gap: '30px',
+            gap: '40px',
             padding: '20px 50px',
           }}
         >

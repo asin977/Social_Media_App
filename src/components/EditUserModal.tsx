@@ -3,9 +3,9 @@ import { ClipLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
 
 import { useUpdateUser } from '../apis/user';
+import { USERNAME_FORM_FIELD } from '../constants/common';
 import { UserListAPIResponse } from '../types/user';
 import Modal from './common/modal';
-import { USERNAME_FORM_FIELD } from '../constants/common';
 
 type EditUserModalProps = {
   user: UserListAPIResponse;
