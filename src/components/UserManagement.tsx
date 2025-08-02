@@ -12,7 +12,7 @@ export const UserManagementPage = () => {
   return (
     <>
       <Header />
-      <div style={{ padding: '20px' }}>
+      <div style={{ padding: '50px' }}>
         <div style={{ position: 'absolute', top: '8px' }}>
           <button
             onClick={() => setIsAddModalVisible(true)}
