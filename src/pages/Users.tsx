@@ -1,6 +1,6 @@
 import { UserManagementPage } from '../components/UserManagement';
 
-export const User = () => {
+export const Users = () => {
   return (
     <>
       <UserManagementPage />

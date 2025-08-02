@@ -158,7 +158,7 @@ const AddUserModal: React.FC<AddUserModalProps> = ({
         >
           {isPending ? <ClipLoader color="#fff" size={20} /> : 'Add'}
         </button>
-        <button
+        {/* <button
           onClick={onClose}
           style={{
             color: '#fff',
@@ -173,7 +173,7 @@ const AddUserModal: React.FC<AddUserModalProps> = ({
           }}
         >
           Cancel
-        </button>
+        </button> */}
       </div>
     </Modal>
   );
