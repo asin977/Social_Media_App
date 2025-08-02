@@ -21,9 +21,9 @@ export const UserPostList = () => {
         style={{
           color: 'darkblue',
           fontSize: '40px',
-          fontFamily: 'bold',
           textAlign: 'start',
-          marginLeft: '60px',
+          marginLeft: '90px',
+          marginBottom: '0px',
         }}
       >
         User Posts
@@ -34,8 +34,9 @@ export const UserPostList = () => {
           gridTemplateColumns: 'repeat(3, minmax(500px, 1fr))',
           textAlign: 'justify',
           margin: '0 50px 35px',
-          gap: '30px',
-          padding: '20px',
+          gap: '55px',
+          paddingTop: '0px',
+          padding: '50px',
         }}
       >
         {posts?.map(post => (
