@@ -27,6 +27,24 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
         padding: '45px',
       }}
     >
+      <button
+        onClick={onClose}
+        style={{
+          backgroundColor: 'transparent',
+          color: 'black',
+          padding: '6px 12px',
+          border: 'none',
+          borderRadius: '4px',
+          cursor: 'pointer',
+          fontFamily: 'bold',
+          fontSize: '18px',
+          position: 'absolute',
+          top: '290px',
+          right: '780px',
+        }}
+      >
+        ✘
+      </button>
       <div
         style={{
           backgroundColor: 'white',
@@ -44,24 +62,7 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
             justifyContent: 'flex-end',
             marginTop: '15px',
           }}
-        >
-          <button
-            onClick={onClose}
-            style={{
-              color: '#fff',
-              backgroundColor: '#023e8a',
-              border: 'none',
-              padding: '10px 20px',
-              borderRadius: '4px',
-              cursor: 'pointer',
-              minWidth: '90px',
-              fontFamily: 'bold',
-              fontSize: '18px',
-            }}
-          >
-            Close
-          </button>
-        </div>
+        ></div>
       </div>
     </div>
   );
