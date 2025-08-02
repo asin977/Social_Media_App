@@ -90,12 +90,12 @@ export const CreateUserPost = () => {
             color: 'white',
             fontWeight: 'bold',
             marginBottom: '20px',
-            borderRadius:'3px',
-            boxShadow:'1px 2px 3px 4px darkblue',
-            cursor:'pointer'
+            borderRadius: '3px',
+            boxShadow: '1px 2px 3px 4px darkblue',
+            cursor: 'pointer',
           }}
         >
-          <option value="" >👤 Select User</option>
+          <option value="">👤 <span style={{fontSize:'18px'}}>Select User</span></option>
           {users?.map(user => (
             <option key={user.id} value={user.id.toString()}>
               {user.name}

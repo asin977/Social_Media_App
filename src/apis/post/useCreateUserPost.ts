@@ -21,10 +21,11 @@ export const useCreateUserPost = () => {
 
   return useMutation<UserPost, Error, UserPostInput>({
     mutationFn: async ({ userId, title, body }) => {
-      const response = await httpClient.post(
-        endpoints.createUserPost(userId),
-        { userId, title, body },
-      );
+      const response = await httpClient.post(endpoints.createUserPost(userId), {
+        userId,
+        title,
+        body,
+      });
       return response.data;
     },
     onSuccess: () => {

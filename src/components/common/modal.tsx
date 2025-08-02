@@ -27,10 +27,28 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
         padding: '45px',
       }}
     >
+      <button
+        onClick={onClose}
+        style={{
+          backgroundColor: 'transparent',
+          color: 'black',
+          padding: '6px 12px',
+          border: 'none',
+          borderRadius: '4px',
+          cursor: 'pointer',
+          fontFamily: 'bold',
+          fontSize: '18px',
+          position: 'absolute',
+          top: '290px',
+          right: '780px',
+        }}
+      >
+        ✘
+      </button>
       <div
         style={{
           backgroundColor: 'white',
-          padding: '30px',
+          padding: '60px',
           borderRadius: '8px',
           boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
           width: '400px',
@@ -38,29 +56,6 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
         }}
       >
         {children}
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'flex-end',
-            marginTop: '15px',
-          }}
-        >
-          <button
-            onClick={onClose}
-            style={{
-              backgroundColor: '#023E8A',
-              color: '#fff',
-              padding: '6px 12px',
-              border: 'none',
-              borderRadius: '4px',
-              cursor: 'pointer',
-              fontFamily:'bold',
-              fontSize:'18px'
-            }}
-          >
-            Close
-          </button>
-        </div>
       </div>
     </div>
   );
