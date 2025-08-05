@@ -94,7 +94,7 @@ export const CreateUserPost = () => {
             boxShadow: '1px 2px 3px 4px darkblue',
             cursor: 'pointer',
             fontSize: '18px',
-            textAlign:'center'
+            textAlign: 'center',
           }}
         >
           <option value="">👤 Select User</option>
