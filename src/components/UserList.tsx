@@ -7,7 +7,7 @@ import { UserListAPIResponse } from '../types/user';
 import { UserDetailsCard } from './UserDetailsCard';
 
 export const UserList = () => {
-  const { data: users, isLoading, isError, error, refetch } = useGetUserList();
+  const { data: users, isLoading, isError, error } = useGetUserList();
 
   const [selectedUser, setSelectedUser] = useState<UserListAPIResponse | null>(
     null,
