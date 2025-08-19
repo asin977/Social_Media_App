@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { DataQueryKeys } from '../data-query-keys';
 import { UserListAPIResponse } from '../../types/user';
-import httpClient from '../httpClient';
+import { DataQueryKeys } from '../data-query-keys';
 import { endpoints } from '../endpoints';
+import httpClient from '../httpClient';
 
 export const useGetUserList = () => {
   return useQuery<UserListAPIResponse[]>({

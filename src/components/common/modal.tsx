@@ -1,12 +1,14 @@
 import React from 'react';
 
+import { ReactComponent as CloseIcon } from '../../assets/svg/close.svg';
+
 type ModalProps = {
   isOpen: boolean;
   onClose: () => void;
   children: React.ReactNode;
 };
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
+export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
   if (!isOpen) {
     return null;
   }
@@ -26,6 +28,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
         zIndex: 1000,
         padding: '45px',
       }}
+      onClick={onClose}
     >
       <button
         onClick={onClose}
@@ -39,26 +42,32 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
           fontFamily: 'bold',
           fontSize: '18px',
           position: 'absolute',
-          top: '290px',
-          right: '780px',
+          top: '310px',
+          right: '750px',
         }}
       >
-        ✘
+        <CloseIcon width={'30px'} height={'30px'} />
       </button>
       <div
         style={{
           backgroundColor: 'white',
-          padding: '60px',
+          padding: '30px',
           borderRadius: '8px',
           boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
           width: '400px',
           maxWidth: '100%',
         }}
+        onClick={e => e.stopPropagation()}
       >
         {children}
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'flex-end',
+            marginTop: '15px',
+          }}
+        ></div>
       </div>
     </div>
   );
 };
-
-export default Modal;

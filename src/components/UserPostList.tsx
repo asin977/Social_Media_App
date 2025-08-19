@@ -1,9 +1,8 @@
 import { Link } from 'react-router-dom';
 
 import { useGetUserPosts } from '../apis/post';
-import { CreateUserPost } from './CreateUserPost';
 import { routes } from '../routes';
-import ErrorContainer from './ErrorContainer';
+import { CreateUserPost } from './CreateUserPost';
 import { Header } from './Header';
 import { UserPostCard } from './UserPostCard';
 

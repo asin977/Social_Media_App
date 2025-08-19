@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 
 import { useCreateUserPost } from '../apis/post/useCreateUserPost';
 import { useFetchUsers } from '../apis/user';
-import Modal from '../components/common/modal';
+import { Modal } from '../components/common/modal';
 import { POST_BODY, POST_TITLE, USER_ID } from '../constants/common';
 import { UserPostCard } from './UserPostCard';
 
