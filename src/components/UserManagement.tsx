@@ -6,7 +6,7 @@ import { UserList } from '../components/UserList';
 
 import AddUserIcon from '../assets/images/add-user.png';
 
-export const UserManagementPage = () => {
+export const UserManagement = () => {
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
 
   return (

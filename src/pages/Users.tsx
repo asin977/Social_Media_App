@@ -1,9 +1,9 @@
-import { UserManagementPage } from '../components/UserManagement';
+import { UserManagement } from '../components/UserManagement';
 
 export const Users = () => {
   return (
     <>
-      <UserManagementPage />
+      <UserManagement />
     </>
   );
 };

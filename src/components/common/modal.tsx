@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { ReactComponent as CloseIcon } from '../../assets/svg/close.svg';
+
 type ModalProps = {
   isOpen: boolean;
   onClose: () => void;
@@ -26,6 +28,7 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
         zIndex: 1000,
         padding: '45px',
       }}
+      onClick={onClose}
     >
       <button
         onClick={onClose}
@@ -43,7 +46,8 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
           right: '780px',
         }}
       >
-        ✘
+        <CloseIcon width={'30px'} height={'30px'} />
+        
       </button>
       <div
         style={{
@@ -54,6 +58,7 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
           width: '400px',
           maxWidth: '100%',
         }}
+        onClick={e => e.stopPropagation()}
       >
         {children}
         <div
