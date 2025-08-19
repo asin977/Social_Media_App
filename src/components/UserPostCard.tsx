@@ -15,6 +15,7 @@ export const UserPostCard: React.FC<UserPostCardProps> = ({
 }) => {
   return (
     <div
+      className="user-details-card"
       style={{
         color: 'black',
         backgroundColor: '#e3f2fd',
@@ -24,10 +25,11 @@ export const UserPostCard: React.FC<UserPostCardProps> = ({
         flexWrap: 'wrap',
         flexDirection: 'column',
         width: '100%',
-        padding: '20px',
+        padding: '50px',
         fontFamily: 'Arial, sans-serif',
         fontSize: '18px',
         borderRadius: '10px',
+        cursor: 'pointer',
       }}
     >
       <span style={{ display: 'flex', justifyContent: 'center' }}>
@@ -42,9 +44,8 @@ export const UserPostCard: React.FC<UserPostCardProps> = ({
           color: 'darkblue',
           margin: '10px 0px',
           fontSize: '18px',
-          fontWeight: 'bold',
-          fontFamily: 'bold',
           textAlign: 'justify',
+          fontFamily: 'regular',
         }}
       >
         {title}

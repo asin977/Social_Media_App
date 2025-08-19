@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { ClipLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
 
 import { useDeleteUser, useGetUserList } from '../apis/user';
+import { routes } from '../routes';
 import { UserListAPIResponse } from '../types/user';
 import EditUserModal from './EditUserModal';
 import ErrorContainer from './ErrorContainer';
@@ -54,6 +56,31 @@ const UserList: React.FC = () => {
 
   return (
     <>
+      <button
+        style={{
+          border: 'none',
+          color: '#fff',
+          background: 'darkblue',
+          position: 'absolute',
+          top: '2%',
+          right: '1%',
+          padding: '5px 10px',
+        }}
+      >
+        <Link
+          to={routes.usersPost}
+          style={{
+            color: '#fff',
+            fontFamily: 'bold',
+            borderRadius: '5px',
+            fontSize: '18px',
+            cursor: 'pointer',
+            textDecoration: 'none',
+          }}
+        >
+          USERSPOST
+        </Link>
+      </button>
       <h1
         style={{
           color: 'darkblue',
