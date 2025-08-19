@@ -4,7 +4,7 @@ type ErrorContainerProps = {
   message: string;
 };
 
-const ErrorContainer: React.FC<ErrorContainerProps> = ({ message }) => (
+export const ErrorContainer: React.FC<ErrorContainerProps> = ({ message }) => (
   <div
     style={{
       padding: '20px',
@@ -19,5 +19,3 @@ const ErrorContainer: React.FC<ErrorContainerProps> = ({ message }) => (
     <strong>Error:</strong> {message}
   </div>
 );
-
-export default ErrorContainer;

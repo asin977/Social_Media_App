@@ -3,16 +3,19 @@ import { ClipLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
 
 import { useUpdateUser } from '../apis/user';
-import { UserListAPIResponse } from '../types/user';
-import Modal from './common/modal';
 import { USERNAME_FORM_FIELD } from '../constants/common';
+import { UserListAPIResponse } from '../types/user';
+import { Modal } from './common/modal';
 
 type EditUserModalProps = {
   user: UserListAPIResponse;
   onClose: () => void;
 };
 
-const EditUserModal: React.FC<EditUserModalProps> = ({ user, onClose }) => {
+export const EditUserModal: React.FC<EditUserModalProps> = ({
+  user,
+  onClose,
+}) => {
   const { mutate: updateUser, isPending } = useUpdateUser();
 
   const handleSuccessSaveBtn = () => {
@@ -122,5 +125,3 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ user, onClose }) => {
     </Modal>
   );
 };
-
-export default EditUserModal;

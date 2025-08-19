@@ -1,12 +1,14 @@
 import React from 'react';
 
+import { ReactComponent as CloseIcon } from '../../assets/svg/closeIcon.svg';
+
 type ModalProps = {
   isOpen: boolean;
   onClose: () => void;
   children: React.ReactNode;
 };
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
+export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
   if (!isOpen) {
     return null;
   }
@@ -26,6 +28,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
         zIndex: 1000,
         padding: '45px',
       }}
+      onClick={onClose}
     >
       <div
         style={{
@@ -33,9 +36,10 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
           padding: '30px',
           borderRadius: '8px',
           boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-          width: '400px',
+          width: '450px',
           maxWidth: '100%',
         }}
+        onClick={e => e.stopPropagation()}
       >
         {children}
         <div
@@ -48,7 +52,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
           <button
             onClick={onClose}
             style={{
-              backgroundColor: '#023E8A',
+              backgroundColor: 'transparent',
               color: '#fff',
               padding: '6px 12px',
               border: 'none',
@@ -58,12 +62,10 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
               fontSize: '18px',
             }}
           >
-            Close
+            <CloseIcon width={'30px'} height={'30px'} color="#fff" />
           </button>
         </div>
       </div>
     </div>
   );
 };
-
-export default Modal;

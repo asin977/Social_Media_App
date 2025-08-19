@@ -1,7 +1,8 @@
 import React from 'react';
 
-import User from '../assets/images/commentuser.png';
 import { AddCommentPayload } from '../types/comments';
+
+import User from '../assets/images/commentuser.png';
 
 export const PostCommentCard: React.FC<AddCommentPayload> = ({
   name,

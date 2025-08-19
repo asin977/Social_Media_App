@@ -6,9 +6,7 @@ const TOKEN =
 
 const httpClient = axios.create({
   baseURL: BASE_URL,
-  headers: {
-    Authorization: `Bearer ${TOKEN}`,
-  },
+  headers: { Authorization: `Bearer ${TOKEN}` },
 });
 
 export default httpClient;

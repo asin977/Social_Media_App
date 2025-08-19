@@ -13,7 +13,7 @@ type UserDetailsCardProps = {
   onDelete: (userId: number) => void;
 };
 
-const UserDetailsCard: React.FC<UserDetailsCardProps> = ({
+export const UserDetailsCard: React.FC<UserDetailsCardProps> = ({
   user,
   onUserSelect,
   onEditBtnClick,
@@ -101,5 +101,3 @@ const UserDetailsCard: React.FC<UserDetailsCardProps> = ({
     </div>
   );
 };
-
-export default UserDetailsCard;

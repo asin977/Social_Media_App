@@ -1,12 +1,14 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import { useGetCommentList } from '../apis/comments';
+import { routes } from '../routes';
+import { Modal } from './common/modal';
 import { PostCommentCard } from './postCommentCard';
-import Modal from '../components/common/modal';
 
 import CommentIcon from '../assets/images/message.png';
 
-export const CommentList = () => {
+export const PostCommentList = () => {
   const { data: comments, isLoading, isError, error } = useGetCommentList();
 
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
@@ -21,6 +23,31 @@ export const CommentList = () => {
 
   return (
     <>
+      <button
+        style={{
+          border: 'none',
+          color: '#fff',
+          background: 'darkblue',
+          position: 'absolute',
+          top: '2%',
+          right: '1%',
+          padding: '5px 45px',
+        }}
+      >
+        <Link
+          to={routes.users}
+          style={{
+            color: '#fff',
+            fontFamily: 'bold',
+            borderRadius: '5px',
+            fontSize: '18px',
+            cursor: 'pointer',
+            textDecoration: 'none',
+          }}
+        >
+          USERS
+        </Link>
+      </button>
       <div style={{ margin: '0 20px 20px' }}></div>
 
       <div
@@ -73,11 +100,11 @@ export const CommentList = () => {
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 2fr))',
               gap: '20px',
               maxHeight: '70vh',
               overflowY: 'auto',
-              padding: '10px',
+              padding: '15px',
             }}
           >
             {comments?.map(comment => (
