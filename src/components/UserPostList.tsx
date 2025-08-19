@@ -1,4 +1,7 @@
+import { Link } from 'react-router-dom';
+
 import { useGetUserPosts } from '../apis/post';
+import { routes } from '../routes';
 import ErrorContainer from './ErrorContainer';
 import { Header } from './Header';
 import { UserPostCard } from './UserPostCard';
@@ -17,6 +20,32 @@ export const UserPostList = () => {
   return (
     <>
       <Header />
+      <button
+        style={{
+          border: 'none',
+          color: '#fff',
+          background: 'darkblue',
+          position: 'absolute',
+          top: '2%',
+          right: '1%',
+          padding: '5px 30px',
+        }}
+      >
+        <Link
+          to={routes.users}
+          style={{
+            color: '#fff',
+            fontFamily: 'bold',
+            borderRadius: '5px',
+            fontSize: '18px',
+            cursor: 'pointer',
+            textDecoration: 'none',
+          }}
+        >
+          USERS
+        </Link>
+      </button>
+
       <h2
         style={{
           color: 'darkblue',
