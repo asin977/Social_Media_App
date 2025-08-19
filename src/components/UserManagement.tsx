@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import AddUserModal from '../components/AddModalUser';
+import AddUserModal from './AddUserModal';
 import { Header } from '../components/Header';
 import { UserList } from '../components/UserList';
 
@@ -40,6 +40,7 @@ export const UserManagement = () => {
         </div>
 
         <UserList />
+        
         <AddUserModal
           isOpen={isAddModalVisible}
           onClose={() => setIsAddModalVisible(false)}

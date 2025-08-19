@@ -47,7 +47,6 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
         }}
       >
         <CloseIcon width={'30px'} height={'30px'} />
-        
       </button>
       <div
         style={{
@@ -61,13 +60,6 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
         onClick={e => e.stopPropagation()}
       >
         {children}
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'flex-end',
-            marginTop: '15px',
-          }}
-        ></div>
       </div>
     </div>
   );

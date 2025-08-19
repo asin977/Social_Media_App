@@ -38,7 +38,9 @@ export const UserList = () => {
           color: 'darkblue',
           marginLeft: '40px',
           textAlign: 'left',
-          marginTop: '-9px',
+          marginTop: '-30px',
+          fontFamily: 'regula',
+          marginBottom:'20px'
         }}
       >
         Users List

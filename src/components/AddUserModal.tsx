@@ -3,14 +3,14 @@ import { ClipLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
 
 import { useAddUser } from '../apis/user';
-import { Modal } from '../components/common/modal';
 import {
-  USER_NAME,
   USER_EMAIL,
   USER_GENDER,
+  USER_NAME,
   USER_STATUS,
 } from '../constants/common';
 import { UserListAPIResponse } from '../types/user';
+import { Modal } from './common/modal';
 
 type AddUserModalProps = {
   isOpen: boolean;
@@ -57,6 +57,7 @@ const AddUserModal: React.FC<AddUserModalProps> = ({
       toast.error('Please fill all fields');
       return;
     }
+
     addUser({ name, email, gender, status });
   };
 
