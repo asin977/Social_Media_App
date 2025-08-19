@@ -3,7 +3,7 @@ import { ClipLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
 
 import { useDeletePosts } from '../apis/post/useDeletePosts';
-import Modal from './common/modal';
+import { Modal } from './common/modal';
 
 type DeletePostButtonProps = {
   postId: number;
@@ -53,8 +53,8 @@ export const DeletePostButton: React.FC<DeletePostButtonProps> = ({
       </button>
 
       <Modal isOpen={confirming} onClose={() => setConfirming(false)}>
-        <h3>Confirm Delete</h3>
-        <p>
+        <h3 style={{ fontSize: '30px', color: 'darkblue' }}>Confirm Delete</h3>
+        <p style={{ marginBottom: '80px' }}>
           Are you sure you want to delete: <strong>{postTitle}</strong>?
         </p>
         <div
@@ -64,41 +64,35 @@ export const DeletePostButton: React.FC<DeletePostButtonProps> = ({
             justifyContent: 'center',
             flexDirection: 'column',
             alignContent: 'center',
-            gap: '12px',
           }}
         >
-          <button
-            onClick={handleDeleteBtn}
-            disabled={isDeleting}
+          <div
             style={{
-              backgroundColor: '#023E8A',
-              color: 'white',
-              padding: '8px 16px',
-              border: 'none',
-              borderRadius: '5px',
-              fontFamily: 'bold',
-              fontSize: '18px',
-              cursor: 'pointer',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
             }}
           >
-            Yes
-          </button>
-
-          <button
-            onClick={() => setConfirming(false)}
-            style={{
-              backgroundColor: '#023E8A',
-              color: 'white',
-              padding: '8px 16px',
-              border: 'none',
-              borderRadius: '5px',
-              fontFamily: 'bold',
-              fontSize: '18px',
-              cursor: 'pointer',
-            }}
-          >
-            Cancel
-          </button>
+            <button
+              onClick={handleDeleteBtn}
+              disabled={isDeleting}
+              style={{
+                backgroundColor: '#023E8A',
+                color: 'white',
+                padding: '8px 16px',
+                border: 'none',
+                borderRadius: '5px',
+                fontFamily: 'bold',
+                fontSize: '18px',
+                cursor: 'pointer',
+                marginBottom: '90px',
+                minWidth: '120px',
+              }}
+            >
+              Yes
+            </button>
+          </div>
         </div>
         {error && (
           <p style={{ color: 'red', marginTop: '10px' }}>

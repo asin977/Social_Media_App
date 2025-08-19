@@ -22,22 +22,23 @@ export const UserPostList = () => {
           color: 'darkblue',
           fontSize: '40px',
           textAlign: 'start',
-          fontFamily: 'bold',
-          marginLeft: '40px',
+          fontFamily: 'regular',
+          marginLeft: '80px',
           marginBottom: '0px',
         }}
       >
-        User Posts
+        Users Posts
       </h2>
 
       <div
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fill, minmax(500px, 1fr))',
-          gap: '30px',
-          padding: '20px',
-          marginLeft: '30px',
-          marginRight: '30px',
+          gap: '50px',
+          padding: '44px',
+          marginLeft: '50px',
+          marginRight: '50px',
+          paddingTop: '25px',
         }}
       >
         {posts?.map((post: Post) => (
@@ -57,8 +58,23 @@ export const UserPostList = () => {
             <h3 style={{ color: 'darkblue', margin: '10px 0' }}>
               {post.title}
             </h3>
-            <p>{post.body}</p>
-            <p style={{ color: 'darkred', fontSize: '15px' }}>
+            <p
+              style={{
+                textAlign: 'justify',
+                marginLeft: '20px',
+                marginRight: '20px',
+              }}
+            >
+              {post.body}
+            </p>
+            <p
+              style={{
+                color: 'darkred',
+                fontSize: '15px',
+                textAlign: 'justify',
+                fontWeight: 'bold',
+              }}
+            >
               Author ID: {post.user_id}
             </p>
             <DeletePostButton postId={post.id} postTitle={post.title} />
