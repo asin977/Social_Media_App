@@ -43,7 +43,7 @@ const UserDetailsCard: React.FC<UserDetailsCardProps> = ({
           width: '100px',
           position: 'absolute',
           top: '50px',
-          left: '20px',
+          left: '7px',
         }}
       />
       <h3 style={{ margin: '0 0 10px 0', textAlign: 'end', fontSize: '23px' }}>

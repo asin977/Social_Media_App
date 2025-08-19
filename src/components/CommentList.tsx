@@ -6,6 +6,7 @@ import { useAddComments, useGetCommentList } from '../apis/comments';
 import { useGetUserPosts } from '../apis/posts';
 import { useGetUserList } from '../apis/user';
 import Modal from '../components/common/modal';
+import { COMMENT_BODY, EMAIL_ID, POST_ID, USER_ID } from '../constants/common';
 import { Header } from './Header';
 import { PostCommentCard } from './postCommentCard';
 
@@ -28,10 +29,10 @@ export const CommentList = () => {
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
 
   const [form, setForm] = useState({
-    postId: '',
-    userId: '',
-    body: '',
-    email: '',
+    [POST_ID]: '',
+    [USER_ID]: '',
+    [COMMENT_BODY]: '',
+    [EMAIL_ID]: '',
   });
 
   const handleChange = (
@@ -42,12 +43,14 @@ export const CommentList = () => {
     const { name, value } = e.target;
     setForm(prev => ({ ...prev, [name]: value }));
   };
-
+  const handleSuccessSaveBtn = () => {
+    toast.success('Comment added successfully!');
+  };
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     const parsedPostId = parseInt(form.postId);
-    const parsedUserId = parseInt(form.userId);
+    const parsedUserId = parseInt(form[USER_ID]);
     if (isNaN(parsedPostId) || isNaN(parsedUserId)) {
       toast.error('Please select a valid post and user');
       return;
@@ -58,15 +61,20 @@ export const CommentList = () => {
     const payload = {
       postId: parsedPostId,
       userId: parsedUserId,
-      email: form.email || selectedUser?.email || 'unknown@example.com',
-      body: form.body,
+      email: form[EMAIL_ID] || selectedUser?.email || 'unknown@example.com',
+      body: form[COMMENT_BODY],
       name: selectedUser?.name || 'Unknown User',
     };
 
     addComment.mutate(payload, {
       onSuccess: () => {
-        toast.success('Comment added successfully!');
-        setForm({ postId: '', userId: '', body: '', email: '' });
+        handleSuccessSaveBtn();
+        setForm({
+          [POST_ID]: '',
+          [USER_ID]: '',
+          [COMMENT_BODY]: '',
+          [EMAIL_ID]: '',
+        });
         setIsAddModalOpen(false);
         refetch();
       },
@@ -149,8 +157,8 @@ export const CommentList = () => {
         </h2>
         <form onSubmit={handleSubmit} style={{ textAlign: 'center' }}>
           <select
-            name="postId"
-            value={form.postId}
+            name={POST_ID}
+            value={form[POST_ID]}
             onChange={handleChange}
             required
             style={{
@@ -170,8 +178,8 @@ export const CommentList = () => {
           </select>
 
           <select
-            name="userId"
-            value={form.userId}
+            name={USER_ID}
+            value={form[USER_ID]}
             onChange={handleChange}
             required
             style={{
@@ -193,9 +201,9 @@ export const CommentList = () => {
           </select>
 
           <textarea
-            name="body"
+            name={COMMENT_BODY}
             placeholder="Comment"
-            value={form.body}
+            value={form[COMMENT_BODY]}
             onChange={handleChange}
             required
             style={{

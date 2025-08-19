@@ -1,4 +1,9 @@
+import { Link } from 'react-router-dom';
+
+import { routes } from '../routes';
+
 import UserIcon from '../assets/images/usersIcon.png';
+import { ReactComponent as LeftArrow } from '../assets/svg/leftArrow.svg';
 
 export const Header = () => (
   <div
@@ -40,7 +45,9 @@ export const Header = () => (
         cursor: 'pointer',
       }}
     >
-      ⬅ Home
+      <Link to={routes.home} style={{ textDecoration: 'none', color: '#fff' }}>
+        <LeftArrow width={'20px'} style={{ marginBottom: '-3px' }} /> HOME
+      </Link>
     </button>
   </div>
 );
