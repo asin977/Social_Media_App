@@ -1,7 +1,6 @@
 import React from 'react';
 
-import UserIcon from '../assets/images/user.png';
-
+import UserIcon from '../assets/images/user.png'
 type UserPostCardProps = {
   title: string;
   body: string;

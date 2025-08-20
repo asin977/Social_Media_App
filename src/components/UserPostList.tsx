@@ -2,19 +2,19 @@ import { Link } from 'react-router-dom';
 
 import { useGetUserPosts } from '../apis/post';
 import { routes } from '../routes';
-import ErrorContainer from './ErrorContainer';
+import { CreateUserPost } from './CreateUserPost';
 import { Header } from './Header';
 import { UserPostCard } from './UserPostCard';
 
 export const UserPostList = () => {
-  const { data: posts, isLoading, isError } = useGetUserPosts();
+  const { data: posts, isLoading, isError, error } = useGetUserPosts();
 
   if (isLoading) {
     return <p>Loading Users...</p>;
   }
 
   if (isError) {
-    <ErrorContainer message={'Failed to fetch the posts'} />;
+    return <p>Error: {error?.message}</p>;
   }
 
   return (
@@ -57,14 +57,18 @@ export const UserPostList = () => {
       >
         User Posts
       </h2>
+
+      <div style={{ margin: '0 20px 20px' }}>
+        <CreateUserPost />
+      </div>
+
       <div
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(3, minmax(500px, 1fr))',
           textAlign: 'justify',
           margin: '0 50px 35px',
-          gap: '55px',
-          paddingTop: '0px',
+          gap: '60px',
           padding: '50px',
         }}
       >

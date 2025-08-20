@@ -1,12 +1,14 @@
 import React from 'react';
 
+import { ReactComponent as CloseIcon } from '../../assets/svg/close.svg';
+
 type ModalProps = {
   isOpen: boolean;
   onClose: () => void;
   children: React.ReactNode;
 };
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
+export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
   if (!isOpen) {
     return null;
   }
@@ -26,7 +28,26 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
         zIndex: 1000,
         padding: '45px',
       }}
+      onClick={onClose}
     >
+      <button
+        onClick={onClose}
+        style={{
+          backgroundColor: 'transparent',
+          color: 'black',
+          padding: '6px 12px',
+          border: 'none',
+          borderRadius: '4px',
+          cursor: 'pointer',
+          fontFamily: 'bold',
+          fontSize: '18px',
+          position: 'absolute',
+          top: '310px',
+          right: '750px',
+        }}
+      >
+        <CloseIcon width={'30px'} height={'30px'} />
+      </button>
       <div
         style={{
           backgroundColor: 'white',
@@ -36,6 +57,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
           width: '400px',
           maxWidth: '100%',
         }}
+        onClick={e => e.stopPropagation()}
       >
         {children}
         <div
@@ -44,26 +66,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
             justifyContent: 'flex-end',
             marginTop: '15px',
           }}
-        >
-          <button
-            onClick={onClose}
-            style={{
-              backgroundColor: '#023E8A',
-              color: '#fff',
-              padding: '6px 12px',
-              border: 'none',
-              borderRadius: '4px',
-              cursor: 'pointer',
-              fontFamily:'bold',
-              fontSize:"18px"
-            }}
-          >
-            Close
-          </button>
-        </div>
+        ></div>
       </div>
     </div>
   );
 };
-
-export default Modal;
