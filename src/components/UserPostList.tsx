@@ -1,22 +1,22 @@
 import { Link } from 'react-router-dom';
 
 import { useGetUserPosts } from '../apis/post';
+import { Post } from '../types/posts';
+import { DeletePostButton } from './DeletePostButton';
 import { routes } from '../routes';
-import ErrorContainer from './ErrorContainer';
 import { Header } from './Header';
-import { UserPostCard } from './UserPostCard';
+
+import UserIcon from '../assets/images/user.png';
 
 export const UserPostList = () => {
-  const { data: posts, isLoading, isError } = useGetUserPosts();
+  const { data: posts, isPending, isError, error } = useGetUserPosts();
 
-  if (isLoading) {
-    return <p>Loading Users...</p>;
+  if (isPending) {
+    return <p>Loading posts...</p>;
   }
-
   if (isError) {
-    <ErrorContainer message={'Failed to fetch the posts'} />;
+    return <p>Error: {error?.message}</p>;
   }
-
   return (
     <>
       <Header />
@@ -51,30 +51,63 @@ export const UserPostList = () => {
           color: 'darkblue',
           fontSize: '40px',
           textAlign: 'start',
-          marginLeft: '90px',
+          fontFamily: 'regular',
+          marginLeft: '80px',
           marginBottom: '0px',
         }}
       >
-        User Posts
+        Users Posts
       </h2>
+
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(3, minmax(500px, 1fr))',
-          textAlign: 'justify',
-          margin: '0 50px 35px',
-          gap: '55px',
-          paddingTop: '0px',
-          padding: '50px',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(500px, 1fr))',
+          gap: '50px',
+          padding: '44px',
+          marginLeft: '50px',
+          marginRight: '50px',
+          paddingTop: '25px',
         }}
       >
-        {posts?.map(post => (
-          <UserPostCard
+        {posts?.map((post: Post) => (
+          <div
             key={post.id}
-            title={post.title}
-            body={post.body}
-            userId={post.user_id}
-          />
+            style={{
+              backgroundColor: '#e3f2fd',
+              boxShadow: '0 2px 6px rgba(0,0,255,0.2)',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              padding: '20px',
+              borderRadius: '8px',
+            }}
+          >
+            <img src={UserIcon} alt="User Icon" style={{ width: '60px' }} />
+            <h3 style={{ color: 'darkblue', margin: '10px 0' }}>
+              {post.title}
+            </h3>
+            <p
+              style={{
+                textAlign: 'justify',
+                marginLeft: '20px',
+                marginRight: '20px',
+              }}
+            >
+              {post.body}
+            </p>
+            <p
+              style={{
+                color: 'darkred',
+                fontSize: '15px',
+                textAlign: 'justify',
+                fontWeight: 'bold',
+              }}
+            >
+              Author ID: {post.user_id}
+            </p>
+            <DeletePostButton postId={post.id} postTitle={post.title} />
+          </div>
         ))}
       </div>
     </>

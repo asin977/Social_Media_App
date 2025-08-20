@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 
 import { useUpdateUser } from '../apis/user';
 import { UserListAPIResponse } from '../types/user';
-import Modal from './common/modal';
+import { Modal } from './common/modal';
 import { USERNAME_FORM_FIELD } from '../constants/common';
 
 type EditUserModalProps = {
