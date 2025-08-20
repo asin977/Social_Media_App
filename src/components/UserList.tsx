@@ -87,7 +87,7 @@ const UserList: React.FC = () => {
           fontSize: '50px',
           margin: '0',
           paddingTop: '20px',
-          fontFamily: 'bold',
+          fontFamily: 'regular',
           textAlign: 'start',
           marginLeft: '35px',
         }}
