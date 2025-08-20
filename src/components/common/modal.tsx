@@ -33,7 +33,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
           padding: '30px',
           borderRadius: '8px',
           boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-          width: '400px',
+          width: '450px',
           maxWidth: '100%',
         }}
       >
@@ -54,8 +54,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
               border: 'none',
               borderRadius: '4px',
               cursor: 'pointer',
-              fontFamily:'bold',
-              fontSize:"18px"
+              fontFamily: 'bold',
+              fontSize: '18px',
             }}
           >
             Close

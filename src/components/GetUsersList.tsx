@@ -1,4 +1,5 @@
 import { useGetUserList } from '../apis/user';
+
 import UserIcon from '../assets/images/user.png';
 
 const GetUserList = () => {

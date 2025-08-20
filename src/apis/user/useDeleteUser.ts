@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { DataQueryKeys } from '../data-query-keys';
-import { endpoints } from '../endpoints';
-import httpClient from '../httpClient';
+import { endpoints } from '../endPoints';
+import httpClient from '../httpClients';
 
 export const useDeleteUser = () => {
   const queryClient = useQueryClient();
