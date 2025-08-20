@@ -16,7 +16,8 @@ const ErrorContainer: React.FC<ErrorContainerProps> = ({ message }) => (
       boxShadow: '0 2px 6px rgba(0,0,0,0.2)',
     }}
   >
-    <strong>Error:</strong> {message}
+    <strong>Error:</strong>
+    {message}
   </div>
 );
 

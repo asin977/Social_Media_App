@@ -18,7 +18,7 @@ export const Header = () => (
         margin: '0px',
         fontFamily: 'bold',
         display: 'flex',
-        marginRight: '15px',
+        marginRight: '13px',
       }}
     >
       SOCIAL
@@ -26,21 +26,7 @@ export const Header = () => (
     <img
       src={UserIcon}
       alt="User Icon"
-      style={{ height: '50px', marginRight: '12px' }}
+      style={{ height: '40px', marginRight: '135px' }}
     />
-    <button
-      style={{
-        border: 'none',
-        padding: '8px 20px',
-        background: '#0077b6',
-        color: 'white',
-        fontFamily: 'bold',
-        borderRadius: '5px',
-        fontSize: '18px',
-        cursor: 'pointer',
-      }}
-    >
-      Posts ➡️
-    </button>
   </div>
 );

@@ -86,22 +86,6 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ user, onClose }) => {
           style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}
         >
           <button
-            type="button"
-            onClick={onClose}
-            style={{
-              backgroundColor: '#ccc',
-              color: 'black',
-              padding: '8px 15px',
-              border: 'none',
-              borderRadius: '5px',
-              cursor: 'pointer',
-              fontFamily: 'bold',
-              fontSize: '18px',
-            }}
-          >
-            Cancel
-          </button>
-          <button
             type="submit"
             style={{
               backgroundColor: 'darkblue',
